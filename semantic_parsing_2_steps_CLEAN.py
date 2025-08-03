@@ -833,14 +833,20 @@ def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
 
 # Main function to parse command ------------------------------------
 
-def parse_command(parser, command, maxExpansions, dReplacement_1, dReplacement_2):
+def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2):
         """
-        This function returns logical form (LF) given a link to parser and command we want to parse.
-        The problem is that the parser may return empty result. This depends of lexicon (used in parser
-        generation) and command itself. To reduce the probability of such event we use a trick expanding
-        original command with zero, one or more (up to maxExpansions) copies of special string 
-        '_context_' that we add in the very beginning of the command. We start we zero copies
-        and stop if number of copies achieved its maximum or if we got at least one succesful parsing.
+        This function returns logical form (LF) given a link to parser and segment of a command
+        we want to parse. Please note that if a command is long and we can't parse it using CCG
+        then we try to split it into segments that while are semantically complete can be parsed.
+
+        The problem is that the parser may return empty result even for segment. 
+        This depends of lexicon (used in parser
+        generation) and segment itself. To reduce the probability of such event we use a trick 
+        -- expanding original segment with zero, one or more (up to maxExpansions) copies of 
+        special string 
+        '_context_' that we add in the very beginning of the segment. We start with zero copies
+        and stop if number of copies achieved its maximum or if we got at least one succesful 
+        parsing.
 
         LF that we got as result of parsing still contain placeholder instead of real words/phrases
         from the command. We use dictionary dReplacement_1 and d_Replacement_2 that should store
@@ -853,14 +859,14 @@ def parse_command(parser, command, maxExpansions, dReplacement_1, dReplacement_2
         parses = []
 
     
-        command_expanded = command
+        segment_expanded = segment
         while nExpansions <= maxExpansions and nParses == 0:
             
             if nExpansions > 0:
-                command_expanded = '_context_ '+ command_expanded
+                segment_expanded = '_context_ '+ segment_expanded
             nExpansions += 1
 
-            parses = list(parser.parse(command_expanded.split()))
+            parses = list(parser.parse(segment_expanded.split()))
             nParses = len(parses)   
             
         if nParses == 0:
@@ -890,7 +896,204 @@ def parse_command(parser, command, maxExpansions, dReplacement_1, dReplacement_2
             
             return LF_replacement
 
-#EDIT
+def command_normalization (command):
+    pattern = r"\b(re\-)[a-z]+"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"re", command, count=0)
+
+    pattern = r"\b[a-z](\-)[a-z]+"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"=", command, count=0)
+
+
+    pattern = r"\b\d+(\-)\d\b"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"", command, count=0)
+
+    
+    command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+    command = command.replace(",","")
+    command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
+    command = command.replace(r"\s+"," ").replace("+","")
+    command = command.strip('.,?!\n”"')
+
+    return command
+
+def clean_LF(LF):
+    """
+    In some cases logical form that we generate in parsing process
+    may be too complicated and we may have possibility to simplify it.
+    """
+
+
+    # delete unneeded '*' 
+    LF = LF.replace('*_','_').replace(')*',')')
+
+    # delete simple duplicated functions
+    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            LF = LF.replace(to_replace, replace_by)
+
+    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
+    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            LF = LF.replace(to_replace, replace_by)
+
+    # delete unneeded duplicated functions
+    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            
+            #check if replace_by is good in terms of brackets
+            ok = True
+            b_open = 0
+            b_close = 0
+            min_equal = 0
+
+            a = list(replace_by)
+            for s in a:
+                if s == '(':
+                    b_open += 1
+                if s == ')':
+                    b_close += 1
+                if b_open < b_close:
+                    ok = False
+                    break
+                if (b_open == b_close and
+                    min_equal == 0 and
+                    b_open > 0
+                ):
+                    min_equal = b_open
+
+                if (min_equal > 0 and
+                    (min_equal < b_open or min_equal < b_close)
+                ):
+                    ok = False
+                    break
+            if b_open != b_close:
+                ok = False
+            
+            if ok == True:
+                LF = LF.replace(to_replace, replace_by)
+
+    return LF
+
+def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, step):
+
+    LF_final = ''
+
+    dReplacement_1 = {}
+    dReplacement_2 = {}
+    command_new = ''
+
+    if step == 1:
+        new_command_1 = text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement_1)
+        new_command_2 = replace_unknown_phrases(new_command_1, dLexWords, dReplacement_2, 
+                                                a_prepositions)
+        command_new = new_command_2
+        
+        pattern = r"\b(x)\d+\b"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(command_new)
+        for match in iterator:
+            if match:
+                command_new = re.sub(match.group(1),"X", command_new, count=1)
+    else:
+        command_new = LF2placeholders(command, dReplacement_1)
+        print('dReplacement_1_step2_3\n'+str(dReplacement_1))
+
+    print('\nPLACEHOLDERS step '+str(step)+'\t'+command_new)
+
+
+    # parse command with expansion -------------------------
+
+    maxExpansion = 1
+    
+    LF_replacement = parse_segment(parser, command_new, maxExpansion, dReplacement_1, dReplacement_2)
+    if LF_replacement != '':
+
+        # replace function _context_() by its argument if it is another 
+        pattern = r"\b_context_\(_(.+)\)"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(LF_replacement)
+        for match in iterator:
+            if match:            
+                LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
+        
+        if step > 1:
+            LF_replacement = clean_LF(LF_replacement)
+            
+        
+        LF_final = LF_final +LF_replacement+'; '
+    else:
+        # we need to split the sentence into segments
+
+        max_segment_length = 7
+        while len(command_new) > 0:
+            command_new_words = command_new.split(' ')
+            
+            for j in range(len(command_new_words) - 1, -1, -1):
+                if j > max_segment_length:
+                    continue
+                segment =  ' '.join(command_new_words[0:j+1])
+                LF_replacement = parse_segment(parser, segment, maxExpansion, dReplacement_1, dReplacement_2)
+                
+                if LF_replacement != '':
+                    # replace function _context_() by its argument if it is another function
+                    pattern = r"\b_context_\(_(.+)\)"
+                    p = re.compile(pattern, re.I)
+                    iterator = p.finditer(LF_replacement)
+                    for match in iterator:
+                        if match:
+                            LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
+
+                    if step > 1:
+                        LF_replacement = clean_LF(LF_replacement)
+                        
+                    LF_final = LF_final +LF_replacement+'; '
+                    command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
+                    break
+                
+                if LF_replacement == '' and j == 0:
+                    command_new = ''
+
+    if step > 1:
+        LF_final = LF_final.replace('STOP_(','_(')            
+        LF_final = LF_final.replace('\n*','')            
+            
+                        
+    print('\nSEMANTICS step '+str(step)+':\t'+LF_final)
+    return LF_final
+
 
 #############################################################
 #1 Read regular expressions from 'regex.txt' file to collect some stats
@@ -922,7 +1125,12 @@ a_prepositions = ['to','the','is','at','be','being','for','has','of','on','throu
 
 
 dCategoryFilter = {}
-lex_search = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
+"""
+When generating lexicon we may control which rules from 'lex_complex.txt' to use.
+If dCategoryFilter is empty than we use all rules. If it is not empty then we use only rules
+where syntactic category contains '/X' where X is a key from dCategoryFilter. 
+"""
+lex = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
 
 dCategoryFilter = {
     'after':1,
@@ -971,9 +1179,9 @@ dCategoryFilter = {
     'report':1,
     
 }
-lex_search_step2 = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
+lex_step2_3 = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
 
-#print(lex_search)
+
 
 #####################################################################
 #3 Read test communications
@@ -990,7 +1198,7 @@ a_commands = read_test_communications(communications)
 #######################################################
 
 dLexWords = {} 
-lex_words(lex_search, dLexWords)
+lex_words(lex, dLexWords)
 
 
 
@@ -1000,8 +1208,8 @@ lex_words(lex_search, dLexWords)
 #######################################################
 
 
-parser = chart.CCGChartParser(lex_search, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-parser_step2 = chart.CCGChartParser(lex_search_step2, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+parser = chart.CCGChartParser(lex, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+parser_step2_3 = chart.CCGChartParser(lex_step2_3, chart.ApplicationRuleSet + chart.CompositionRuleSet)
 
 #########################################################
 #6  Output files
@@ -1010,7 +1218,6 @@ parser_step2 = chart.CCGChartParser(lex_search_step2, chart.ApplicationRuleSet +
 results = 'RESULTS.tsv'
 f_out = open(results, 'w', errors='ignore')
 f_out.write('#\tCommunication\tSemantics\n')
-f_out
 
 
 #################################################################
@@ -1025,148 +1232,25 @@ for command in a_commands:
     
     count += 1
     original_command = command
-    LF_final = ''
-    LF_final_step2 = ''
-    LF_final_step3 = ''
-
+    
+    
 
     print('\n'+str(count)+'====================================================================')
     print('COMMAND:\n'+str(original_command))
     
-    # command normalization--------------------------------------
-    
-    
-    pattern = r"\b(re\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"re", command, count=0)
+    command = command_normalization(command)
 
-    pattern = r"\b[a-z](\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"=", command, count=0)
-
-
-    pattern = r"\b\d+(\-)\d\b"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"", command, count=0)
-
-    
-    command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
-    command = command.replace(",","")
-    command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
-    command = command.replace(r"\s+"," ").replace("+","")
-    command = command.strip('.,?!\n”"')
-
-    print('??? '+command+'>')
-    
     ########################################################
     # STEP 1
     ########################################################
 
-    #--- replace words by placeholders --------------------------------
-
-    dReplacement_1 = {}
-
-    new_command_tmp = command
-
-    new_command_1 = text2placeholders(new_command_tmp, dRegexCategory, dRegexComplexity,dReplacement_1)
-    #print('new_command_1 step 1\t'+new_command_1)
-    print('dReplacement_1 step 1\n'+str(dReplacement_1))
     
-    #------ replace phrases outside lexicon by X1,.... placeholders ---------------
-
-    dReplacement_2 = {}
-    new_command_2 = replace_unknown_phrases(new_command_1, dLexWords, dReplacement_2, a_prepositions)
-    #print('\n'+new_command_2)
-    print('dReplacement_2 step 1\n'+str(dReplacement_2)) 
+    LF_final_step1 = parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 1)
+    LF_final_step2 = parse_command(parser_step2_3, LF_final_step1, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 2)
+    LF_final_step3 = parse_command(parser_step2_3, LF_final_step2, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 3)
     
 
-
-    command_new = new_command_2
-    
-    placeholders = command_new
-    
-    pattern = r"\b(x)\d+\b"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command_new)
-    for match in iterator:
-        if match:
-            command_new = re.sub(match.group(1),"X", command_new, count=1)
-
-    print('\nPLACEHOLDERS step 1\t'+command_new)
-
-    # parse command with expansion -------------------------
-
-    maxExpansion = 1
-    
-    LF_replacement = parse_command(parser, command_new, maxExpansion, dReplacement_1, dReplacement_2)
-    
-    
-    if LF_replacement != '':
-
-        # replace function _context_() by its argument if it is another 
-        pattern = r"\b_context_\(_(.+)\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement)
-        for match in iterator:
-            if match:            
-                LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
-
-        LF_final = LF_final +LF_replacement+'; '
-    else:
-        # we need to split the sentence into segments
-
-        max_segment_length = 7
-
-        while len(command_new) > 0:
-            command_new_words = command_new.split(' ')
-            
-            for j in range(len(command_new_words) - 1, -1, -1):
-
-                if j > max_segment_length:
-                    continue
-                segment =  ' '.join(command_new_words[0:j+1])
-                
-                
-                LF_replacement = parse_command(parser, segment, maxExpansion, dReplacement_1, dReplacement_2)
-                
-                
-                if LF_replacement != '':
-
-                    
-
-                    # replace function _context_() by its argument if it is another function
-                    pattern = r"\b_context_\(_(.+)\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement)
-                    for match in iterator:
-                        if match:
-                            
-                            LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
-                
-            
-                    LF_final = LF_final +LF_replacement+'; '
-                    command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
-                    break
-                
-                if LF_replacement == '' and j == 0:
-                    command_new = ''
-                
-                
-            
-    print('\nSEMANTICS step 1:\t'+LF_final)
-
+    '''
     ########################################################
     # STEP 2
     ########################################################
@@ -1192,7 +1276,7 @@ for command in a_commands:
     maxExpansion = 1
     
 
-    LF_replacement_step2 = parse_command(parser_step2, command_new, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
+    LF_replacement_step2 = parse_segment(parser_step2_3, command_new, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
     
     
     
@@ -1315,7 +1399,7 @@ for command in a_commands:
                     continue
                 segment =  ' '.join(command_new_words[0:j+1])
                 
-                LF_replacement_step2 = parse_command(parser_step2, segment, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
+                LF_replacement_step2 = parse_segment(parser_step2_3, segment, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
                 
                 
                 if LF_replacement_step2 != '':
@@ -1458,7 +1542,7 @@ for command in a_commands:
     maxExpansion = 1
     
 
-    LF_replacement_step3 = parse_command(parser_step2, command_new, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
+    LF_replacement_step3 = parse_segment(parser_step2_3, command_new, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
     
     
     
@@ -1582,7 +1666,7 @@ for command in a_commands:
                     continue
                 segment =  ' '.join(command_new_words[0:j+1])
                 
-                LF_replacement_step3 = parse_command(parser_step2, segment, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
+                LF_replacement_step3 = parse_segment(parser_step2_3, segment, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
                 
                 
                 if LF_replacement_step3 != '':
@@ -1697,7 +1781,7 @@ for command in a_commands:
     LF_final_step3 = LF_final_step3.replace('\n*','')            
            
     print('\nSEMANTICS step 3:\t'+LF_final_step3)
-
+    '''
     
     
 
