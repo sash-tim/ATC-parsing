@@ -6,13 +6,14 @@ Semantic parsing for pilot/controller communications
 from nltk.ccg import chart, lexicon
 
 from pathlib import Path
-import time
 import re
 
 
-# Read regular expressions from a file and collect some stats
-# about defined categories----------------------------------
 
+#Regex-------------------------------------------------------
+
+# Read regular expressions from a file and collect some stats
+# about defined categories
 
 def read_regex(f_name, dRegexCategory, dRegexComplexity, 
                     dCategoryFrequency, dPlaceholderCategory, dCategoryPlaceholder, dPlaceholderNumber):
@@ -149,10 +150,46 @@ def read_regex(f_name, dRegexCategory, dRegexComplexity,
             dPlaceholderCategory[placeholder] = category
             dCategoryPlaceholder[category][placeholder] = 1
 
+#Prepositions -------------------------------------------
 
+def read_prepositions(f_name):
+    """
+    """
+    
+    f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
 
-# make lexicon----------------------------------------------
+    a_propositions = []
+    for record in f_in:
+        
+        if record.strip(' #\n') == '':
+            continue
+        else:
+            a_propositions.append(record.strip(' #\n').lower())
 
+    return a_propositions
+    f_in.close()
+
+#Category filter ----------------------------------
+
+def read_category_filters(f_name, dCategoryFilter):
+    """
+    """
+    
+    f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
+
+    for record in f_in:
+        
+        if record.strip(' \n') == '':
+            continue
+        else:
+            dCategoryFilter[record.strip(' \n').upper()] = 1
+
+    f_in.close()
+    
+
+#Lexicon---------------------------------------------------
+
+# make lexicon
 def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_name, dCategoryFilter):
 
     """
@@ -448,7 +485,18 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
                                 lex_last_part, True)
     return lex
 
+# all phrases from lexicon  --------------------------------
+def lex_words(lexicon, dLexWords):
+    '''
+    We need this to extract unknow phrases from a communication we want to parse
+    '''
 
+    for x in str(lexicon).split('\n'):
+        word = x.split('=>')
+        dLexWords[word[0].strip()] = 1
+
+
+#Command---------------------------------------------------
 
 # use this to read communications from a text file
 def read_test_communications(f_name):
@@ -464,117 +512,46 @@ def read_test_communications(f_name):
     f_in.close()
     return a_communications
 
+def command_normalization (command):
+    pattern = r"\b(re\-)[a-z]+"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"re", command, count=0)
 
-# all phrases from lexicon  --------------------------------
-'''
-We need this to extract unknow phrases from a communication we want to parse
-'''
-
-def lex_words(lexicon, dLexWords):
-    for x in str(lexicon).split('\n'):
-        word = x.split('=>')
-        dLexWords[word[0].strip()] = 1
+    pattern = r"\b[a-z](\-)[a-z]+"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"=", command, count=0)
 
 
+    pattern = r"\b\d+(\-)\d\b"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(command)
+    for match in iterator:
+        if match:
+            #print('match:'+str(match))
+            command = re.sub(match.group(1),"", command, count=0)
+
+    
+    command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+    command = command.replace(",","")
+    command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
+    command = command.replace(r"\s+"," ").replace("+","")
+    command = command.strip('.,?!\n”"')
+
+    return command
+
+
+#Placeholders-----------------------------------------------
 
 # Extract categories defined by regex from a command and 
-# replace by placeholders -----------------------
-"""
-The concept of placeholders is very important for the project. The idea is that in parsing time
-we parse not original sentence but its variant where words/phrases are replaced by placeholders. 
-
-The total number of unique placeholders is significantly smaller than total number of unique
-words/phrases that we can see in atc communications. These means that lexicon, that we use in parsing is small 
-also and hence the parsing process hase smaller latency.
-
-These are examples of a ATC communication, corresponding string of placeholders and mapping of placeholders
-back into words/phrases from original communication.
-
-Original (A) communication (punctuation is removed):
-```
-Southwest 578 cleared to Atlanta via radar vectors then V222 to CRG then direct Climb and maintain 5000 expect 35000 ten minutes after departure Departure frequency 124.85 squawk 5263
-```
-
-Step 1 - placeholders:
-```
-aircraft1 intnumber1 cleared1 to1 place1 via1 radar1 then1 route1 to2 fix1 then2 direction1 altitudechange1 intnumber2 expect1 intnumber3 wordnumber1 timeminsec1 after1 departure1 departure2 frequency1 realnumber1 squawk1 intnumber4
-```
-Step 1 - placeholedrs replacements
-
-```
-aircraft1 : Southwest
-intnumber1 : 578
-cleared1 : cleared
-to1 : to
-place1 : Atlanta
-via1 : via
-radar1 : radar vectors
-then1 :then
-route1 : V222
-to2 :to
-fix1 : CRG
-then2 :then
-direction1 : direct
-altitudechange1 : Climd and maintain
-intnumber2 : 5000
-expect1 : expect
-intnumber3 : 35000
-wordnumber1 : ten
-timeminsec1 : minutes
-after1 : after
-departure1 : departure
-departure2 : Departure
-frequency1 : frequency
-realnumber1 : 124.85
-squawk1 : squawk
-intnumber4 : 5263
-
-```
-
-
-Step 2 - placeholders:
-```
-callsign1 cleared1 via1 radar1 then1 then2 altitudechange1 expect1 time1 after1 departure1 squawk1
-
-```
-Step 2 -- placeholder replacements
-```
-callsign1 : _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*))
-cleared1 : _CLEARED_(_CLEARED_(*cleared*),_TO_(*to*),_PLACE_(*Atlanta*))
-via1 : _VIA_(*via*)
-radar1 : _RADAR_(*radar vectors*)
-then1 : _THEN_(_THEN_(*then*),_ROUTE_(_ROUTE_(*V222*),_TO_(*to*),_FIX_(*CRG*)))
-then2 : _THEN_(_THEN_(*then*),_DIRECTION_(*direct*))
-altitudechange1 : _ALTITUDECHANGE_(_ALTITUDECHANGE_(*Climb and maintain*),_INTNUMBER_(*5000*))
-expect1 : _EXPECT_(_EXPECT_(*expect*),_INTNUMBER_(*35000*))
-time1 : _TIME_(_WORDNUMBER_(*ten*),_TIMEMINSEC_(*minutes*))
-after1 : _AFTER_(_AFTER_(*after*),_DEPARTURE_(*departure*))
-departure1 : _DEPARTURE_(_DEPARTURE_(*Departure*),_FREQUENCY_(_FREQUENCY_(*frequency*),_REALNUMBER_(*124.85*)))
-squawk1 : _SQUAWK_(_SQUAWK_(*squawk*),_INTNUMBER_(*5263*))
-```
-
-Step 3 placeholders"
-```
-callsign1 cleared1 then1 then2 altitudechange1 expect1 departure1 squawk1
-```
-
-Step 3 - placeholder replacements
-
-```
-callsign1 : _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*))
-cleared1 : _CLEARED_(_CLEARED_(_CLEARED_(_CLEARED_(*cleared*),_TO_(*to*),_PLACE_(*Atlanta*))),_VIA_(*via*),_RADAR_(*radar vectors*))
-then1 : _THEN_(_THEN_(*then*),_ROUTE_(_ROUTE_(*V222*),_TO_(*to*),_FIX_(*CRG*)))
-then2 : _THEN_(_THEN_(*then*),_DIRECTION_(*direct*))
-altitudechange1 : _ALTITUDECHANGE_(_ALTITUDECHANGE_(*Climb and maintain*),_INTNUMBER_(*5000*))
-expect1 : _EXPECT_(_EXPECT_(_EXPECT_(_EXPECT_(*expect*),_INTNUMBER_(*35000*))),_TIME_(_TIME_(_TIME_(_WORDNUMBER_(*ten*),_TIMEMINSEC_(*minutes*))),_AFTER_(_AFTER_(_AFTER_(*after*),_DEPARTURE_(*departure*)))))
-departure1 : _DEPARTURE_(_DEPARTURE_(*Departure*),_FREQUENCY_(_FREQUENCY_(*frequency*),_REALNUMBER_(*124.85*)))
-squawk1 : _SQUAWK_(_SQUAWK_(*squawk*),_INTNUMBER_(*5263*))
-```
-
-"""
-
-
-
+# replace by placeholders
 def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
     """
     This function is used on step 1 to convert original communication (command) to string of
@@ -660,78 +637,7 @@ def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
 
     return new_command
 
-
-
-def LF2placeholders(LF, dReplacement):
-
-    
-    """
-    This function is used to generate placeholders on 2nd and 3rd steps. The difference is that here
-    instead of original text of communication in English we have logical form (LF) that is result
-    of semantic parsing on the 1st step.
-
-    This is example of such LF after 1st step for communication
-    (A) "Southwest 578 cleared to Atlanta via radar vectors then ...":
-
-    ```
-    _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)); _CLEARED_(_CLEARED_(*cleared*),_TO_(*to*),_PLACE_(*Atlanta*)); _VIA_(*via*); _RADAR_(*radar vectors*); _THEN_(_THEN_(*then*),_ROUTE_(_ROUTE_(*V222*),_TO_(*to*),_FIX_(*CRG*))); _THEN_(_THEN_(*then*),_DIRECTION_(*direct*)); _ALTITUDECHANGE_(_ALTITUDECHANGE_(*Climb and maintain*),_INTNUMBER_(*5000*)); _EXPECT_(_EXPECT_(*expect*),_INTNUMBER_(*35000*)); _TIME_(_WORDNUMBER_(*ten*),_TIMEMINSEC_(*minutes*)); _AFTER_(_AFTER_(*after*),_DEPARTURE_(*departure*)); _DEPARTURE_(_DEPARTURE_(*Departure*),_FREQUENCY_(_FREQUENCY_(*frequency*),_REALNUMBER_(*124.85*))); _SQUAWK_(_SQUAWK_(*squawk*),_INTNUMBER_(*5263*));
-    ```
-    In this case we can split the LF by ';' into sequence of functions: CALLSIGN, CLEARED, ...
-    We use names of these functions (category names) to generate placeholders : callsign1, cleared1, ...
-    As replacement for placeholder callsign1 we use related function from LF - _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)).
-
-    In the end of step 2 we have new LF and use it to generate new sequence of placeholders and new LF
-    in the step1. 
-
-
-    """
-
-
-    new_command = ''
-    count = 0
-
-    dCategoryMaxPlaceholderNumber = {}
-
-    for LF_item in LF.split(';'):
-        LF_item = LF_item.strip(' ')
-
-        if LF_item == '':
-            continue
-
-        if LF_item.lower() == LF_item:
-            LF_item = '_context_('+LF_item+')'
-
-        a_items = LF_item.split('_(')
-        category = ''
-
-        for item in a_items:
-            
-
-            if item != item.lower() or item.find('context') >= 0:
-                category = item.strip('_').lower()
-                break
-        
-        if category == '':
-            continue
-
-        if category not in dCategoryMaxPlaceholderNumber:
-            dCategoryMaxPlaceholderNumber[category] = 1
-        else:
-            dCategoryMaxPlaceholderNumber[category] = int(dCategoryMaxPlaceholderNumber[category]) + 1
-        
-        categoryID = category+str(dCategoryMaxPlaceholderNumber[category])
-
-        new_command = new_command + categoryID+' '
-        
-        count += 1
-
-        dReplacement[categoryID] = '<'*count+LF_item+'>'*count
-
-    return new_command
-
-
 # replace phrases that are outside of the lexicon with special placeholders X1, .... ---------------------
-
 def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
     """
     Given a string of placeholders (command) this is possible that it may stil contain normal 
@@ -830,9 +736,79 @@ def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
          
     return new_command
 
+# do the same as in text2placeholders but use LF instead of text command - we need this 
+# to make steps 2 and 3
+def LF2placeholders(LF, dReplacement):
 
-# Main function to parse command ------------------------------------
+    
+    """
+    This function is used to generate placeholders on 2nd and 3rd steps. The difference is that here
+    instead of original text of communication in English we have logical form (LF) that is result
+    of semantic parsing on the 1st step.
 
+    This is example of such LF after 1st step for communication
+    (A) "Southwest 578 cleared to Atlanta via radar vectors then ...":
+
+    ```
+    _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)); _CLEARED_(_CLEARED_(*cleared*),_TO_(*to*),_PLACE_(*Atlanta*)); _VIA_(*via*); _RADAR_(*radar vectors*); _THEN_(_THEN_(*then*),_ROUTE_(_ROUTE_(*V222*),_TO_(*to*),_FIX_(*CRG*))); _THEN_(_THEN_(*then*),_DIRECTION_(*direct*)); _ALTITUDECHANGE_(_ALTITUDECHANGE_(*Climb and maintain*),_INTNUMBER_(*5000*)); _EXPECT_(_EXPECT_(*expect*),_INTNUMBER_(*35000*)); _TIME_(_WORDNUMBER_(*ten*),_TIMEMINSEC_(*minutes*)); _AFTER_(_AFTER_(*after*),_DEPARTURE_(*departure*)); _DEPARTURE_(_DEPARTURE_(*Departure*),_FREQUENCY_(_FREQUENCY_(*frequency*),_REALNUMBER_(*124.85*))); _SQUAWK_(_SQUAWK_(*squawk*),_INTNUMBER_(*5263*));
+    ```
+    In this case we can split the LF by ';' into sequence of functions: CALLSIGN, CLEARED, ...
+    We use names of these functions (category names) to generate placeholders : callsign1, cleared1, ...
+    As replacement for placeholder callsign1 we use related function from LF - _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)).
+
+    In the end of step 2 we have new LF and use it to generate new sequence of placeholders and new LF
+    in the step1. 
+
+
+    """
+
+
+    new_command = ''
+    count = 0
+
+    dCategoryMaxPlaceholderNumber = {}
+
+    for LF_item in LF.split(';'):
+        LF_item = LF_item.strip(' ')
+
+        if LF_item == '':
+            continue
+
+        if LF_item.lower() == LF_item:
+            LF_item = '_context_('+LF_item+')'
+
+        a_items = LF_item.split('_(')
+        category = ''
+
+        for item in a_items:
+            
+
+            if item != item.lower() or item.find('context') >= 0:
+                category = item.strip('_').lower()
+                break
+        
+        if category == '':
+            continue
+
+        if category not in dCategoryMaxPlaceholderNumber:
+            dCategoryMaxPlaceholderNumber[category] = 1
+        else:
+            dCategoryMaxPlaceholderNumber[category] = int(dCategoryMaxPlaceholderNumber[category]) + 1
+        
+        categoryID = category+str(dCategoryMaxPlaceholderNumber[category])
+
+        new_command = new_command + categoryID+' '
+        
+        count += 1
+
+        dReplacement[categoryID] = '<'*count+LF_item+'>'*count
+
+    return new_command
+
+
+#Parsing ------------------------------------
+
+#parse a semment of a command
 def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2):
         """
         This function returns logical form (LF) given a link to parser and segment of a command
@@ -895,117 +871,6 @@ def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2
             
             
             return LF_replacement
-
-def command_normalization (command):
-    pattern = r"\b(re\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"re", command, count=0)
-
-    pattern = r"\b[a-z](\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"=", command, count=0)
-
-
-    pattern = r"\b\d+(\-)\d\b"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"", command, count=0)
-
-    
-    command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
-    command = command.replace(",","")
-    command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
-    command = command.replace(r"\s+"," ").replace("+","")
-    command = command.strip('.,?!\n”"')
-
-    return command
-
-def clean_LF(LF):
-    """
-    In some cases logical form that we generate in parsing process
-    may be too complicated and we may have possibility to simplify it.
-    """
-
-
-    # delete unneeded '*' 
-    LF = LF.replace('*_','_').replace(')*',')')
-
-    # delete simple duplicated functions
-    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
-            
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            LF = LF.replace(to_replace, replace_by)
-
-    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
-            
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            LF = LF.replace(to_replace, replace_by)
-
-    # delete unneeded duplicated functions
-    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
-            
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            
-            #check if replace_by is good in terms of brackets
-            ok = True
-            b_open = 0
-            b_close = 0
-            min_equal = 0
-
-            a = list(replace_by)
-            for s in a:
-                if s == '(':
-                    b_open += 1
-                if s == ')':
-                    b_close += 1
-                if b_open < b_close:
-                    ok = False
-                    break
-                if (b_open == b_close and
-                    min_equal == 0 and
-                    b_open > 0
-                ):
-                    min_equal = b_open
-
-                if (min_equal > 0 and
-                    (min_equal < b_open or min_equal < b_close)
-                ):
-                    ok = False
-                    break
-            if b_open != b_close:
-                ok = False
-            
-            if ok == True:
-                LF = LF.replace(to_replace, replace_by)
-
-    return LF
 
 def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, step):
 
@@ -1094,710 +959,87 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
     print('\nSEMANTICS step '+str(step)+':\t'+LF_final)
     return LF_final
 
+#Cleaning and uniques of keys in JSON-------------------------------------
 
-#############################################################
-#1 Read regular expressions from 'regex.txt' file to collect some stats
-#   about defined categories 
-#############################################################
-regex_file_name = 'regex.txt'
-
-dRegexCategory = {} 
-dRegexComplexity = {}
-dCategoryFrequency = {} 
-dPlaceholderCategory = {} 
-dCategoryPlaceholder = {}
-dPlaceholderNumber = {}
+def clean_LF(LF):
+    """
+    In some cases logical form that we generate in parsing process
+    may be too complicated and we may have possibility to simplify it.
+    """
 
 
-read_regex(regex_file_name, dRegexCategory, dRegexComplexity, 
-        dCategoryFrequency, dPlaceholderCategory, dCategoryPlaceholder,
-        dPlaceholderNumber)
+    # delete unneeded '*' 
+    LF = LF.replace('*_','_').replace(')*',')')
 
+    # delete simple duplicated functions
+    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            LF = LF.replace(to_replace, replace_by)
 
+    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
+    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            LF = LF.replace(to_replace, replace_by)
 
+    # delete unneeded duplicated functions
+    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
+    p = re.compile(pattern, re.I)
+    iterator = p.finditer(LF)
+    for match in iterator:
+        if match:
+            
+            to_replace = str(match.group())
+            replace_by = str(match.group(2))
+            
+            #check if replace_by is good in terms of brackets
+            ok = True
+            b_open = 0
+            b_close = 0
+            min_equal = 0
 
-############################################################
-#2 Read lexicon rules and prepositions ---------------------
-############################################################
-lex_file_name = 'lexicon_complex.txt'
-a_prepositions = ['to','the','is','at','be','being','for','has','of','on','through','will','with','via','in','your',
-                  'underneath','this','that','it','as','over','into','an','are','if','out','then','up','now','or','my','when','have']
-
-
-dCategoryFilter = {}
-"""
-When generating lexicon we may control which rules from 'lex_complex.txt' to use.
-If dCategoryFilter is empty than we use all rules. If it is not empty then we use only rules
-where syntactic category contains '/X' where X is a key from dCategoryFilter. 
-"""
-lex = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
-
-dCategoryFilter = {
-    'after':1,
-    'around':1,
-    'as':1,
-    'at':1,
-    'before':1,
-    'by':1,
-    'due':1,
-    'if':1,
-    'in':1,
-    'is':1,
-    'for':1,
-    'from':1,
-    'with':1,
-    'of':1,
-    'off':1,
-    'out':1,
-    'on':1,
-    'then':1,
-    'through':1,
-    'to':1,
-    'until':1,
-    'upto':1,
-    'via':1,
-    'when':1,
-    'while':1,
-    'will':1,
-    'approach':1,
-    'approved':1,
-    'directionmagnetic':1,
-    'fix':1,
-    'status':1,
-    'time':1,
-    'trafficpattern':1,
-    'trafficcircuit':1,
-    'restriction':1,
-    'confirmation':1,
-    'confirmed':1,
-    'emergency':1,
-    'heading':1,
-    'database':1,
-    'phoneticalphabet':1,
-    'goaround':1,
-    'cancelled':1,
-    'report':1,
-    
-}
-lex_step2_3 = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_name, dCategoryFilter)
-
-
-
-#####################################################################
-#3 Read test communications
-#####################################################################
-
-
-communications = 'test_communication.txt'
-a_commands = read_test_communications(communications)
-
-
-
-#######################################################
-# all words from lexicon
-#######################################################
-
-dLexWords = {} 
-lex_words(lex, dLexWords)
-
-
-
-
-#######################################################
-#5 CCG parser
-#######################################################
-
-
-parser = chart.CCGChartParser(lex, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-parser_step2_3 = chart.CCGChartParser(lex_step2_3, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-
-#########################################################
-#6  Output files
-#########################################################
-
-results = 'RESULTS.tsv'
-f_out = open(results, 'w', errors='ignore')
-f_out.write('#\tCommunication\tSemantics\n')
-
-
-#################################################################
-# Main loop
-#################################################################
-
-
-start_time = time.time()
-
-count = 0
-for command in a_commands:
-    
-    count += 1
-    original_command = command
-    
-    
-
-    print('\n'+str(count)+'====================================================================')
-    print('COMMAND:\n'+str(original_command))
-    
-    command = command_normalization(command)
-
-    ########################################################
-    # STEP 1
-    ########################################################
-
-    
-    LF_final_step1 = parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 1)
-    LF_final_step2 = parse_command(parser_step2_3, LF_final_step1, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 2)
-    LF_final_step3 = parse_command(parser_step2_3, LF_final_step2, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 3)
-    
-
-    '''
-    ########################################################
-    # STEP 2
-    ########################################################
-
-    dReplacement_1_step2 = {}
-
-
-    new_command_1_step2 = LF2placeholders(LF_final, dReplacement_1_step2)
-    #print('new_command_1_step2\t'+new_command_1_step2)
-    print('dReplacement_1_step2\n'+str(dReplacement_1_step2))
-    
-    command_new = new_command_1_step2
-
-    dReplacement_2_step2 = {}
-    
-    placeholders = command_new
-    
-    
-    print('\nPLACEHOLDERS step 2\t'+command_new)
-
-    # parse command with expansion -------------------------
-
-    maxExpansion = 1
-    
-
-    LF_replacement_step2 = parse_segment(parser_step2_3, command_new, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
-    
-    
-    
-    if LF_replacement_step2 != '':
-
-        #print('???'+LF_replacement_step2)
-
-        # delete _context_ function if its argument is a function
-        pattern = r"\b_context_\(_(.+)\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step2)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                replace_by = '_'+str(match.group(1))
-                LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-                
-        
-        # delete unneeded '*' 
-        LF_replacement_step2 = LF_replacement_step2.replace('*_','_').replace(')*',')')
-
-        # delete simple duplicated functions
-        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step2)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-        # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-        pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step2)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-
-
-
-        # delete unneeded duplicated functions
-        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step2)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                #check if replace_by is good in terms of brackets
-                ok = True
-                b_open = 0
-                b_close = 0
-                min_equal = 0
-
-                a = list(replace_by)
-                #print(a)
-                for s in a:
-                    if s == '(':
-                        b_open += 1
-                    if s == ')':
-                        b_close += 1
-                    if b_open < b_close:
-                        ok = False
-                        break
-                    if (b_open == b_close and
-                        min_equal == 0 and
-                        b_open > 0
-                    ):
-                        min_equal = b_open
-
-                    if (min_equal > 0 and
-                        (min_equal < b_open or min_equal < b_close)
-                    ):
-                        ok = False
-                        break
-                if b_open != b_close:
+            a = list(replace_by)
+            for s in a:
+                if s == '(':
+                    b_open += 1
+                if s == ')':
+                    b_close += 1
+                if b_open < b_close:
                     ok = False
-                
-                #print(str(ok))
-
-                if ok == True:
-                    LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-
-        
-        LF_final_step2 = LF_final_step2 +LF_replacement_step2+'\n '
-
-        
-
-
-    else:
-        # we need to split the sentence into segments
-
-        max_segment_length = 7
-
-        while len(command_new) > 0:
-            command_new_words = command_new.split(' ')
-            
-            for j in range(len(command_new_words) - 1, -1, -1):
-
-                if j > max_segment_length:
-                    continue
-                segment =  ' '.join(command_new_words[0:j+1])
-                
-                LF_replacement_step2 = parse_segment(parser_step2_3, segment, maxExpansion, dReplacement_1_step2, dReplacement_2_step2)
-                
-                
-                if LF_replacement_step2 != '':
-                    
-                    # delete _context_ function if its argument is a function
-                    pattern = r"\b_context_\(_(.+)\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step2)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            replace_by = '_'+str(match.group(1))
-                            LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-                         
-                    
-                    # delete unneeded '*' 
-                    LF_replacement_step2 = LF_replacement_step2.replace('*_','_').replace(')*',')')
-
-                    # delete simple duplicated functions
-                    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step2)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-                    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-                    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step2)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-
-
-                    # delete unneeded duplicated functions
-                    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step2)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            #check if replace_by is good in terms of brackets
-                            ok = True
-                            b_open = 0
-                            b_close = 0
-                            min_equal = 0
-
-                            a = list(replace_by)
-                            #print(a)
-                            for s in a:
-                                if s == '(':
-                                    b_open += 1
-                                if s == ')':
-                                    b_close += 1
-                                if b_open < b_close:
-                                    ok = False
-                                    break
-                                if (b_open == b_close and
-                                    min_equal == 0 and
-                                    b_open > 0
-                                ):
-                                    min_equal = b_open
-
-                                if (min_equal > 0 and
-                                    (min_equal < b_open or min_equal < b_close)
-                                ):
-                                    ok = False
-                                    break
-                            if b_open != b_close:
-                                ok = False
-                            
-                            #print(str(ok))
-
-                            if ok == True:
-                                LF_replacement_step2 = LF_replacement_step2.replace(to_replace, replace_by)
-
-
-                            
-                    
-
-
-            
-                    LF_final_step2 = LF_final_step2 +LF_replacement_step2+'; '
-                    command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
                     break
-                
-                if LF_replacement_step2 == '' and j == 0:
-                    command_new = ''
-                
-                
-            
-    print('\nSEMANTICS step 2:\t'+LF_final_step2)
+                if (b_open == b_close and
+                    min_equal == 0 and
+                    b_open > 0
+                ):
+                    min_equal = b_open
 
-
-    #### 3 ???
-
-    ########################################################
-    # STEP 3
-    ########################################################
-
-    dReplacement_1_step3 = {}
-
-
-    new_command_1_step3 = LF2placeholders(LF_final_step2, dReplacement_1_step3)
-    #print('new_command_1_step3\t'+new_command_1_step3)
-    print('dReplacement_1_step3\n'+str(dReplacement_1_step3))
-    
-    command_new = new_command_1_step3
-
-    dReplacement_2_step3 = {}
-    
-    placeholders = command_new
-    
-    
-    print('\nPLACEHOLDERS step 3\t'+command_new)
-
-    # parse command with expansion -------------------------
-
-    maxExpansion = 1
-    
-
-    LF_replacement_step3 = parse_segment(parser_step2_3, command_new, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
-    
-    
-    
-    if LF_replacement_step3 != '':
-
-        #print('???'+LF_replacement_step3)
-
-        # delete _context_ function if its argument is a function
-        pattern = r"\b_context_\(_(.+)\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step3)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                replace_by = '_'+str(match.group(1))
-                LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-                
-        
-        # delete unneeded '*' 
-        LF_replacement_step3 = LF_replacement_step3.replace('*_','_').replace(')*',')')
-
-        # delete simple duplicated functions
-        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step3)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-        # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-        pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step3)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-
-
-
-        # delete unneeded duplicated functions
-        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(LF_replacement_step3)
-        for match in iterator:
-            if match:
-                
-                to_replace = str(match.group())
-                #print('to_replace:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('replace_by:::'+replace_by)
-                
-                #check if replace_by is good in terms of brackets
-                ok = True
-                b_open = 0
-                b_close = 0
-                min_equal = 0
-
-                a = list(replace_by)
-                #print(a)
-                for s in a:
-                    if s == '(':
-                        b_open += 1
-                    if s == ')':
-                        b_close += 1
-                    if b_open < b_close:
-                        ok = False
-                        break
-                    if (b_open == b_close and
-                        min_equal == 0 and
-                        b_open > 0
-                    ):
-                        min_equal = b_open
-
-                    if (min_equal > 0 and
-                        (min_equal < b_open or min_equal < b_close)
-                    ):
-                        ok = False
-                        break
-                if b_open != b_close:
+                if (min_equal > 0 and
+                    (min_equal < b_open or min_equal < b_close)
+                ):
                     ok = False
-                
-                #print(str(ok))
-
-                if ok == True:
-                    LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-
-        
-        LF_final_step3 = LF_final_step3 +LF_replacement_step3+'\n '
-        
-
-        
-
-
-    else:
-        # we need to split the sentence into segments
-
-        max_segment_length = 7
-
-        while len(command_new) > 0:
-            command_new_words = command_new.split(' ')
-            
-            for j in range(len(command_new_words) - 1, -1, -1):
-
-                if j > max_segment_length:
-                    continue
-                segment =  ' '.join(command_new_words[0:j+1])
-                
-                LF_replacement_step3 = parse_segment(parser_step2_3, segment, maxExpansion, dReplacement_1_step3, dReplacement_2_step3)
-                
-                
-                if LF_replacement_step3 != '':
-                    
-                    # delete _context_ function if its argument is a function
-                    pattern = r"\b_context_\(_(.+)\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step3)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            replace_by = '_'+str(match.group(1))
-                            LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-                         
-                    
-                    # delete unneeded '*' 
-                    LF_replacement_step3 = LF_replacement_step3.replace('*_','_').replace(')*',')')
-
-                    # delete simple duplicated functions
-                    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step3)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-                    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-                    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step3)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-
-
-                    # delete unneeded duplicated functions
-                    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(LF_replacement_step3)
-                    for match in iterator:
-                        if match:
-                            
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(2))
-                            #print('replace_by:::'+replace_by)
-                            
-                            #check if replace_by is good in terms of brackets
-                            ok = True
-                            b_open = 0
-                            b_close = 0
-                            min_equal = 0
-
-                            a = list(replace_by)
-                            #print(a)
-                            for s in a:
-                                if s == '(':
-                                    b_open += 1
-                                if s == ')':
-                                    b_close += 1
-                                if b_open < b_close:
-                                    ok = False
-                                    break
-                                if (b_open == b_close and
-                                    min_equal == 0 and
-                                    b_open > 0
-                                ):
-                                    min_equal = b_open
-
-                                if (min_equal > 0 and
-                                    (min_equal < b_open or min_equal < b_close)
-                                ):
-                                    ok = False
-                                    break
-                            if b_open != b_close:
-                                ok = False
-                            
-                            #print(str(ok))
-
-                            if ok == True:
-                                LF_replacement_step3 = LF_replacement_step3.replace(to_replace, replace_by)
-
-
-                            
-                    
-
-
-            
-                    LF_final_step3 = LF_final_step3 +LF_replacement_step3+'; '
-                    command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
                     break
-                
-                if LF_replacement_step3 == '' and j == 0:
-                    command_new = ''
-                
-    LF_final_step3 = LF_final_step3.replace('STOP_(','_(')            
-    LF_final_step3 = LF_final_step3.replace('\n*','')            
-           
-    print('\nSEMANTICS step 3:\t'+LF_final_step3)
-    '''
-    
-    
+            if b_open != b_close:
+                ok = False
+            
+            if ok == True:
+                LF = LF.replace(to_replace, replace_by)
 
+    return LF
 
-    #################################################################
-    # Make json results
-    #################################################################
+def clean_JSON(sJSON):
 
-    #LF_final_step3
-
-    print('\n\nJSON=============\n')
-
-    sJSON = '{'+LF_final_step3.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
-
-    #clean the sJSON
-
+    # delete '{' and '}' around '"..."'
     while True:
         sJSON_new = sJSON
         pattern = r"\{\"[\w\d\s\.\'\-]+\"\}" 
@@ -1816,9 +1058,11 @@ for command in a_commands:
         else:
             sJSON = sJSON_new
 
+    # delete ',' and '\s' before '}'
     while True:
         sJSON_new = sJSON
-        pattern = r"\,\s+\}" 
+        #pattern = r"\,\s+\}" 
+        pattern = r"[\,\s]+\}" 
         p = re.compile(pattern, re.I)
         iterator = p.finditer(sJSON)
         for match in iterator:
@@ -1833,27 +1077,7 @@ for command in a_commands:
             break
         else:
             sJSON = sJSON_new
-
-    while True:
-        sJSON_new = sJSON
-        pattern = r"\s+\}" 
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-                
-                to_replace = match.group()
-                #print("===to_replace<<<"+to_replace+">>>")
-                replace_by = '}'
-                
-                sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
-
-        if sJSON_new == sJSON:
-            break
-        else:
-            sJSON = sJSON_new
-
-
+    
     # delete simple duplicated functions: "xyz":{"xyz":{...}} -> "xyz":{...}
     while True:
         sJSON_new = sJSON
@@ -1881,1159 +1105,51 @@ for command in a_commands:
     ########################################################################
     # merge 'the: "the":{"xyz":{...}} -> "the_xyz":{...}
 
-    while True:
-
-        pattern = r"\"the\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
+    for word in ['the','have','your',
+                 'are','over','be',
+                 'an']:
+        for brackets in ['0','1','2','3']:
+            while True:
                 
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
+                pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                p = re.compile(pattern, re.I)
+                iterator = p.finditer(sJSON)
+                for match in iterator:
+                    if match:
                     
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"the '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
+                        to_replace = str(match.group())
+                        replace_by = str(match.group(1))
+                        
+                        n_open = 0
+                        n_close = 0
+                        OK = True
 
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
+                        for s in replace_by:
+                            
+                            if s == '{':
+                                n_open += 1
+                            if s == '}':
+                                n_close += 1
+                            if n_close > n_open:
+                                OK = False
+                                break
+                        if n_open != n_close:
+                            OK = False   
+                        
+                        if OK:
+                            replace_by = '\"'+word+' '+replace_by[1:]
+                            sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
 
-        pattern = r"\"the\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
+                if sJSON_new != sJSON:
+                    sJSON = sJSON_new
                     
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"the '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"the\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"the '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"the\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"the '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-    ############################################################
-    # merge 'have: "have":{"xyz":{...}} -> "have_xyz":{...}
-
-    while True:
-
-        pattern = r"\"have\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"have '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"have\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"have '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"have\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"have '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"have\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"have '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-############################################################
-    # merge 'your: "your":{"xyz":{...}} -> "your xyz":{...}
-
-    while True:
-
-        pattern = r"\"your\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"your '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"your\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"your '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"your\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"your '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"your\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"your '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-############################################################
-    # merge 'are: "are":{"xyz":{...}} -> "are xyz":{...}
-
-    while True:
-
-        pattern = r"\"are\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"are '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"are\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"are '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"are\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"are '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"are\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"are '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-
-############################################################
-    # merge 'over: "over":{"xyz":{...}} -> "over xyz":{...}
-
-    while True:
-
-        pattern = r"\"over\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"over '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"over\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"over '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"over\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"over '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"over\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"over '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-
-############################################################
-    # merge 'be: "be":{"xyz":{...}} -> "be xyz":{...}
-
-    while True:
-
-        pattern = r"\"be\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"be '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"be\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"be '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"be\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"be '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"be\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"be '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-
-############################################################
-    # merge 'an: "an":{"xyz":{...}} -> "an xyz":{...}
-
-    while True:
-
-        pattern = r"\"an\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{0})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"an '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"an\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{1})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"an '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"an\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{2})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"an '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        pattern = r"\"an\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{3})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(1))
-                #print('BBB:::'+replace_by)
-                
-                
-                n_open = 0
-                n_close = 0
-                OK = True
-
-                for s in replace_by:
-                    
-                    if s == '{':
-                        n_open += 1
-                    if s == '}':
-                        n_close += 1
-                    if n_close > n_open:
-                        OK = False
-                        break
-                if n_open != n_close:
-                    OK = False   
-                
-                if OK:
-                    replace_by = '\"an '+replace_by[1:]
-                    #print('CCC:::'+to_replace)
-                
-                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-        
-        if sJSON_new != sJSON:
-            sJSON = sJSON_new
-            
-
-        
-
-        break
-
-
-#update duplicate keys =============================
+                break
+   
+    return sJSON
+
+def make_unique_keys(sJSON):
 
     dKeys = {}
-
     pattern = r"\"[a-z\s]+\":" 
     p = re.compile(pattern, re.I)
     iterator = p.finditer(sJSON)
@@ -3045,7 +1161,6 @@ for command in a_commands:
             prefix = '"'
             if to_replace_key.startswith(prefix) == False:
                 to_replace_key = '\"'+to_replace_key
-            #print('XXX:::'+to_replace_key+'>')
             if to_replace_key not in dKeys:
                 dKeys[to_replace_key] = 0
             id = int(dKeys[to_replace_key]) + 1
@@ -3054,7 +1169,114 @@ for command in a_commands:
             
         sJSON = re.sub(to_replace,replace_by, sJSON, count=1)
 
+    return sJSON
+   
+#---------------------------------------
+# App ----------------------------------------------
+#---------------------------------------------------
 
+#1 Read regular expressions from 'regex.txt' file to collect some stats
+#   about defined categories 
+
+script_path = Path(__file__).parent
+regex_file_path = script_path / 'data' / 'regex.txt'
+
+dRegexCategory = {} 
+dRegexComplexity = {}
+dCategoryFrequency = {} 
+dPlaceholderCategory = {} 
+dCategoryPlaceholder = {}
+dPlaceholderNumber = {}
+
+
+read_regex(regex_file_path, dRegexCategory, dRegexComplexity, 
+        dCategoryFrequency, dPlaceholderCategory, dCategoryPlaceholder,
+        dPlaceholderNumber)
+
+
+
+#2 Read lexicon rules, prepositions and category filters---------------------
+
+
+lex_file_path = script_path / 'data' / 'lexicon_complex.txt'
+prepositions_file_path = script_path / 'data' / 'prepositions.txt'
+category_filters_file_path = script_path / 'data' / 'category_filters.txt'
+
+a_prepositions = read_prepositions(prepositions_file_path)
+
+"""
+When generating lexicon we may control which rules from 'lex_complex.txt' to use.
+If dCategoryFilter is empty than we use all rules. If it is not empty then we use only rules
+where syntactic category contains '/X' where X is a key from dCategoryFilter. 
+"""
+
+
+dCategoryFilter = {}
+lex = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_path, dCategoryFilter)
+
+dCategoryFilter = {}
+read_category_filters(category_filters_file_path, dCategoryFilter)
+lex_step2_3 = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_path, dCategoryFilter)
+
+
+
+#3 Read test communications
+
+communication_file_path = script_path / 'test_communication.txt'
+a_commands = read_test_communications(communication_file_path)
+
+
+#4 all words from lexicon
+dLexWords = {} 
+lex_words(lex, dLexWords)
+
+
+#5 CCG parser
+
+parser = chart.CCGChartParser(lex, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+parser_step2_3 = chart.CCGChartParser(lex_step2_3, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+
+
+#6  Output file
+
+results = 'RESULTS.tsv'
+f_out = open(results, 'w', errors='ignore')
+f_out.write('#\tCommunication\tSemantics\n')
+
+
+
+# Main loop------------------------------------------------------
+
+count = 0
+for command in a_commands:
+    
+    count += 1
+    original_command = command
+    
+    print('\n'+str(count)+'====================================================================')
+    print('COMMAND:\n'+str(original_command))
+    
+    command = command_normalization(command)
+    
+    
+    LF_final_step1 = parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 1)
+    LF_final_step2 = parse_command(parser_step2_3, LF_final_step1, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 2)
+    LF_final_step3 = parse_command(parser_step2_3, LF_final_step2, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 3)
+    
+
+    # Make json results
+
+    print('\n\nJSON=============\n')
+
+    sJSON = '{'+LF_final_step3.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
+
+    #clean the sJSON
+
+    sJSON = clean_JSON(sJSON)
+
+    # make keys unique in sJSON
+    sJSON = make_unique_keys(sJSON)
+    
     print(str(sJSON)+'\n\n')
 
     f_out.write(str(count)+'\t'+original_command+'\t'+str(sJSON)+'\n')
