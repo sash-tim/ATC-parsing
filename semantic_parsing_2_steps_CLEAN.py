@@ -8,189 +8,11 @@ from nltk.ccg import chart, lexicon
 from pathlib import Path
 import re
 
-
-
-#Regex-------------------------------------------------------
-
-# Read regular expressions from a file and collect some stats
-# about defined categories
-
-def read_regex(f_name, dRegexCategory, dRegexComplexity, 
-                    dCategoryFrequency, dPlaceholderCategory, dCategoryPlaceholder, dPlaceholderNumber):
-    """
-    ## Regular expressions are used to map words/phrases for ATC communications into semantic 
-    categories
-
-    For flexibility we store data about word/phrases -> categories mapping in a text file ('regex.txt). 
-    Example. Here we define set of strings that may be mapped into CALLSIGN category.
-
-    ```
-    #CALLSIGN
-
-    r"\bSWA\d+\b"
-    r"\bAAL\d+\b"
-    r"\bUAL\d+\b"
-    r"\bDAL\d+\b"
-    r"\bcallsign\b"
-    r"\bheavy\s+777\b"
-    r"\bn\d+[a-z]*\b"
-    r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
-    r"\b[a-z]\-[a-z]+"
-    r"\b(?!\d{1,2}[lr])\d+[a-z]{1,3}\b"
-    
-    ```
-
-    This function reads regex.txt file and returns some dictionaries with info about semantic 
-    categories. 
-    """
-    
-    f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
-
-    """
-    *dRegexCategory* dictionary maps all regex from 'regex.txt into categories. Hence we can't have two
-    or more identical regex in different categories - be careful adding new data into regex.txt file. 
-    """
-
-    category = ''
-    regex = ''
-    
-    for record in f_in:
-        
-        if record.startswith('#'):
-            category = record.strip(' #\n').upper()
-        else:
-            regex = record.strip(' \n').replace('r"','').replace('"','').lower()
-            if regex != '':
-                dRegexCategory[regex] = category
-
-    f_in.close()
-
-    """
-    *dRegexComplexity* dictionary stores complexity of each regex from 'regex.txt' file.
-    
-    The problem is that same word/phrase may be part of different regex applicable to a given ATC
-    communication. To determin the order we extract categories from a communication we starts with 
-    most complex regex applicable to the communication (greedy approach).
-
-    NOTE - we ignore here (?:...), (?!...) and (?<!...) in regex while calculating its complexity.
-    
-    *dCategoryFrequency* dictionary store information about all unique categories defind in 'regex.txt'.
-    While we store info about number of regex mapped in give category we don't use this info yet.
-    """
-    
-    for regex in dRegexCategory:
-
-        clean_regex = re.sub(r'\(\?.*?\)', '', regex)
-
-          
-        a_regex = clean_regex.split('\\')
-        dRegexComplexity[regex] = len(a_regex)
-
-    # Frequency of each category
-    
-    for item in dRegexCategory:
-        category = dRegexCategory[item]
-        if category not in dCategoryFrequency:
-            dCategoryFrequency[category] = 0
-        dCategoryFrequency[category] = dCategoryFrequency[category] + 1
-
-    """
-    *dPlaceHolderNumber*
-    Placeholders for all categories - we use placeholders instead of real word/phrases 
-    extracted from communication using a regex. For example both 'roger'and 'wilco' will be replaced
-    by placeholed 'acknowledgeX' where X is an integer from 1..N where N is total number of occurences of words 'roger' and 'wilco'
-    in the communication.
-
-    This gives us possibility to significantly reduce size of the lexicon and hence latency.
-
-    We don't know in advance how many placeholders we will need to use for any given 
-    communicationmay for any new communication but we need to fix maximum number of such place holder
-    in advance separately for each category. 
-    
-    We can do this using *dPlaceholderNumber* dictionary -- here we seе max number of placeholders for
-    some categories and use small default value for all other categories. You may update these 
-    settings. 
-
-
-    """
-    
-    
-    
-    dPlaceholderNumber["CLOUDS"] = 6
-    dPlaceholderNumber["FEATURE"] = 8
-    dPlaceholderNumber["INTNUMBER"] = 9
-    dPlaceholderNumber["PHONETICALPHABET"] = 6
-    dPlaceholderNumber["REQUESTINSTRUCTION"] = 8
-    dPlaceholderNumber["RUNWAY"] = 6
-    dPlaceholderNumber["SIDE"] = 9
-    dPlaceholderNumber["STATUS"] = 8
-    dPlaceholderNumber["TO"] = 6
-    dPlaceholderNumber["WORDNUMBER"] = 30
-    
-    dPlaceholderNumber["OTHER"] = 5 #default value
-
-    """
-    *dPlaceholderCategory* store categories of all placeholed that potentially may be extracted
-    from any ATC communication. Please be careful - if a communication need to have more placeholder for e category
-    that is give by *dPlaceHolderNumber* then correct parseing of the communication is impossible. 
-
-    If you noticed such case in your data then please updated this function there max number of place holders
-    is hardcoded. 
-    """
-
-    for category in dCategoryFrequency:
-        dCategoryPlaceholder[category] = {}
-        if category in dPlaceholderNumber:
-            placeholder_number = dPlaceholderNumber[category] 
-        else:
-            placeholder_number = dPlaceholderNumber["OTHER"]
-
-        for i in range(1, placeholder_number + 1):
-            placeholder = category.lower()+str(i)
-            dPlaceholderCategory[placeholder] = category
-            dCategoryPlaceholder[category][placeholder] = 1
-
-#Prepositions -------------------------------------------
-
-def read_prepositions(f_name):
-    """
-    """
-    
-    f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
-
-    a_propositions = []
-    for record in f_in:
-        
-        if record.strip(' #\n') == '':
-            continue
-        else:
-            a_propositions.append(record.strip(' #\n').lower())
-
-    return a_propositions
-    f_in.close()
-
-#Category filter ----------------------------------
-
-def read_category_filters(f_name, dCategoryFilter):
-    """
-    """
-    
-    f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
-
-    for record in f_in:
-        
-        if record.strip(' \n') == '':
-            continue
-        else:
-            dCategoryFilter[record.strip(' \n').upper()] = 1
-
-    f_in.close()
     
 
-#Lexicon---------------------------------------------------
 
 # make lexicon
-def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_name, dCategoryFilter):
+def make_lexicon(dData):
 
     """
     This fuction returns lexicon that is used by parser to parse ATC communications.
@@ -234,11 +56,209 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
 
     """
 
-    #print('dCategoryFilter\n\n'+str(dCategoryFilter))
-    
+    # Paths to DATA
+
+    script_path = Path(__file__).parent
+    regex_file_path = script_path / 'data' / 'regex.txt'
+    lex_complex_file_path = script_path / 'data' / 'lexicon_complex.txt'
+    prepositions_file_path = script_path / 'data' / 'prepositions.txt'
+    category_filters_file_path = script_path / 'data' / 'category_filters.txt'
+
+
+    #Regex
+    def read_regex(regex_file_path):
+        """
+        ## Regular expressions are used to map words/phrases for ATC communications into semantic 
+        categories
+
+        For flexibility we store data about word/phrases -> categories mapping in a text file ('regex.txt). 
+        Example. Here we define set of strings that may be mapped into CALLSIGN category.
+
+        ```
+        #CALLSIGN
+
+        r"\bSWA\d+\b"
+        r"\bAAL\d+\b"
+        r"\bUAL\d+\b"
+        r"\bDAL\d+\b"
+        r"\bcallsign\b"
+        r"\bheavy\s+777\b"
+        r"\bn\d+[a-z]*\b"
+        r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
+        r"\b[a-z]\-[a-z]+"
+        r"\b(?!\d{1,2}[lr])\d+[a-z]{1,3}\b"
+        
+        ```
+
+        This function reads regex.txt file and returns some dictionaries with info about semantic 
+        categories. 
+        """
+        
+        f_in = open(regex_file_path ,encoding = 'utf-8', errors = 'ignore')
+
+        """
+        *dRegexCategory* dictionary maps all regex from 'regex.txt into categories. Hence we can't have two
+        or more identical regex in different categories - be careful adding new data into regex.txt file. 
+        """
+        dRegexCategory = {}
+        category = ''
+        regex = ''
+        
+        for record in f_in:
+            
+            if record.startswith('#'):
+                category = record.strip(' #\n').upper()
+            else:
+                regex = record.strip(' \n').replace('r"','').replace('"','').lower()
+                if regex != '':
+                    dRegexCategory[regex] = category
+
+        dData['regex_category'] = dRegexCategory            
+
+        f_in.close()
+
+        """
+        *dRegexComplexity* dictionary stores complexity of each regex from 'regex.txt' file.
+        
+        The problem is that same word/phrase may be part of different regex applicable to a given ATC
+        communication. To determin the order we extract categories from a communication we starts with 
+        most complex regex applicable to the communication (greedy approach).
+
+        NOTE - we ignore here (?:...), (?!...) and (?<!...) in regex while calculating its complexity.
+        
+        *dCategoryFrequency* dictionary store information about all unique categories defind in 'regex.txt'.
+        While we store info about number of regex mapped in give category we don't use this info yet.
+        """
+        dRegexComplexity = {}
+
+        for regex in dRegexCategory:
+
+            clean_regex = re.sub(r'\(\?.*?\)', '', regex)
+
+            
+            a_regex = clean_regex.split('\\')
+            dRegexComplexity[regex] = len(a_regex)
+
+        dData['regex_complexity'] = dRegexComplexity           
+
+
+        # Frequency of each category
+        
+        dCategoryFrequency = {}
+
+        for item in dRegexCategory:
+            category = dRegexCategory[item]
+            if category not in dCategoryFrequency:
+                dCategoryFrequency[category] = 0
+            dCategoryFrequency[category] = dCategoryFrequency[category] + 1
+
+        dData['category_frequency'] = dCategoryFrequency            
+
+
+        """
+        *dPlaceHolderNumber*
+        Placeholders for all categories - we use placeholders instead of real word/phrases 
+        extracted from communication using a regex. For example both 'roger'and 'wilco' will be replaced
+        by placeholed 'acknowledgeX' where X is an integer from 1..N where N is total number of occurences of words 'roger' and 'wilco'
+        in the communication.
+
+        This gives us possibility to significantly reduce size of the lexicon and hence latency.
+
+        We don't know in advance how many placeholders we will need to use for any given 
+        communicationmay for any new communication but we need to fix maximum number of such place holder
+        in advance separately for each category. 
+        
+        We can do this using *dPlaceholderNumber* dictionary -- here we seе max number of placeholders for
+        some categories and use small default value for all other categories. You may update these 
+        settings. 
+
+
+        """
+        
+        dPlaceholderNumber = {}
+        
+        dPlaceholderNumber["CLOUDS"] = 6
+        dPlaceholderNumber["FEATURE"] = 8
+        dPlaceholderNumber["INTNUMBER"] = 9
+        dPlaceholderNumber["PHONETICALPHABET"] = 6
+        dPlaceholderNumber["REQUESTINSTRUCTION"] = 8
+        dPlaceholderNumber["RUNWAY"] = 6
+        dPlaceholderNumber["SIDE"] = 9
+        dPlaceholderNumber["STATUS"] = 8
+        dPlaceholderNumber["TO"] = 6
+        dPlaceholderNumber["WORDNUMBER"] = 30
+        
+        dPlaceholderNumber["OTHER"] = 5 #default value
+
+        dData['placeholder_number'] = dPlaceholderNumber           
+
+
+        """
+        *dPlaceholderCategory* store categories of all placeholed that potentially may be extracted
+        from any ATC communication. Please be careful - if a communication need to have more placeholder for e category
+        that is give by *dPlaceHolderNumber* then correct parseing of the communication is impossible. 
+
+        If you noticed such case in your data then please updated this function there max number of place holders
+        is hardcoded. 
+        """
+        dCategoryPlaceholder = {}
+        dPlaceholderCategory = {}
+
+        for category in dCategoryFrequency:
+            dCategoryPlaceholder[category] = {}
+            if category in dPlaceholderNumber:
+                placeholder_number = dPlaceholderNumber[category] 
+            else:
+                placeholder_number = dPlaceholderNumber["OTHER"]
+
+            for i in range(1, placeholder_number + 1):
+                placeholder = category.lower()+str(i)
+                dPlaceholderCategory[placeholder] = category
+                dCategoryPlaceholder[category][placeholder] = 1
+
+        dData['category_placeholder'] = dCategoryPlaceholder            
+        dData['placeholder_category'] = dPlaceholderCategory            
+
+    #Prepositions
+    def read_prepositions(prepositions_file_path):
+        """
+        """
+        
+        f_in = open(prepositions_file_path ,encoding = 'utf-8', errors = 'ignore')
+
+        a_prepositions = []
+        for record in f_in:
+            
+            if record.strip(' #\n') == '':
+                continue
+            else:
+                a_prepositions.append(record.strip(' #\n').lower())
+
+        dData['prepositions'] = a_prepositions
+        
+        f_in.close()
+
+    #Category filter ----------------------------------
+    def read_category_filters(category_filters_file_path):
+        """
+        """
+        
+        f_in = open(category_filters_file_path ,encoding = 'utf-8', errors = 'ignore')
+        dCategoryFilter = {}
+        for record in f_in:
+            
+            if record.strip(' \n') == '':
+                continue
+            else:
+                dCategoryFilter[record.strip(' \n').upper()] = 1
+
+        dData['category_filter'] = dCategoryFilter
+        f_in.close()
+
+
     # read lexicon complex file------------------------------------
-    def read_lexicon_complex(f_name, dLexComplex):
-        f_in = open(f_name ,encoding = 'utf-8', errors = 'ignore')
+    def read_lexicon_complex(lex_complex_file_path, dLexComplex, with_filter):
+        f_in = open(lex_complex_file_path ,encoding = 'utf-8', errors = 'ignore')
 
         category = ''
         lexicon_entry = ''
@@ -261,11 +281,11 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
             
                 lexicon_entry = record.strip(' \n').replace('\\\\','\\')
 
-                if dCategoryFilter == {}:
+                if not with_filter:
                     dLexComplex[placeholder].append(lexicon_entry)
                 else:
                     good_entry = False
-                    for good_category in dCategoryFilter:
+                    for good_category in dData['category_filter']:
                     
                         if lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0:
                             good_entry = True
@@ -280,7 +300,7 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
         
     # generate some rules for lexicon for a given category that are not 'comples' and
     # may be generated automatically
-    def make_lex_all_category(category, dCategoryPlaceholder):
+    def make_lex_all_category(category):
         """
         This function generate lexicon rules that are not complex and may be generated automaticall.
 
@@ -297,13 +317,13 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
 
         """
         res = ""
-        for placeholder in dCategoryPlaceholder[category]:
+        for placeholder in dData['category_placeholder'][category]:
             res = res + str(placeholder) + " => "+category.upper()+" {_"+category.upper()+'_('+str(placeholder)+")}\n"
             
         return(res)
     
     # generate 'complex' rules
-    def make_lex_complex(dLexComplex, dCategoryPlaceholder):
+    def make_lex_complex(dLexComplex):
     
         res = ""
         for placeholder in dLexComplex:
@@ -313,13 +333,13 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
             # jst replace 1st placeholder from a rule from dLexComplex with all other placeholder related 
             # to related category
             for lex in a_ccg:
-                for placeholder_new in dCategoryPlaceholder[category]:
+                for placeholder_new in dData['category_placeholder'][category]:
                     res = res + placeholder_new + " => "+lex.replace(placeholder,placeholder_new)+"\n"
             
         return(res)
 
     # rules, generate automatically for prepositions
-    def make_lex_preposition(dCategoryFrequency,  a_prepositions):
+    def make_lex_preposition():
         """
         Let's we have this phrase in an ATC communication: '... the localizer ...'. 'localizer'
         belongs to the category 'NAVAID'. We want the same be true for phrase 'the localizer' where
@@ -346,16 +366,38 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
 
 
         res = ""
-        for category in dCategoryFrequency:
-            for preposition in a_prepositions:
+        for category in dData['category_frequency']:
+            for preposition in dData['prepositions']:
                 res = res + preposition + " => "+category+"/"+category+" {\\x._"+preposition+r"_(x)}"+"\n"
-        for preposition in a_prepositions:
+        for preposition in dData['prepositions']:
             res = res + preposition + " => NP/NP {\\x._"+preposition+r"_(x)}"+"\n"
 
             
             
         return(res)
     
+    # all phrases from lexicon  --------------------------------
+    def lex_words(lexicon, dData):
+        '''
+        We need this to extract unknow phrases from a communication we want to parse
+        '''
+        dLexWords = {}
+
+        for x in str(lexicon).split('\n'):
+            word = x.split('=>')
+            dLexWords[word[0].strip()] = 1
+        
+        dData['lex_words'] = dLexWords
+
+    #read regex
+    read_regex(regex_file_path)
+
+    #read prepositions
+    read_prepositions(prepositions_file_path)
+
+    #read category filters
+    read_category_filters(category_filters_file_path)
+
     # first line in the lexicon - lex_categories ----------------
 
     """
@@ -370,7 +412,7 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
     Then we need to add all categories that we defined in 'regex.txt':
     """
 
-    for category in sorted(dCategoryFrequency):
+    for category in sorted(dData['category_frequency']):
         lex_categories = lex_categories.strip('\n')+','+category.upper()
     lex_categories = lex_categories+'\n'
     
@@ -399,7 +441,7 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
     '''
 
     
-    for category in sorted(dCategoryFrequency):
+    for category in sorted(dData['category_frequency']):
         
         lex_common = (lex_common+'\n'+
             
@@ -419,30 +461,31 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
     # update lexicom with simple rules for each placeholder
 
     lex_all_category = ''
-    for category in dCategoryFrequency:
-        lex_all_category = lex_all_category + make_lex_all_category(category, dCategoryPlaceholder)
+    for category in dData['category_frequency']:
+        lex_all_category = lex_all_category + make_lex_all_category(category)
 
     
 
 
     # lex_complex----------------------------------------------
 
-    # read lexicon complex entries file
+    # read lexicon complex entries file with and witout filters
+    # no filter
     dLexComplex = {}
-    read_lexicon_complex(f_name, dLexComplex)
-
-    #print(dLexComplex)
-
-    lex_complex = make_lex_complex(dLexComplex, dCategoryPlaceholder)
-    #print(lex_complex)
-
+    with_filter = False
+    read_lexicon_complex(lex_complex_file_path, dLexComplex, with_filter)
+    lex_complex_no_filter = make_lex_complex(dLexComplex)
+    
+    #with filter
+    dLexComplex = {}
+    with_filter = True
+    read_lexicon_complex(lex_complex_file_path, dLexComplex, with_filter)
+    lex_complex_with_filter = make_lex_complex(dLexComplex)
+    
 
     #lex_prepositions ----------------------------------
 
-    
-    lex_prepositions = make_lex_preposition(dCategoryFrequency,  a_prepositions)
-    #print(lex_prepositions)
-
+    lex_prepositions = make_lex_preposition()
 
     # lex_last_part-------------------------------------
     """
@@ -477,23 +520,31 @@ def make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, f_nam
     argiment is the concatination of strings of rules generated above.
     """
 
-    lex = lexicon.fromstring(lex_categories + 
+    lex_no_filter = lexicon.fromstring(lex_categories + 
                                 lex_common + 
                                 lex_all_category +
-                                lex_complex +
+                                lex_complex_no_filter +
                                 lex_prepositions +
                                 lex_last_part, True)
-    return lex
+    
+    lex_words(lex_no_filter, dData)
 
-# all phrases from lexicon  --------------------------------
-def lex_words(lexicon, dLexWords):
-    '''
-    We need this to extract unknow phrases from a communication we want to parse
-    '''
+    lex_with_filter = lexicon.fromstring(lex_categories + 
+                                lex_common + 
+                                lex_all_category +
+                                lex_complex_with_filter +
+                                lex_prepositions +
+                                lex_last_part, True)
+    
+    
 
-    for x in str(lexicon).split('\n'):
-        word = x.split('=>')
-        dLexWords[word[0].strip()] = 1
+
+    #CCG parsers
+    command_parser = chart.CCGChartParser(lex_no_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+
+    dData['command_parser'] = command_parser
+    dData['LF_parser'] = LF_parser
 
 
 #Command---------------------------------------------------
@@ -512,54 +563,19 @@ def read_test_communications(f_name):
     f_in.close()
     return a_communications
 
-def command_normalization (command):
-    pattern = r"\b(re\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"re", command, count=0)
-
-    pattern = r"\b[a-z](\-)[a-z]+"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"=", command, count=0)
-
-
-    pattern = r"\b\d+(\-)\d\b"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(command)
-    for match in iterator:
-        if match:
-            #print('match:'+str(match))
-            command = re.sub(match.group(1),"", command, count=0)
-
-    
-    command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
-    command = command.replace(",","")
-    command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
-    command = command.replace(r"\s+"," ").replace("+","")
-    command = command.strip('.,?!\n”"')
-
-    return command
 
 
 #Placeholders-----------------------------------------------
 
 # Extract categories defined by regex from a command and 
 # replace by placeholders
-def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
+def text2placeholders(command, dData, dReplacement):
     """
     This function is used on step 1 to convert original communication (command) to string of
     placeholders. Information about categories is sttored in input dictionaries dRegexCategory, 
     dRegexComplexity. Output dictionary dReplacement store placeholder replacements with 
     words/phrases from command.
     """
-    #dCategoryUsed = {}
     new_command = command
     dCategoryMaxPlaceholderNumber = {}
     
@@ -578,7 +594,7 @@ def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
     new_command_ok = True
     while new_command_ok:
         new_command_ok = False
-        for pattern in sorted(dRegexComplexity, key=dRegexComplexity.get, reverse=True):
+        for pattern in sorted(dData['regex_complexity'], key=dData['regex_complexity'].get, reverse=True):
             if pattern == '':
                 continue
             p = re.compile(pattern, re.I)
@@ -587,7 +603,7 @@ def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
             for match in iterator:
                 if match:
                     count += 1
-                    category = dRegexCategory[pattern]
+                    category = dData['regex_category'][pattern]
                     
                     if category not in dCategoryMaxPlaceholderNumber:
                         dCategoryMaxPlaceholderNumber[category] = 0
@@ -638,7 +654,7 @@ def text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement):
     return new_command
 
 # replace phrases that are outside of the lexicon with special placeholders X1, .... ---------------------
-def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
+def replace_unknown_phrases(command, dData, dReplacement):
     """
     Given a string of placeholders (command) this is possible that it may stil contain normal 
     words/phrases (not placeholders and not propositions). This is possible if this word/phrase is
@@ -661,7 +677,7 @@ def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
     # command where words from lexicon are replaced with 'Y' -----
     command_no_lex = command
 
-    for word in sorted(dLexWords):
+    for word in sorted(dData['lex_words']):
         if word == '':
             continue
         pattern = word+r"\b"
@@ -673,7 +689,7 @@ def replace_unknown_phrases(command, dLexWords, dReplacement, a_prepositions):
         for match in iterator:
             if match:
                 
-                if (match.group()).isalpha() and match.group() not in set(a_prepositions):
+                if (match.group()).isalpha() and match.group() not in set(dData['prepositions']):
                     continue
 
                 to_replace = match.group()+r"\b"
@@ -808,7 +824,7 @@ def LF2placeholders(LF, dReplacement):
 
 #Parsing ------------------------------------
 
-#parse a semment of a command
+#parse a segment of a command
 def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2):
         """
         This function returns logical form (LF) given a link to parser and segment of a command
@@ -872,7 +888,83 @@ def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2
             
             return LF_replacement
 
-def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, step):
+def parse_command(parser, command, dData, step):
+    def clean_LF(LF):
+        """
+        In some cases logical form that we generate in parsing process
+        may be too complicated and we may have possibility to simplify it.
+        """
+
+
+        # delete unneeded '*' 
+        LF = LF.replace('*_','_').replace(')*',')')
+
+        # delete simple duplicated functions
+        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(LF)
+        for match in iterator:
+            if match:
+                
+                to_replace = str(match.group())
+                replace_by = str(match.group(2))
+                LF = LF.replace(to_replace, replace_by)
+
+        # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
+        pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(LF)
+        for match in iterator:
+            if match:
+                
+                to_replace = str(match.group())
+                replace_by = str(match.group(2))
+                LF = LF.replace(to_replace, replace_by)
+
+        # delete unneeded duplicated functions
+        pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(LF)
+        for match in iterator:
+            if match:
+                
+                to_replace = str(match.group())
+                replace_by = str(match.group(2))
+                
+                #check if replace_by is good in terms of brackets
+                ok = True
+                b_open = 0
+                b_close = 0
+                min_equal = 0
+
+                a = list(replace_by)
+                for s in a:
+                    if s == '(':
+                        b_open += 1
+                    if s == ')':
+                        b_close += 1
+                    if b_open < b_close:
+                        ok = False
+                        break
+                    if (b_open == b_close and
+                        min_equal == 0 and
+                        b_open > 0
+                    ):
+                        min_equal = b_open
+
+                    if (min_equal > 0 and
+                        (min_equal < b_open or min_equal < b_close)
+                    ):
+                        ok = False
+                        break
+                if b_open != b_close:
+                    ok = False
+                
+                if ok == True:
+                    LF = LF.replace(to_replace, replace_by)
+
+        return LF
+
 
     LF_final = ''
 
@@ -880,10 +972,9 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
     dReplacement_2 = {}
     command_new = ''
 
-    if step == 1:
-        new_command_1 = text2placeholders(command, dRegexCategory, dRegexComplexity, dReplacement_1)
-        new_command_2 = replace_unknown_phrases(new_command_1, dLexWords, dReplacement_2, 
-                                                a_prepositions)
+    if step == 0:
+        new_command_1 = text2placeholders(command, dData, dReplacement_1)
+        new_command_2 = replace_unknown_phrases(new_command_1, dData, dReplacement_2)
         command_new = new_command_2
         
         pattern = r"\b(x)\d+\b"
@@ -894,7 +985,7 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
                 command_new = re.sub(match.group(1),"X", command_new, count=1)
     else:
         command_new = LF2placeholders(command, dReplacement_1)
-        print('dReplacement_1_step2_3\n'+str(dReplacement_1))
+        #print('dReplacement_1_step2_3\n'+str(dReplacement_1))
 
     print('\nPLACEHOLDERS step '+str(step)+'\t'+command_new)
 
@@ -914,7 +1005,7 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
             if match:            
                 LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
         
-        if step > 1:
+        if step > 0:
             LF_replacement = clean_LF(LF_replacement)
             
         
@@ -941,7 +1032,7 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
                         if match:
                             LF_replacement = LF_replacement.replace(str(match.group(0)), '_'+str(match.group(1)))
 
-                    if step > 1:
+                    if step > 0:
                         LF_replacement = clean_LF(LF_replacement)
                         
                     LF_final = LF_final +LF_replacement+'; '
@@ -951,7 +1042,7 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
                 if LF_replacement == '' and j == 0:
                     command_new = ''
 
-    if step > 1:
+    if step > 0:
         LF_final = LF_final.replace('STOP_(','_(')            
         LF_final = LF_final.replace('\n*','')            
             
@@ -959,250 +1050,201 @@ def parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, 
     print('\nSEMANTICS step '+str(step)+':\t'+LF_final)
     return LF_final
 
-#Cleaning and uniques of keys in JSON-------------------------------------
+def parse_communication(command, number_of_steps, dData):
+    def command_normalization (command):
+        pattern = r"\b(re\-)[a-z]+"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(command)
+        for match in iterator:
+            if match:
+                #print('match:'+str(match))
+                command = re.sub(match.group(1),"re", command, count=0)
 
-def clean_LF(LF):
-    """
-    In some cases logical form that we generate in parsing process
-    may be too complicated and we may have possibility to simplify it.
-    """
+        pattern = r"\b[a-z](\-)[a-z]+"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(command)
+        for match in iterator:
+            if match:
+                #print('match:'+str(match))
+                command = re.sub(match.group(1),"=", command, count=0)
 
 
-    # delete unneeded '*' 
-    LF = LF.replace('*_','_').replace(')*',')')
+        pattern = r"\b\d+(\-)\d\b"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(command)
+        for match in iterator:
+            if match:
+                #print('match:'+str(match))
+                command = re.sub(match.group(1),"", command, count=0)
 
-    # delete simple duplicated functions
-    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
+        
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+        command = command.replace(",","")
+        command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
+        command = command.replace(r"\s+"," ").replace("+","")
+        command = command.strip('.,?!\n”"')
+
+        return command
+    
+    command = command_normalization(command)
+    command_parser = dData['command_parser']
+    LF_parser = dData['LF_parser']
+
+
+    for i in range(number_of_steps):
+        if i == 0:
+            LF = parse_command(command_parser, command, dData, i)
             
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            LF = LF.replace(to_replace, replace_by)
-
-    # delete simple duplicated functions such as _STAR_(_the_(_STAR_(...)))
-    pattern = r"\b(_[a-z]+_)\(((_[a-z]+_\(\1\([\s\w\d\-\,\.\*\']+\)\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
+        else:
+            LF = parse_command(LF_parser, LF, dData, i)
             
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            LF = LF.replace(to_replace, replace_by)
-
-    # delete unneeded duplicated functions
-    pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\'\(\)]+\)))\)"
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(LF)
-    for match in iterator:
-        if match:
-            
-            to_replace = str(match.group())
-            replace_by = str(match.group(2))
-            
-            #check if replace_by is good in terms of brackets
-            ok = True
-            b_open = 0
-            b_close = 0
-            min_equal = 0
-
-            a = list(replace_by)
-            for s in a:
-                if s == '(':
-                    b_open += 1
-                if s == ')':
-                    b_close += 1
-                if b_open < b_close:
-                    ok = False
-                    break
-                if (b_open == b_close and
-                    min_equal == 0 and
-                    b_open > 0
-                ):
-                    min_equal = b_open
-
-                if (min_equal > 0 and
-                    (min_equal < b_open or min_equal < b_close)
-                ):
-                    ok = False
-                    break
-            if b_open != b_close:
-                ok = False
-            
-            if ok == True:
-                LF = LF.replace(to_replace, replace_by)
-
     return LF
-
-def clean_JSON(sJSON):
-
-    # delete '{' and '}' around '"..."'
-    while True:
-        sJSON_new = sJSON
-        pattern = r"\{\"[\w\d\s\.\'\-]+\"\}" 
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-                
-                to_replace = match.group()
-                replace_by = to_replace.strip('{}')
-                
-                sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
-
-        if sJSON_new == sJSON:
-            break
-        else:
-            sJSON = sJSON_new
-
-    # delete ',' and '\s' before '}'
-    while True:
-        sJSON_new = sJSON
-        #pattern = r"\,\s+\}" 
-        pattern = r"[\,\s]+\}" 
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-                
-                to_replace = match.group()
-                replace_by = '}'
-                
-                sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
-
-        if sJSON_new == sJSON:
-            break
-        else:
-            sJSON = sJSON_new
+   
+def LF_2_JSON(LF):
     
-    # delete simple duplicated functions: "xyz":{"xyz":{...}} -> "xyz":{...}
-    while True:
-        sJSON_new = sJSON
+    def clean_JSON(sJSON):
 
-        pattern = r"(\"[a-z]+\"\:\{)(\1[\"\w\d\s\_\:\,]+\})\}"
-        p = re.compile(pattern, re.I)
-        iterator = p.finditer(sJSON)
-        for match in iterator:
-            if match:
-            
-                to_replace = str(match.group())
-                #print('AAA:::'+to_replace)
-                replace_by = str(match.group(2))
-                #print('BBB:::'+replace_by)
-                
-                sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
-
-        if sJSON_new == sJSON:
-            break
-        else:
-            sJSON = sJSON_new
-
-
-    
-    ########################################################################
-    # merge 'the: "the":{"xyz":{...}} -> "the_xyz":{...}
-
-    for word in ['the','have','your',
-                 'are','over','be',
-                 'an']:
-        for brackets in ['0','1','2','3']:
-            while True:
-                
-                pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
-                p = re.compile(pattern, re.I)
-                iterator = p.finditer(sJSON)
-                for match in iterator:
-                    if match:
+        # delete '{' and '}' around '"..."'
+        while True:
+            sJSON_new = sJSON
+            pattern = r"\{\"[\w\d\s\.\'\-]+\"\}" 
+            p = re.compile(pattern, re.I)
+            iterator = p.finditer(sJSON)
+            for match in iterator:
+                if match:
                     
-                        to_replace = str(match.group())
-                        replace_by = str(match.group(1))
-                        
-                        n_open = 0
-                        n_close = 0
-                        OK = True
-
-                        for s in replace_by:
-                            
-                            if s == '{':
-                                n_open += 1
-                            if s == '}':
-                                n_close += 1
-                            if n_close > n_open:
-                                OK = False
-                                break
-                        if n_open != n_close:
-                            OK = False   
-                        
-                        if OK:
-                            replace_by = '\"'+word+' '+replace_by[1:]
-                            sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-
-                if sJSON_new != sJSON:
-                    sJSON = sJSON_new
+                    to_replace = match.group()
+                    replace_by = to_replace.strip('{}')
                     
+                    sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
+
+            if sJSON_new == sJSON:
                 break
-   
+            else:
+                sJSON = sJSON_new
+
+        # delete ',' and '\s' before '}'
+        while True:
+            sJSON_new = sJSON
+            #pattern = r"\,\s+\}" 
+            pattern = r"[\,\s]+\}" 
+            p = re.compile(pattern, re.I)
+            iterator = p.finditer(sJSON)
+            for match in iterator:
+                if match:
+                    
+                    to_replace = match.group()
+                    replace_by = '}'
+                    
+                    sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
+
+            if sJSON_new == sJSON:
+                break
+            else:
+                sJSON = sJSON_new
+        
+        # delete simple duplicated functions: "xyz":{"xyz":{...}} -> "xyz":{...}
+        while True:
+            sJSON_new = sJSON
+
+            pattern = r"(\"[a-z]+\"\:\{)(\1[\"\w\d\s\_\:\,]+\})\}"
+            p = re.compile(pattern, re.I)
+            iterator = p.finditer(sJSON)
+            for match in iterator:
+                if match:
+                
+                    to_replace = str(match.group())
+                    replace_by = str(match.group(2))
+                    
+                    sJSON_new = re.sub(to_replace,replace_by, sJSON_new, count=1)
+
+            if sJSON_new == sJSON:
+                break
+            else:
+                sJSON = sJSON_new
+
+
+        
+        ########################################################################
+        # merge 'the: "the":{"xyz":{...}} -> "the_xyz":{...}
+
+        for word in ['the','have','your',
+                    'are','over','be',
+                    'an']:
+            for brackets in ['0','1','2','3']:
+                while True:
+                    
+                    pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                    p = re.compile(pattern, re.I)
+                    iterator = p.finditer(sJSON)
+                    for match in iterator:
+                        if match:
+                        
+                            to_replace = str(match.group())
+                            replace_by = str(match.group(1))
+                            
+                            n_open = 0
+                            n_close = 0
+                            OK = True
+
+                            for s in replace_by:
+                                
+                                if s == '{':
+                                    n_open += 1
+                                if s == '}':
+                                    n_close += 1
+                                if n_close > n_open:
+                                    OK = False
+                                    break
+                            if n_open != n_close:
+                                OK = False   
+                            
+                            if OK:
+                                replace_by = '\"'+word+' '+replace_by[1:]
+                                sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
+
+                    if sJSON_new != sJSON:
+                        sJSON = sJSON_new
+                        
+                    break
+    
+        return sJSON
+    def make_unique_keys(sJSON):
+
+        dKeys = {}
+        pattern = r"\"[a-z\s]+\":" 
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(sJSON)
+        for match in iterator:
+            if match:
+                
+                to_replace = match.group()
+                to_replace_key = to_replace.split(' ')[-1]
+                prefix = '"'
+                if to_replace_key.startswith(prefix) == False:
+                    to_replace_key = '\"'+to_replace_key
+                if to_replace_key not in dKeys:
+                    dKeys[to_replace_key] = 0
+                id = int(dKeys[to_replace_key]) + 1
+                dKeys[to_replace_key] = id
+                replace_by = '\"'+to_replace.strip(':\"')+'_'+str(id)+'\":'
+                
+            sJSON = re.sub(to_replace,replace_by, sJSON, count=1)
+
+        return sJSON
+
+
+    sJSON = '{'+LF.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
+    sJSON = clean_JSON(sJSON)
+    sJSON = make_unique_keys(sJSON)
+
     return sJSON
-
-def make_unique_keys(sJSON):
-
-    dKeys = {}
-    pattern = r"\"[a-z\s]+\":" 
-    p = re.compile(pattern, re.I)
-    iterator = p.finditer(sJSON)
-    for match in iterator:
-        if match:
-            
-            to_replace = match.group()
-            to_replace_key = to_replace.split(' ')[-1]
-            prefix = '"'
-            if to_replace_key.startswith(prefix) == False:
-                to_replace_key = '\"'+to_replace_key
-            if to_replace_key not in dKeys:
-                dKeys[to_replace_key] = 0
-            id = int(dKeys[to_replace_key]) + 1
-            dKeys[to_replace_key] = id
-            replace_by = '\"'+to_replace.strip(':\"')+'_'+str(id)+'\":'
-            
-        sJSON = re.sub(to_replace,replace_by, sJSON, count=1)
-
-    return sJSON
-   
+    
 #---------------------------------------
 # App ----------------------------------------------
 #---------------------------------------------------
 
-#1 Read regular expressions from 'regex.txt' file to collect some stats
-#   about defined categories 
 
-script_path = Path(__file__).parent
-regex_file_path = script_path / 'data' / 'regex.txt'
-
-dRegexCategory = {} 
-dRegexComplexity = {}
-dCategoryFrequency = {} 
-dPlaceholderCategory = {} 
-dCategoryPlaceholder = {}
-dPlaceholderNumber = {}
-
-
-read_regex(regex_file_path, dRegexCategory, dRegexComplexity, 
-        dCategoryFrequency, dPlaceholderCategory, dCategoryPlaceholder,
-        dPlaceholderNumber)
-
-
-
-#2 Read lexicon rules, prepositions and category filters---------------------
-
-
-lex_file_path = script_path / 'data' / 'lexicon_complex.txt'
-prepositions_file_path = script_path / 'data' / 'prepositions.txt'
-category_filters_file_path = script_path / 'data' / 'category_filters.txt'
-
-a_prepositions = read_prepositions(prepositions_file_path)
 
 """
 When generating lexicon we may control which rules from 'lex_complex.txt' to use.
@@ -1210,34 +1252,15 @@ If dCategoryFilter is empty than we use all rules. If it is not empty then we us
 where syntactic category contains '/X' where X is a key from dCategoryFilter. 
 """
 
+dData = {}
 
-dCategoryFilter = {}
-lex = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_path, dCategoryFilter)
+make_lexicon(dData)
 
-dCategoryFilter = {}
-read_category_filters(category_filters_file_path, dCategoryFilter)
-lex_step2_3 = make_lexicon(dCategoryFrequency, dCategoryPlaceholder, a_prepositions, lex_file_path, dCategoryFilter)
+# Main loop------------------------------------------------------
 
-
-
-#3 Read test communications
-
+script_path = Path(__file__).parent   
 communication_file_path = script_path / 'test_communication.txt'
 a_commands = read_test_communications(communication_file_path)
-
-
-#4 all words from lexicon
-dLexWords = {} 
-lex_words(lex, dLexWords)
-
-
-#5 CCG parser
-
-parser = chart.CCGChartParser(lex, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-parser_step2_3 = chart.CCGChartParser(lex_step2_3, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-
-
-#6  Output file
 
 results = 'RESULTS.tsv'
 f_out = open(results, 'w', errors='ignore')
@@ -1245,40 +1268,26 @@ f_out.write('#\tCommunication\tSemantics\n')
 
 
 
-# Main loop------------------------------------------------------
-
 count = 0
 for command in a_commands:
     
     count += 1
-    original_command = command
     
     print('\n'+str(count)+'====================================================================')
-    print('COMMAND:\n'+str(original_command))
-    
-    command = command_normalization(command)
-    
-    
-    LF_final_step1 = parse_command(parser, command, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 1)
-    LF_final_step2 = parse_command(parser_step2_3, LF_final_step1, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 2)
-    LF_final_step3 = parse_command(parser_step2_3, LF_final_step2, dRegexCategory, dRegexComplexity, dLexWords, a_prepositions, 3)
-    
+    print('\nCOMMAND:\n'+str(command))
+    original_command = command
+
+    # Parsing
+
+    number_of_steps = 3
+    LF = parse_communication(command, number_of_steps, dData)
+
 
     # Make json results
+    sJSON = LF_2_JSON(LF)
 
-    print('\n\nJSON=============\n')
-
-    sJSON = '{'+LF_final_step3.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
-
-    #clean the sJSON
-
-    sJSON = clean_JSON(sJSON)
-
-    # make keys unique in sJSON
-    sJSON = make_unique_keys(sJSON)
-    
-    print(str(sJSON)+'\n\n')
-
+    # Print results
+    print('\nJSON \n'+str(sJSON)+'\n\n')
     f_out.write(str(count)+'\t'+original_command+'\t'+str(sJSON)+'\n')
 
 
