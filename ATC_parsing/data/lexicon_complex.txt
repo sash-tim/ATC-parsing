@@ -1289,6 +1289,7 @@ CHANGES/NAVIGATION {\\x._CHANGES_(_CHANGES_(changes1),x)}
 
 
 #Runway
+RUNWAY/CLEARED {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
 RUNWAY/RESTRICTION {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
 (RUNWAY/RESTRICTION)/IS {\\x y._RUNWAY_(_RUNWAY_(runway1), x,y)}
 (RUNWAY/CONTEXT)/DUE {\\x y._RUNWAY_(_RUNWAY_(runway1), x, y)}
