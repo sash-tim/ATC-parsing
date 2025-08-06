@@ -1,0 +1,1 @@
+from .semantic_parsing import make_lexicon, parsing, logicalForm2JSON
