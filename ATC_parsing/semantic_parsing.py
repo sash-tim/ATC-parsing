@@ -560,7 +560,6 @@ def parsing(command, number_of_steps, dData):
         iterator = p.finditer(command)
         for match in iterator:
             if match:
-                #print('match:'+str(match))
                 command = re.sub(match.group(1),"re", command, count=0)
 
         pattern = r"\b[a-z](\-)[a-z]+"
@@ -568,7 +567,6 @@ def parsing(command, number_of_steps, dData):
         iterator = p.finditer(command)
         for match in iterator:
             if match:
-                #print('match:'+str(match))
                 command = re.sub(match.group(1),"=", command, count=0)
 
 
@@ -577,7 +575,6 @@ def parsing(command, number_of_steps, dData):
         iterator = p.finditer(command)
         for match in iterator:
             if match:
-                #print('match:'+str(match))
                 command = re.sub(match.group(1),"", command, count=0)
 
         
@@ -1002,10 +999,8 @@ def parsing(command, number_of_steps, dData):
                     command_new = re.sub(match.group(1),"X", command_new, count=1)
         else:
             command_new = LF2placeholders(command, dReplacement_1)
-            #print('dReplacement_1_step2_3\n'+str(dReplacement_1))
-
-        print('\nPLACEHOLDERS step '+str(step)+'\t'+command_new)
-
+            
+        
 
         # parse command with expansion -------------------------
 
@@ -1064,7 +1059,6 @@ def parsing(command, number_of_steps, dData):
             LF_final = LF_final.replace('\n*','')            
                 
                             
-        print('\nSEMANTICS step '+str(step)+':\t'+LF_final)
         return LF_final
 
     ###################################
