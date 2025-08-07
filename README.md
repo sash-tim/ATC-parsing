@@ -89,6 +89,6 @@ If we see new command patterns that can't be parsed correctly we should update o
 
 You may try to update these files yourself, especially if you are familiar with CCG parsing from NLTK. But I'll be happy if you could let me know about any problems with the parsing of any specific command.
 
-Please use GitHub *issues* or mail me directly: *atc.parsing@gmail.com*
+Please use GitHub [issues](https://github.com/sash-tim/ATC-parsing/issues) or mail me directly: *atc.parsing@gmail.com*
 
 Thank you.
