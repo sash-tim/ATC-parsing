@@ -1,110 +1,109 @@
 '''
-Semantic parsing for pilot/controller communications
+Semantic parsing for pilot/controller commands
 
 '''
 
 from nltk.ccg import chart, lexicon
-
-from pathlib import Path
 import re
+from importlib.resources import files
 
 
 def make_lexicon(dData):
 
     """
     This fuction takes some predefined text files from DATA subfolder and generates lexicon, 
-    parsers and some other data that are used in the parsing of ATC communications. Output is 
+    parsers and some other data that are used in the parsing of ATC commands. Output is 
     dData dictionary with all we need for parsing. If you need to fix some errors in parsing 
     then you may update these predifined files in DATA.
 
     """
     
+    regex_file = files("ATC_parsing.data").joinpath("regex.txt").read_text()
     """
-    Inputs:
-    - dCategoryFrequeny -- dictionary with category names as keys and numbers of related 
-    regex as values
-    - dCategoryPlaceholdes -- dictionary with category names as keys and dictionary of related
-    placeholders as values
-    - a_prepositions -- array of prepositions that are outside of any category. Really the same proposition 
-    may be represented by a category and be part of the list in the same time, but its in this case its representation in the
-    list is ignored.
-    - f_name -- name of a text file (lexicon_complex.txt) that contains data about sematic rules that can't be generated
-    automatically. 
-    - dCategoryFilter -- a dictionary with some category names. This make_lexicon function is 
-    running 3 times to parse a communication. In first run we use dCategoryFilter = {}, while in 2nd 
-    and 3rd runs it contains a non-empty set of category names. The I dea is to limit set of
-    rules that are applicable in 2nd and 3rd runs.
+    ## Regex ##
+    
+    In the *regex.txt* files we store regular expressions that are used to extract phrases from ATC 
+    commands that correspond to semantic categories related to ATC phraseology, places, waypoints,
+    fixes, airlines and some other ATC concepts. You are free to update this file in your
+    local copy of the library to 'localize' it to your needs.
 
-
-    This is part of lexicon_complex.txt file that define some of 'complex' (not generated automaticall) 
-    rules for lexicon related to CALLSIGN:
+    # Example #
+    
+    These are some example records from *regex.txt* that define *CALLSIGN* category:
 
     ```
     #CALLSIGN
-    -(CALLSIGN/FREQUENCY)/ON {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    (CALLSIGN/AIRFIELD)/AT {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    CALLSIGN/WORDNUMBER {\\x._CALLSIGN_(_CALLSIGN_(callsign1), x)}
-    CALLSIGN/WORDNUMPHONEALPHABET {\\x._CALLSIGN_(_CALLSIGN_(callsign1), x)}
-    (CALLSIGN/NAVIGATION)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    (CALLSIGN/STATUS)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    (CALLSIGN/FLIGHTPLAN)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    (CALLSIGN/PLACE)/AT {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-    (CALLSIGN/POSITION)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
+    r"\bAAL\d+\b"
+    r"\bcallsign\b"
+    r"\bheavy\s+777\b"
+    r"\bn\d+[a-z]*\b"
+    r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
+    r"\b[a-z]\-[a-z]+"
+    r"\b(?!\d{1,2}[lr])\d+[a-z]{1,3}\b"
 
+    ```    
+    """
+
+    lex_complex_file = files("ATC_parsing.data").joinpath("lexicon_complex.txt").read_text()
+    """
+    ## Lexicon ##
+    Lexicon stores rules that are used by parser in the parsing process. Most of these rules are
+    generated here automatically based, for example, on list of categories in *regex.txt*, but most
+    advanced rules that correspond to specific patterns used in ATC commands should be defined
+    in *lexicon_complex.txt* file. If you have a problem with the parsing of a command and you can't fix it
+    through *regex.txt' update, then you may try to expand the set of rules in this file.
+    
+    # Example #
+    ```
     #AIRCRAFT
     CALLSIGN/CALLSIGN {\\x._CALLSIGN_(_AIRCRAFT_(aircraft1),x)}
-
-
+    ```
+    Here we see a rule from the section that corresponds to the *AIRCRAFT* category. It says that phrase
+    ```
+    Cessna 123AB
+    ```
+    has *CALLSIGN* category because it starts with 'Cessna' from *AIRCRAFT* category followed by
+    '123AB' from *CALLSIGN* category. And it logical form representation is
+    ```
+    _CALLSIGN_(_AIRCRAFT_(*Cessna*),_CALLSIGN_(*123AB*))
     ```
 
     """
-
-    
-
-    from importlib.resources import files
-
-    regex_file = files("ATC_parsing.data").joinpath("regex.txt").read_text()
-    lex_complex_file = files("ATC_parsing.data").joinpath("lexicon_complex.txt").read_text()
     prepositions_file = files("ATC_parsing.data").joinpath("prepositions.txt").read_text()
+    """
+    The *prepositions.txt* file contains the list of standard prepositions. In the parsing process they play slightly
+    different role compared to other words if only they are not assigned a special category in
+    *regex.txt* as, for example, category *TO* for 'to' and 'into'.
+
+    """
     category_filters_file = files("ATC_parsing.data").joinpath("category_filters.txt").read_text()
+    """
+    The *category_filters.txt* file plays an important role in parsing the most complicated ATC
+    commands. In such cases, rules from *lexicon_complex.txt* can't extract long semantically 
+    continuous segments from the command and, as a result, split it into a sequence of shorter segments. 
+    
+    We may fix this
+    problem running parse process more than once. But we need to be careful here to filter out some 
+    rules from  *lexicon_coplex.txt* that are not applicable in all steps except the very first one.
+    In another case, some segments that are not semantically related may be merged into the same 
+    segment.
+    """
 
-
-    #Regex
     def read_regex(regex_file, dData):
         """
-        ## Regular expressions are used to map words/phrases for ATC communications into semantic 
-        categories
-
-        For flexibility we store data about word/phrases -> categories mapping in a text file ('regex.txt). 
-        Example. Here we define set of strings that may be mapped into CALLSIGN category.
-
-        ```
-        #CALLSIGN
-
-        r"\bSWA\d+\b"
-        r"\bAAL\d+\b"
-        r"\bUAL\d+\b"
-        r"\bDAL\d+\b"
-        r"\bcallsign\b"
-        r"\bheavy\s+777\b"
-        r"\bn\d+[a-z]*\b"
-        r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
-        r"\b[a-z]\-[a-z]+"
-        r"\b(?!\d{1,2}[lr])\d+[a-z]{1,3}\b"
-        
-        ```
-
-        This function reads regex.txt file and returns some dictionaries with info about semantic 
-        categories. 
+        This function reads *regex.txt* file and stores some data in *dData* dictionary 
         """
         
         lines = regex_file.splitlines()
 
-        """
-        *dRegexCategory* dictionary maps all regex from 'regex.txt into categories. Hence we can't have two
-        or more identical regex in different categories - be careful adding new data into regex.txt file. 
-        """
         dRegexCategory = {}
+
+        """
+        *dRegexCategory* dictionary maps all regexes from *regex.txt* into categories. Hence we can't 
+        have two or more identical regexes in different categories - be careful adding new data into 
+        *regex.txt* file. 
+        """
+        
         category = ''
         regex = ''
         
@@ -120,19 +119,23 @@ def make_lexicon(dData):
         dData['regex_category'] = dRegexCategory            
 
 
-        """
-        *dRegexComplexity* dictionary stores complexity of each regex from 'regex.txt' file.
-        
-        The problem is that same word/phrase may be part of different regex applicable to a given ATC
-        communication. To determin the order we extract categories from a communication we starts with 
-        most complex regex applicable to the communication (greedy approach).
-
-        NOTE - we ignore here (?:...), (?!...) and (?<!...) in regex while calculating its complexity.
-        
-        *dCategoryFrequency* dictionary store information about all unique categories defind in 'regex.txt'.
-        While we store info about number of regex mapped in give category we don't use this info yet.
-        """
         dRegexComplexity = {}
+
+        """
+        *dRegexComplexity* dictionary stores the complexity of each regex from 'regex.txt' file.
+        
+        Basically before we start parsing an ATC command we want to represent it as a sequence of 
+        so called placeholders. Each placeholder is a category name with an integer index. 
+        Here we use regexes to extract phrase applicable to a regex and then replace this phrase 
+        by relevant placeholder. We repeat this process until all words/phrases are replaced 
+        with placeholders (we use special placeholders for unknown words/phrases)
+        
+        The problem is that different regexes may be applicable to different **intersected** phrases. 
+        Hence we need to determine an order of regexes we check if it is applicable or not.
+
+        Here we use a greedy approach - check regexes starting from the most complex ones.
+        
+        """
 
         for regex in dRegexCategory:
 
@@ -144,10 +147,11 @@ def make_lexicon(dData):
 
         dData['regex_complexity'] = dRegexComplexity           
 
-
-        # Frequency of each category
         
         dCategoryFrequency = {}
+        """
+        *dCategoryFrequency* - number of regexes for each unique category
+        """
 
         for item in dRegexCategory:
             category = dRegexCategory[item]
@@ -158,27 +162,33 @@ def make_lexicon(dData):
         dData['category_frequency'] = dCategoryFrequency            
 
 
-        """
-        *dPlaceHolderNumber*
-        Placeholders for all categories - we use placeholders instead of real word/phrases 
-        extracted from communication using a regex. For example both 'roger'and 'wilco' will be replaced
-        by placeholed 'acknowledgeX' where X is an integer from 1..N where N is total number of occurences of words 'roger' and 'wilco'
-        in the communication.
-
-        This gives us possibility to significantly reduce size of the lexicon and hence latency.
-
-        We don't know in advance how many placeholders we will need to use for any given 
-        communicationmay for any new communication but we need to fix maximum number of such place holder
-        in advance separately for each category. 
-        
-        We can do this using *dPlaceholderNumber* dictionary -- here we seе max number of placeholders for
-        some categories and use small default value for all other categories. You may update these 
-        settings. 
-
-
-        """
         
         dPlaceholderNumber = {}
+
+        """
+        ## dPlaceHolderNumber ##
+
+        We use placeholders instead of real words/phrases 
+        extracted from a command using a regex. For example, regexes for words  'roger'and 'wilco' 
+        have the same categoty *ACKNOWLEDGE* and they will be replaced
+        by placeholders 'acknowledgeX' where X is an integer from 1..N where N is the total number of 
+        occurences of words 'roger' and 'wilco'
+        in the command.
+
+        The use of placeholders instead of real words/phrases gives us the possibility to significantly
+        reduce size of the lexicon and hence latency of the parsing process.
+
+        We don't know how many placeholders we need to have for any new command 
+        but we need to fix the maximum number of such placeholders
+        in advance separately for each category. 
+        
+        We can do this using *dPlaceholderNumber* dictionary -- here we store max number of 
+        placeholders for
+        some categories and a small default value for all other categories. You may update these 
+        settings. 
+
+        """
+        
         
         dPlaceholderNumber["CLOUDS"] = 6
         dPlaceholderNumber["FEATURE"] = 8
@@ -196,16 +206,18 @@ def make_lexicon(dData):
         dData['placeholder_number'] = dPlaceholderNumber           
 
 
-        """
-        *dPlaceholderCategory* store categories of all placeholed that potentially may be extracted
-        from any ATC communication. Please be careful - if a communication need to have more placeholder for e category
-        that is give by *dPlaceHolderNumber* then correct parseing of the communication is impossible. 
-
-        If you noticed such case in your data then please updated this function there max number of place holders
-        is hardcoded. 
-        """
         dCategoryPlaceholder = {}
         dPlaceholderCategory = {}
+
+        """
+        *dPlaceholderCategory* stores categories of all placeholders that potentially may be 
+        extracted
+        from any ATC command. Please be careful - if a command needs to have more placeholders 
+        for a category
+        than it is given by *dPlaceHolderNumber* then correct parsing of the command is impossible. 
+
+        """
+        
 
         for category in dCategoryFrequency:
             dCategoryPlaceholder[category] = {}
@@ -222,9 +234,10 @@ def make_lexicon(dData):
         dData['category_placeholder'] = dCategoryPlaceholder            
         dData['placeholder_category'] = dPlaceholderCategory            
 
-    #Prepositions
+    
     def read_prepositions(prepositions_file, dData):
         """
+        Read prepositions from *preposition_file*
         """
         
         lines = prepositions_file.splitlines()
@@ -241,9 +254,10 @@ def make_lexicon(dData):
         
     
 
-    #Category filter ----------------------------------
+    
     def read_category_filters(category_filters_file, dData):
         """
+        Read category filters from *category_filters_file*
         """
         
         lines = category_filters_file.splitlines()
@@ -258,11 +272,22 @@ def make_lexicon(dData):
 
         dData['category_filter'] = dCategoryFilter
     
-
+    #EDIT
 
     # read lexicon complex file------------------------------------
     def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter):
-        
+        """
+        Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
+        If 
+        ```
+        with_filter == True
+        ```
+        then all rules from *lex_complex_file* will be stored in  *dLexXomplex*. In another case
+        we store only rules that contain string '/X' where 'X' is a category from the category filter.
+
+        """
+
+
         lines = lex_complex_file.splitlines()
 
         category = ''
@@ -274,12 +299,17 @@ def make_lexicon(dData):
                 continue
             if record.startswith('#'): #category name 
                 category = record.strip(' #\n').upper()
-                # we generate here semantic rules for 1st placeholder of the category. Identical
-                #rules for other placeholders for same category will be added to the lexicon 
-                # on the final step 
                 placeholder = category.lower()+'1'
-                # dictionary to store 'complex' rules for each category (represented by its placeholder) 
+                """
+                We generate here semantic rules for 1st placeholder of the category. Identical
+                rules for other placeholders for same category will be added to the lexicon 
+                on the final step. 
+                """
                 dLexComplex[placeholder] = []
+                """
+                dictionary to store 'complex' rules for each category 
+                (represented by its placeholder) 
+                """
             else: # just 'complex' rule
                 if record.startswith('-'): # skip rule if starts with '-'
                     continue
