@@ -13,8 +13,8 @@ def make_lexicon(dData):
     """
     This fuction takes some predefined text files from DATA subfolder and generates lexicon, 
     parsers and some other data that are used in the parsing of ATC commands. Output is 
-    dData dictionary with all we need for parsing. If you need to fix some errors in parsing 
-    then you may update these predifined files in DATA.
+    dData dictionary with all we need for parsing. If you need to fix some errors in the parsing 
+    of specific command then you may update these predifined files in DATA.
 
     """
     
@@ -272,9 +272,7 @@ def make_lexicon(dData):
 
         dData['category_filter'] = dCategoryFilter
     
-    #EDIT
 
-    # read lexicon complex file------------------------------------
     def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter):
         """
         Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
@@ -328,27 +326,27 @@ def make_lexicon(dData):
                     if good_entry == True:
                         dLexComplex[placeholder].append(lexicon_entry)
                     
-                
-
-    
-    
-        
-    # generate some rules for lexicon for a given category that are not 'comples' and
-    # may be generated automatically
+                  
     def make_lex_all_category(category):
         """
-        This function generate lexicon rules that are not complex and may be generated automaticall.
+        All functions with prefix 'make_lex' return a string that will be part of a longer
+        string (lexicon string) that will be used as an input for a NLTK function that generates 
+        the lexicon itself.
 
-        For example, for category 'CALLSIGN' these rules will be generated:
+        The current function generates part of the lexicon string for specified category 'category' 
+        for rules that are not complex and may be generated 
+        automatically. For example, for category 'CALLSIGN' these rules will be generated:
 
         ```
         callsign1 => CALLSIGN {_CALLSIGN_(callsign1)}
         callsign2 => CALLSIGN {_CALLSIGN_(callsign2)}
         ...
         ```
-        Here for each placeholder (callsign1, callsign2, ...) up to maximum number of placeholeders
+        Here for each placeholder (callsign1, callsign2, ...) up to the maximum number of 
+        placeholders
         assigned to the category CALLSIGN we define a rule with syntactic and semantic parts. Here 
-        category CALLSIGN defin the syntactic part while function _CALLSIGN_(callsignX) its semantic part.
+        category 'CALLSIGN' defines the syntactic part while '_CALLSIGN_(callsignX)' its 
+        semantic part.
 
         """
         res = ""
@@ -357,8 +355,28 @@ def make_lexicon(dData):
             
         return(res)
     
-    # generate 'complex' rules
+    
     def make_lex_complex(dLexComplex):
+
+        """
+        This function generates a part of lexicon string for all 'complex' rules from *dLexComplex*.
+
+        For example
+        ```
+        aircraft1 => CALLSIGN/CALLSIGN {\\x._CALLSIGN_(_AIRCRAFT_(aircraft1),x)}
+        aircraft2 => CALLSIGN/CALLSIGN {\\x._CALLSIGN_(_AIRCRAFT_(aircraft2),x)}
+        ...
+        ```
+        Here for each placeholder (aircraft1, aircraft2, ...) up to the maximum number of 
+        placeholders
+        assigned to the category 'AIRCRAFT' we define a rule with syntactic and semantic parts. Here 
+        category 'CALLSIGN/CALLSIGN' defines the syntactic part while function 
+        ```
+        \\x._CALLSIGN_(_AIRCRAFT_(aircraft1),x)
+        ``` 
+        its semantic part.
+
+        """
     
         res = ""
         for placeholder in dLexComplex:
@@ -373,16 +391,18 @@ def make_lexicon(dData):
             
         return(res)
 
-    # rules, generate automatically for prepositions
+    
     def make_lex_preposition():
         """
-        Let's we have this phrase in an ATC communication: '... the localizer ...'. 'localizer'
-        belongs to the category 'NAVAID'. We want the same be true for phrase 'the localizer' where
-        'the' is preposition. 
+        Lets we have this phrase in an ATC command: '... the localizer ...'. Here 'localizer'
+        belongs to the category 'NAVAID'. We want the same to be true for the phrase 'the localizer' 
+        where 'the' is a preposition. 
         
         Also if
-        a word/phrase is unknown (doesn't belong to any category or the list of prepositions) then we assign it automatically to the lexical 
-        category NP to such word/phrase. So for example word 'abracadabra' belongs to NP. We want the same is true for phrase
+        a word/phrase is unknown (doesn't belong to any category in *regex.txt* or the list of 
+        prepositions) then we assign it automatically to the lexical 
+        category *NP*. So for example, word 'abracadabra' belongs to NP. We want the same 
+        to be true for phrase
         'the abaracadabra'.
 
         So for 'the' we want to have automatically generated rules:
@@ -390,7 +410,7 @@ def make_lexicon(dData):
         ```
         the => NAVAID/NAVAID {\\x._the_(x)}
         ```
-        for all categories including NAVAID, and
+        for category *NAVAID*, and
 
         ```
         the => NP/NP {\\x._the_(x)}
@@ -411,10 +431,11 @@ def make_lexicon(dData):
             
         return(res)
     
-    # all phrases from lexicon  --------------------------------
     def lex_words(lexicon, dData):
         '''
-        We need this to extract unknow phrases from a communication we want to parse
+        This function is used when the lexicon' is generated. It extract all words from it. 
+        Results are stored in *dData*. We need this information to extract unknow phrases from a 
+        command we want to parse.
         '''
         dLexWords = {}
 
@@ -424,23 +445,25 @@ def make_lexicon(dData):
         
         dData['lex_words'] = dLexWords
 
-    #read regex
+    
     read_regex(regex_file, dData)
 
-    #read prepositions
     read_prepositions(prepositions_file, dData)
 
-    #read category filters
     read_category_filters(category_filters_file, dData)
 
-    # Lexicon generation------------------------------
-
-    # first line in the lexicon - lex_categories
-
+    
     """
-    To generate a lexicon using NLTK we need to prepare a string with information about all
-    rules we want to include into the lexicon. But it should starts with list of all categories.
-    This list starts with categories common to any application that uses NLTK CCG parser: 
+    ## Lexicon generation ##
+
+    To generate a lexicon using NLTK we need to prepare a string (*lexicon string*) with 
+    information about all rules we want to include in the lexicon. 
+
+    # lex_categories #
+
+    But it should start with list of all categories. This list starts with categories common to 
+    any application that uses NLTK CCG parser: 
+
     """
     
     lex_categories = ":- S,NP,N,ADJ,VP,PP,P,JJ,JJR,DT,PPN,NNP\n"
@@ -454,16 +477,21 @@ def make_lexicon(dData):
     lex_categories = lex_categories+'\n'
     
 
-    # lex_common ------------------------------------------------
-
     """
-    These are few special rules that we want to add to the lexicon. Rules for string '_context_'
-    are used in a trick that we use to guaranty that parsing process will stop. Please not that in the 
-    case of long sentence we can't guarantee that parsing process will stop with a result. It may be just empty set of results.
-    To avoid this we do some modifications of the original sentence (including its spliting) to
+    ## lex_common ##
+
+    These are a few special rules that we want to add to the lexicon. 
+    
+    Rules for string '_context_' are used in a trick that we use to guarantee that 
+    the parsing process will stop. 
+
+    Please note that in the case of long commands we can't guarantee that the parsing process 
+    will stop with a result. It may be just an empty set of results.
+
+    To avoid this, we do some modifications of the original sentence (including its splitting) to
     get something useful in all cases.
 
-    Rules for 'no' are basis to introduce negation to the system.
+    Rules for word 'no' are the basis to introduce negation to the system.
     """
 
     lex_common = '''
@@ -493,21 +521,24 @@ def make_lexicon(dData):
             )
         
     
+    """
+    # lex_all_category #
 
-
-    # update lexicom with simple rules for each placeholder
+    Update lexicon with simple rules for each placeholder
+    """
 
     lex_all_category = ''
     for category in dData['category_frequency']:
         lex_all_category = lex_all_category + make_lex_all_category(category)
 
+    """
+    # lex_complex #
+
+    Read lexicon complex file with and witout filters.
     
-
-
-    # lex_complex----------------------------------------------
-
-    # read lexicon complex entries file with and witout filters
-    # no filter
+    # no filter #
+    
+    """
     dLexComplex = {}
     with_filter = False
     read_lexicon_complex(lex_complex_file, dLexComplex, with_filter)
@@ -519,16 +550,20 @@ def make_lexicon(dData):
     read_lexicon_complex(lex_complex_file, dLexComplex, with_filter)
     lex_complex_with_filter = make_lex_complex(dLexComplex)
     
-
-    #lex_prepositions ----------------------------------
-
+    """
+    # lex_prepositions #
+    """
+    
     lex_prepositions = make_lex_preposition()
 
-    # lex_last_part-------------------------------------
+    
     """
-    We use these rules to represent all words/phaese not recognised by patterns in regex.txt and
-    not included into preposition list by special CONTEXT category. For this category we use 10
-    placeholders X1,...,X12   
+    # lex_last_part #
+
+    We use these rules to represent all words/phases not recognised by patterns in *regex.txt* and
+    not included in prepositions list with special 'CONTEXT' category. 
+    
+    For this category we use 12 special placeholders X1,...,X12   
     """
 
     lex_last_part = """
@@ -546,15 +581,20 @@ def make_lexicon(dData):
     X11 => CONTEXT {X11}
     X12 => CONTEXT {X12}
     
-    
     """
 
-
-    # finally --------------------------------------------
-
     """
-    Now we can generate lexicon uning NLTK lexicon.fromstring() function where the single
-    argiment is the concatination of strings of rules generated above.
+    # Finally #
+
+    Now we can generate lexicon using NLTK 
+    ```
+    lexicon.fromstring() 
+    ```
+    function where the its single
+    argument (lexicon string) is the concatenation of strings of rules generated above.
+
+    Here we generate two lexicons - without filter and with filter. Function *lex_words()* is
+    used only for lexicon with filter.
     """
 
     lex_no_filter = lexicon.fromstring(lex_categories + 
@@ -574,17 +614,53 @@ def make_lexicon(dData):
                                 lex_last_part, True)
     
     
+    """
+    ## CCG parsers ##
 
+    Now we can generate two NLTK CCG parsers for lexicon without or with filters.
 
-    #CCG parsers
+    The parser where we use lexicon without filter - *command_parser*, may be used for commands
+    represented in normal textual form. 
+
+    The parser with lexicon with filter - *LF_parser*, will be used during 2nd, 3rd,... steps
+    of the parsing process. Here input is a logical form returned by the previous step.
+    """
+
     command_parser = chart.CCGChartParser(lex_no_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
 
     dData['command_parser'] = command_parser
     dData['LF_parser'] = LF_parser
 
+
+
 def parsing(command, number_of_steps, dData):
+    """
+    ## Parsing ##
+
+    Arguments:
+    - *command*
+    Original ATC command in textual form. Please note that we ignore punctuation.
+    - *number_of_steps*
+    The first step takes the original textual command as input and produces a logical form that represents
+    semantics of the command. Depending on the command complexity, it may be possible to make one
+    or more additional steps where logical form returned by previous step is parsed to get new
+    compressed logical form if this is possible. The value of the parameter is the maximum 
+    number of steps that will be produced. The real number may be smaller if logical forms that are
+    produced 
+    in two sequential steps are identical.
+    - dData
+    The dictionary generated by *make_lexicon()* function. It contains all data that we need to
+    parse the command in any number of steps. 
+
+    """
+
     def command_normalization (command):
+        """
+        Command normalization including reduction of punctuation and replacement of some
+        contracted expressions by their complete forms. Returns normalized command.
+        
+        """
         pattern = r"\b(re\-)[a-z]+"
         p = re.compile(pattern, re.I)
         iterator = p.finditer(command)
@@ -617,10 +693,29 @@ def parsing(command, number_of_steps, dData):
         return command
     
     def parse_command(parser, command, dData, step):
+        """
+        Main function to parse a command.
+        Arguments:
+        - parser
+        May be the parser with lexicon without filter to use for textual command or 
+        the parser with lexicon with filter to use for logical forms,
+        - command
+        Textual command or logical form,
+        - dData 
+        Dictionary produced by *make_lexicon()* function,
+        - step
+        Index of the step (0 for first step with textual command)
+
+        
+        Returns a string - logical form
+        """
+
         def clean_LF(LF):
             """
-            In some cases logical form that we generate in parsing process
-            may be too complicated and we may have possibility to simplify it.
+            In some cases logical form that we generate in the parsing process
+            may be too complicated and we may have the possibility to simplify it.
+
+            Returns cleaned logical form.
             """
 
 
@@ -692,26 +787,34 @@ def parsing(command, number_of_steps, dData):
                         LF = LF.replace(to_replace, replace_by)
 
             return LF
-        # Extract categories defined by regex from a command and 
-        # replace by placeholders
+        
         def text2placeholders(command, dData, dReplacement):
             """
-            This function is used on step 1 to convert original communication (command) to string of
-            placeholders. Information about categories is sttored in input dictionaries dRegexCategory, 
-            dRegexComplexity. Output dictionary dReplacement store placeholder replacements with 
-            words/phrases from command.
+            Arguments:
+            - command
+            Textual command after normalization,
+            - dData 
+            Dictionary generated by *make_lexicon()* function,
+            - dReplacement
+            Output dictionary with mapping of placeholders to phrases from the command
+
+            Returns a string - a sequence of placeholders (and, possibly, unrecognized words/phrases).
+
+            This function is used on step with index 0 to convert original textual command 
+            to the string of placeholders. Please note that if the command contains unknow
+            words/phrases (not recognised by any regex) we leave it as it is.
             """
             new_command = command
             dCategoryMaxPlaceholderNumber = {}
             
             """
             Here we extract words/phrases from command relevant to a regex from dRegexComplexity. We use
-            gready approach - use most complex applicable regex first. Relevant word/phrase is replaced
+            gready approach - use the most complex applicable regex first. Relevant word/phrase is replaced
             with placeholder -- category name expanded with integer number. 
 
-            This is possible that the same word/phrase occurs if the command more than once. To have 
-            one-to-one correspondance between placeholders and related words/phrases in dReplacement we use
-            a trick -- because keys in dReplacement are just extracted words/phrases we guaranty uniqueness
+            It is possible that the same word/phrase occurs in the command more than once. To have 
+            one-to-one correspondence between placeholders and related words/phrases in dReplacement we use
+            a trick -- because keys in dReplacement are just extracted words/phrases we guarantee uniqueness
             surrounding the word/phrase with unique number of open and close symbols '<' and '>'.
             """
 
@@ -778,28 +881,45 @@ def parsing(command, number_of_steps, dData):
 
             return new_command
 
-        # replace phrases that are outside of the lexicon with special placeholders X1, .... ---------------------
         def replace_unknown_phrases(command, dData, dReplacement):
             """
-            Given a string of placeholders (command) this is possible that it may stil contain normal 
-            words/phrases (not placeholders and not propositions). This is possible if this word/phrase is
-            outside lexicon (and list of prepositions) -- they are not covered by any regex . 
-            We call such words/phrases as unknown
+            Arguments:
+            - command
+            A string returned by *text2placeholders()* function,
+            - dData
+            Dictionary generated by *make_lexicon()* fuction, 
+            - dReplacement
+            Output dictionary with mapping of special X1,...,X12 placeholders to 
+            unrecognized phrases from the command
+
+            Returns a string - a sequence of placeholders.
+
+
+            Given a string of placeholders (command), it is possible that it may still contain 
+            normal words/phrases. It is possible if this word/phrase is
+            outside lexicon (and list of prepositions) -- they are not covered by any regex. 
+            We call such words/phrases unknown
             and we want to replace them with special placeholders - X1, X2, ...
 
-            This function just doing this returning a string placeholders where unknown phrases are 
-            replaced with special placeholders. Please not that it still may contain normal words 
-            but only some prepositions. Output dictionary dReplacement maps unknown phrases into special
-            placeholeds X1, X2, ...
+            This function is just doing this, returning a string of placeholders where unknown phrases are 
+            replaced with special placeholders. 
+            
+            Please note that it still may contain normal words 
+            but only some prepositions. 
+            
+            Output dictionary dReplacement maps unknown phrases into special
+            placeholders X1, X2, ...
 
-            TODO -- it seems we have a problem if two unknow phrases are identical - fix it!!!
             """
 
-
-            # ----- clean command (with placeholders -- now we can do this) ---------------------
+            """
+            clean command (with placeholders -- now we can do this)
+            """
             command = command.replace(':','').replace(';','').replace(',','').replace('.','').replace('+','').lower()
             
-            # command where words from lexicon are replaced with 'Y' -----
+            """
+            command where words from lexicon are replaced with 'Y'
+            """
             command_no_lex = command
 
             for word in sorted(dData['lex_words']):
@@ -825,9 +945,10 @@ def parsing(command, number_of_steps, dData):
 
 
                         command_no_lex = re.sub(to_replace,r"Y", command_no_lex, count=1)
-                        
-            # replace unknow phrases with X1, X2,...   
-                    
+
+            """          
+            replace unknow phrases with X1, X2,...   
+            """       
             aNoLex = command_no_lex.split('Y')
 
 
@@ -876,6 +997,8 @@ def parsing(command, number_of_steps, dData):
                         
                 
             return new_command
+
+        #EDIT
 
         # do the same as in text2placeholders but use LF instead of text command - we need this 
         # to make steps 2 and 3
