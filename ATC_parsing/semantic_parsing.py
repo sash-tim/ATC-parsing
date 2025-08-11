@@ -11,6 +11,10 @@ from importlib.resources import files
 def make_lexicon(dData):
 
     """
+    Argument:
+    - dData
+    Output dictionary that shores all the data we need to parse ATC command.
+
     This fuction takes some predefined text files from DATA subfolder and generates lexicon, 
     parsers and some other data that are used in the parsing of ATC commands. Output is 
     dData dictionary with all we need for parsing. If you need to fix some errors in the parsing 
@@ -91,6 +95,12 @@ def make_lexicon(dData):
 
     def read_regex(regex_file, dData):
         """
+        Arguments:
+        - regex_file
+        A string that contains all the data from *regex.txt* file,
+        - dData
+        We update this dictionary with the data extracted from *regex_file*.
+
         This function reads *regex.txt* file and stores some data in *dData* dictionary 
         """
         
@@ -237,6 +247,14 @@ def make_lexicon(dData):
     
     def read_prepositions(prepositions_file, dData):
         """
+        Arguments:
+        - prepositions_file
+        A string that contains all the data from *prepositions.txt* file,
+        - dData
+        We update this dictionary with the data extracted from *prepositions_file*.
+
+
+
         Read prepositions from *preposition_file*
         """
         
@@ -254,9 +272,15 @@ def make_lexicon(dData):
         
     
 
-    
     def read_category_filters(category_filters_file, dData):
         """
+        Arguments:
+        - category_filters_file
+        A string that contains all the data from *category_filters.txt* file,
+        - dData
+        We update this dictionary with the data extracted from *category_filters_file*.
+
+
         Read category filters from *category_filters_file*
         """
         
@@ -275,6 +299,15 @@ def make_lexicon(dData):
 
     def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter):
         """
+        Arguments:
+        - lex_complex_file
+        A string that contains all the data from *lexicon_complex.txt* file,
+        - dLexComplex
+        Output dictionary with a set of rules from *lex_complex_file*.
+        - with_filter
+        May be 'True' or 'False'. If 'False' then all rules from 'lex_complex_file' are extracted.
+        If 'False' then the extraction depends on a filter.
+
         Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
         If 
         ```
@@ -329,6 +362,13 @@ def make_lexicon(dData):
                   
     def make_lex_all_category(category):
         """
+        Argument:
+        - category
+        Category name.
+
+        Returns a string 
+
+
         All functions with prefix 'make_lex' return a string that will be part of a longer
         string (lexicon string) that will be used as an input for a NLTK function that generates 
         the lexicon itself.
@@ -359,6 +399,12 @@ def make_lexicon(dData):
     def make_lex_complex(dLexComplex):
 
         """
+        Argument:
+        - dLexComplex
+        A dictionary with information about 'complex' rules.
+
+        Returns a string.
+
         This function generates a part of lexicon string for all 'complex' rules from *dLexComplex*.
 
         For example
@@ -394,6 +440,8 @@ def make_lexicon(dData):
     
     def make_lex_preposition():
         """
+        Returns a string.
+
         Lets we have this phrase in an ATC command: '... the localizer ...'. Here 'localizer'
         belongs to the category 'NAVAID'. We want the same to be true for the phrase 'the localizer' 
         where 'the' is a preposition. 
@@ -433,6 +481,12 @@ def make_lexicon(dData):
     
     def lex_words(lexicon, dData):
         '''
+        Arguments:
+        - lexicon
+        The lexicon for the ATC commands parsing.
+        - dData
+        We update dData with information about all words that occur in the lexicon.
+
         This function is used when the lexicon' is generated. It extract all words from it. 
         Results are stored in *dData*. We need this information to extract unknow phrases from a 
         command we want to parse.
@@ -642,17 +696,19 @@ def parsing(command, number_of_steps, dData):
     - *command*
     Original ATC command in textual form. Please note that we ignore punctuation.
     - *number_of_steps*
-    The first step takes the original textual command as input and produces a logical form that represents
-    semantics of the command. Depending on the command complexity, it may be possible to make one
-    or more additional steps where logical form returned by previous step is parsed to get new
-    compressed logical form if this is possible. The value of the parameter is the maximum 
-    number of steps that will be produced. The real number may be smaller if logical forms that are
-    produced 
+    The first step (step index 0) takes the original textual command as input and produces a 
+    logical form that represents semantics of the command. Depending on the command complexity, 
+    it may be possible to make one or more additional steps where logical form returned by 
+    previous step is parsed to get new compressed logical form if this is possible. 
+    The value of the parameter is the maximum number of steps that will be produced. 
+    The real number may be smaller if logical forms that are produced 
     in two sequential steps are identical.
     - dData
     The dictionary generated by *make_lexicon()* function. It contains all data that we need to
     parse the command in any number of steps. 
 
+    
+    Returns logical form (string) that represents semantics of the command
     """
 
     def command_normalization (command):
@@ -704,7 +760,7 @@ def parsing(command, number_of_steps, dData):
         - dData 
         Dictionary produced by *make_lexicon()* function,
         - step
-        Index of the step (0 for first step with textual command)
+        Index of the step (0 for first step for textual command)
 
         
         Returns a string - logical form
@@ -715,7 +771,7 @@ def parsing(command, number_of_steps, dData):
             In some cases logical form that we generate in the parsing process
             may be too complicated and we may have the possibility to simplify it.
 
-            Returns cleaned logical form.
+            Returns string - cleaned logical form.
             """
 
 
@@ -800,21 +856,23 @@ def parsing(command, number_of_steps, dData):
 
             Returns a string - a sequence of placeholders (and, possibly, unrecognized words/phrases).
 
-            This function is used on step with index 0 to convert original textual command 
-            to the string of placeholders. Please note that if the command contains unknow
-            words/phrases (not recognised by any regex) we leave it as it is.
+            This function is used on the step with index 0 to convert the original textual command 
+            to a string of placeholders. Please note that if the command contains unrecognized
+            words/phrases (unrecognised by any regex), we leave it as it is.
             """
             new_command = command
             dCategoryMaxPlaceholderNumber = {}
             
             """
-            Here we extract words/phrases from command relevant to a regex from dRegexComplexity. We use
-            gready approach - use the most complex applicable regex first. Relevant word/phrase is replaced
-            with placeholder -- category name expanded with integer number. 
+            Here we extract words/phrases from command relevant to a regex from *regex.txt*. 
+            We use a greedy approach - use the most complex applicable regex first. 
+            The relevant word/phrase is replaced
+            by the placeholder -- category name expanded with an integer number. 
 
-            It is possible that the same word/phrase occurs in the command more than once. To have 
-            one-to-one correspondence between placeholders and related words/phrases in dReplacement we use
-            a trick -- because keys in dReplacement are just extracted words/phrases we guarantee uniqueness
+            The same word/phrase may occur in the command more than once. To have 
+            one-to-one correspondence between placeholders and related words/phrases in 
+            dReplacement we use a trick -- because keys in dReplacement are just extracted 
+            words/phrases we guarantee uniqueness
             surrounding the word/phrase with unique number of open and close symbols '<' and '>'.
             """
 
@@ -892,17 +950,18 @@ def parsing(command, number_of_steps, dData):
             Output dictionary with mapping of special X1,...,X12 placeholders to 
             unrecognized phrases from the command
 
-            Returns a string - a sequence of placeholders.
+            Returns a string - a sequence of placeholders (possibly with some normal words -
+            prepositions).
 
 
             Given a string of placeholders (command), it is possible that it may still contain 
             normal words/phrases. It is possible if this word/phrase is
-            outside lexicon (and list of prepositions) -- they are not covered by any regex. 
-            We call such words/phrases unknown
+            outside the lexicon (and list of prepositions) -- they are not covered by any regex. 
+            We call such words/phrases unknown,
             and we want to replace them with special placeholders - X1, X2, ...
 
-            This function is just doing this, returning a string of placeholders where unknown phrases are 
-            replaced with special placeholders. 
+            This function is just doing this, returning a string of placeholders where unknown 
+            phrases are replaced with special placeholders. 
             
             Please note that it still may contain normal words 
             but only some prepositions. 
@@ -918,7 +977,7 @@ def parsing(command, number_of_steps, dData):
             command = command.replace(':','').replace(';','').replace(',','').replace('.','').replace('+','').lower()
             
             """
-            command where words from lexicon are replaced with 'Y'
+            command where words from the lexicon are replaced with 'Y'
             """
             command_no_lex = command
 
@@ -998,32 +1057,38 @@ def parsing(command, number_of_steps, dData):
                 
             return new_command
 
-        #EDIT
+        
 
-        # do the same as in text2placeholders but use LF instead of text command - we need this 
-        # to make steps 2 and 3
         def LF2placeholders(LF, dReplacement):
 
-            
             """
-            This function is used to generate placeholders on 2nd and 3rd steps. The difference is that here
-            instead of original text of communication in English we have logical form (LF) that is result
-            of semantic parsing on the 1st step.
+            Arguments:
+            - LF
+            Logical form (string) - results of the parsing on the previous step,
+            - dReplacement
+            Replacement of the new placeholders by related functions from the LF.
 
-            This is example of such LF after 1st step for communication
-            (A) "Southwest 578 cleared to Atlanta via radar vectors then ...":
+            Returns a string - a new sequence of placeholders.
+
+            This function is used to generate placeholders on all steps except step index 0. 
+            The difference is that here, instead of the original textual command, we have a logical form 
+            (LF). That is the result of semantic parsing on the previous step.
+
+            This is an example of such LF after step index 0 for the command
+            "*Southwest 578 cleared to Atlanta via radar vectors then ...*:
+            
 
             ```
             _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)); _CLEARED_(_CLEARED_(*cleared*),_TO_(*to*),_PLACE_(*Atlanta*)); _VIA_(*via*); _RADAR_(*radar vectors*); _THEN_(_THEN_(*then*),_ROUTE_(_ROUTE_(*V222*),_TO_(*to*),_FIX_(*CRG*))); _THEN_(_THEN_(*then*),_DIRECTION_(*direct*)); _ALTITUDECHANGE_(_ALTITUDECHANGE_(*Climb and maintain*),_INTNUMBER_(*5000*)); _EXPECT_(_EXPECT_(*expect*),_INTNUMBER_(*35000*)); _TIME_(_WORDNUMBER_(*ten*),_TIMEMINSEC_(*minutes*)); _AFTER_(_AFTER_(*after*),_DEPARTURE_(*departure*)); _DEPARTURE_(_DEPARTURE_(*Departure*),_FREQUENCY_(_FREQUENCY_(*frequency*),_REALNUMBER_(*124.85*))); _SQUAWK_(_SQUAWK_(*squawk*),_INTNUMBER_(*5263*));
             ```
-            In this case we can split the LF by ';' into sequence of functions: CALLSIGN, CLEARED, ...
-            We use names of these functions (category names) to generate placeholders : callsign1, cleared1, ...
-            As replacement for placeholder callsign1 we use related function from LF - _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)).
+            In this case, we can split the LF by ';' into a sequence of functions: CALLSIGN, CLEARED, ...
+            We use names of these functions (category names) to generate placeholders: callsign1, 
+            cleared1, ...
+            
+            As a replacement for placeholder callsign1 we use the related function 
+            from LF - _CALLSIGN_(_AIRCRAFT_(*Southwest*),_INTNUMBER_(*578*)).
 
-            In the end of step 2 we have new LF and use it to generate new sequence of placeholders and new LF
-            in the step1. 
-
-
+            
             """
 
 
@@ -1069,69 +1134,96 @@ def parsing(command, number_of_steps, dData):
 
             return new_command
 
-        #parse a segment of a command
+        
         def parse_segment(parser, segment, maxExpansions, dReplacement_1, dReplacement_2):
-                """
-                This function returns logical form (LF) given a link to parser and segment of a command
-                we want to parse. Please note that if a command is long and we can't parse it using CCG
-                then we try to split it into segments that while are semantically complete can be parsed.
+            """
+            Arguments:
+            -parser
+            The same as in *parsing()* function
+            - segment
+            Part of the command that may be parsed successfully,
+            - maxExpansions
+            Maximum number of expansion of the segment with special term '_context_' -
+            a trick to increase the probability that the segment will be parsed successfully,
+            - dReplacement_1
+            Dictionary of placeholder replacements to replace placeholders  with the correct
+            words/phrases from the segment,
+            - dReplacement_2
+            Dictionary of special placeholder (X1, X2,...) replacements to replace 
+            placeholders with the correct unknown words/phrases from the segment.
 
-                The problem is that the parser may return empty result even for segment. 
-                This depends of lexicon (used in parser
-                generation) and segment itself. To reduce the probability of such event we use a trick 
-                -- expanding original segment with zero, one or more (up to maxExpansions) copies of 
-                special string 
-                '_context_' that we add in the very beginning of the segment. We start with zero copies
-                and stop if number of copies achieved its maximum or if we got at least one succesful 
-                parsing.
+            Returns logical form (a string) -- the result of parsing the segment.
 
-                LF that we got as result of parsing still contain placeholder instead of real words/phrases
-                from the command. We use dictionary dReplacement_1 and d_Replacement_2 that should store
-                correct replacements of these placeholders.
-                """
+            This function returns a logical form (LF) given a parser and a segment of 
+            a command we want to parse. Please note that if a command is long and we can't 
+            parse it using CCG, then we try to split it into segments that can be parsed, still 
+            being semantically complete.
 
-
-                nExpansions = 0
-                nParses = 0
-                parses = []
-
+            The problem is that the parser may return an empty result even for a segment. 
+            This depends on the lexicon (used in parser generation) and the segment itself. 
             
-                segment_expanded = segment
-                while nExpansions <= maxExpansions and nParses == 0:
-                    
-                    if nExpansions > 0:
-                        segment_expanded = '_context_ '+ segment_expanded
-                    nExpansions += 1
 
-                    parses = list(parser.parse(segment_expanded.split()))
-                    nParses = len(parses)   
-                    
-                if nParses == 0:
-                    return ''    
-                else:
-                    
-                    LF = ''
-                    for t in parses:
-                        (token, op) = t.label()
-                        LF = str(token.semantics())
-                        break
+            To reduce the probability of such event, we use a trick 
+            -- expanding original segment with zero, one or more (up to maxExpansions) copies of 
+            special term '_context_' that we add in the very beginning of the segment. 
+            
+            We start with zero copies of the term and stop if the parsing is successful or
+            the number of copies achieved its maximum.
 
+            The LF that we get as a result of the parsing still contains placeholders instead of 
+            real words/phrases from the segment. We use dictionaris *dReplacement_1* and 
+            *dReplacement_2* that should store the correct replacements of these placeholders.
+            """
+
+
+            nExpansions = 0
+            nParses = 0
+            parses = []
+
+        
+            segment_expanded = segment
+            """
+            The parsing is successful if 
+            ```
+            nParses > 0
+            ```
+            """
+            while nExpansions <= maxExpansions and nParses == 0:
+                
+                if nExpansions > 0:
+                    segment_expanded = '_context_ '+ segment_expanded
+                nExpansions += 1
+
+                parses = list(parser.parse(segment_expanded.split()))
+                nParses = len(parses)   
+                
+            if nParses == 0:
+                return ''    
+            else:
+                
+                LF = ''
+                for t in parses:
+                    (token, op) = t.label()
+                    LF = str(token.semantics())
+                    break
+
+                
+                LF_replacement = LF
+                
+                
+                for X in dReplacement_1:
+                    Y = dReplacement_1[X]
+                    LF_replacement = re.sub(r"\b"+X+r"\b",'*'+Y+'*', LF_replacement, count=1)
                     
-                    LF_replacement = LF
+                for X in dReplacement_2:
+                    Y = dReplacement_2[X]
+                    LF_replacement = re.sub(r"\b"+X+r"\b",'*'+Y+'*', LF_replacement, count=1)
                     
-                    
-                    for X in dReplacement_1:
-                        Y = dReplacement_1[X]
-                        LF_replacement = re.sub(r"\b"+X+r"\b",'*'+Y+'*', LF_replacement, count=1)
-                        
-                    for X in dReplacement_2:
-                        Y = dReplacement_2[X]
-                        LF_replacement = re.sub(r"\b"+X+r"\b",'*'+Y+'*', LF_replacement, count=1)
-                        
-                    LF_replacement = LF_replacement.replace('<','').replace('>','')
-                    
-                    
-                    return LF_replacement
+                LF_replacement = LF_replacement.replace('<','').replace('>','')
+                
+                
+                return LF_replacement
+
 
         LF_final = ''
 
@@ -1162,7 +1254,9 @@ def parsing(command, number_of_steps, dData):
         LF_replacement = parse_segment(parser, command_new, maxExpansion, dReplacement_1, dReplacement_2)
         if LF_replacement != '':
 
-            # replace function _context_() by its argument if it is another 
+            """
+            Clean function _context_(...) by its argument if it is another function
+            """
             pattern = r"\b_context_\(_(.+)\)"
             p = re.compile(pattern, re.I)
             iterator = p.finditer(LF_replacement)
@@ -1176,8 +1270,9 @@ def parsing(command, number_of_steps, dData):
             
             LF_final = LF_final +LF_replacement+'; '
         else:
-            # we need to split the sentence into segments
-
+            """ 
+            we need to split the sentence into segments
+            """
             max_segment_length = 7
             while len(command_new) > 0:
                 command_new_words = command_new.split(' ')
@@ -1214,7 +1309,6 @@ def parsing(command, number_of_steps, dData):
                             
         return LF_final
 
-    ###################################
     command = command_normalization(command)
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
@@ -1237,10 +1331,23 @@ def parsing(command, number_of_steps, dData):
     return LF
    
 def logicalForm2JSON(LF):
+    """
+    If you prefer read semantics of a command using JSON format, them you can use this function.
+
+    Arguments:
+    - LF
+    Parsing results in logical form (string)
+
+    Returns JSON string.
+    """
     
     def clean_JSON(sJSON):
-
-        # delete '{' and '}' around '"..."'
+        """
+        Clean JSON string.
+        """
+        """
+        Delete '{' and '}' around '"..."'
+        """
         while True:
             sJSON_new = sJSON
             pattern = r"\{\"[\w\d\s\.\'\-]+\"\}" 
@@ -1259,10 +1366,11 @@ def logicalForm2JSON(LF):
             else:
                 sJSON = sJSON_new
 
-        # delete ',' and '\s' before '}'
+        """
+        Delete ',' and '\s' before '}'
+        """
         while True:
-            sJSON_new = sJSON
-            #pattern = r"\,\s+\}" 
+            sJSON_new = sJSON 
             pattern = r"[\,\s]+\}" 
             p = re.compile(pattern, re.I)
             iterator = p.finditer(sJSON)
@@ -1279,7 +1387,16 @@ def logicalForm2JSON(LF):
             else:
                 sJSON = sJSON_new
         
-        # delete simple duplicated functions: "xyz":{"xyz":{...}} -> "xyz":{...}
+        """
+        Delete simple duplicated functions. Replace
+        ``` 
+        "xyz":{"xyz":{...}}
+        ```
+        with
+        ```
+        "xyz":{...}
+        ```
+        """
         while True:
             sJSON_new = sJSON
 
@@ -1300,9 +1417,20 @@ def logicalForm2JSON(LF):
                 sJSON = sJSON_new
 
 
-        
-        ########################################################################
-        # merge 'the: "the":{"xyz":{...}} -> "the_xyz":{...}
+        """
+        replace 
+        ```
+        the":{"xyz":{...}}
+        ```
+        with
+        ```
+        the_xyz":{...}
+        ```
+        where instead of 'the' may be any word from
+        ```
+        ['the','have','your','are','over','be','an']
+        ```
+        """
 
         for word in ['the','have','your',
                     'are','over','be',
@@ -1345,7 +1473,13 @@ def logicalForm2JSON(LF):
                     break
     
         return sJSON
+    
+
     def make_unique_keys(sJSON):
+        """
+        All keys in JSON should be unique. In our case key is a category, and we may have more than
+        one identical category in the parsing results. To get unique, we add an integer index to each category.
+        """
 
         dKeys = {}
         pattern = r"\"[a-z\s]+\":" 
