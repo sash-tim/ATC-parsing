@@ -32,6 +32,7 @@ AIRSPACE/AIRSPACE {\\x._AIRSPACE_(x,_AIRSPACE_(airspace1))}
 AIRSPACE/DIRECTIONMAGNETIC {\\x._AIRSPACE_(_AIRSPACE_(airspace1),x)}
 
 #After
+AFTER/MEASURE {\\x._AFTER_(_AFTER_(after1), x)}
 AFTER/AIRCRAFT {\\x._AFTER_(_AFTER_(after1), x)}
 AFTER/GOAROUND {\\x._AFTER_(_AFTER_(after1), x)}
 AFTER/PLACE {\\x._AFTER_(_AFTER_(after1), x)}
@@ -1324,6 +1325,9 @@ SEQUENCE/AFTER {\\x._SEQUENCE_(_SEQUENCE_(sequence1),x)}
 
 #Service
 SERVICE/REALNUMBER {\\x._SERVICE_(_SERVICE_(service1), _FREQUENCY_(x))}
+SERVICE/STATUS {\\x._SERVICE_(_SERVICE_(service1), x)}
+
+
 #SID
 SID/DEPARTURE {\\x._SID_(_SID_(sid1), x)}
 
