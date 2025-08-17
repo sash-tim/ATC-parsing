@@ -9,11 +9,11 @@
 
 Why do we may need semantic parsing if we have GPT-5 and other LLMs?
 
-Working previously with GPT-4.5, I discovered a few ATC commands where the model had some problems with its interpretation. Recently, I tested the same commands using GPT-5 and got correct results. Please see examples in [Appendix](#Appendix)
+Working previously with GPT-4.5, I discovered a few ATC commands where the model had some problems with its interpretation. Recently, I tested the same commands using GPT-5 and got correct results. Please see examples in the [Appendix](#Appendix)
 
-I started a discussion with GPT-5 about the difference between these two versions in the context of ATC commands interpretation. Also, I asked GPT-5 if this is possible to estimate the probability of error in the interpretation of ATC commands by the model itself.
+I started a discussion with GPT-5 about the difference between these two versions in the context of ATC commands interpretation. Also, I asked GPT-5 if this is possible to estimate the probability of error in the interpretation of ATC commands by the model itself (not for a specific command but in general).
 
-The GPT-5 generated a document that I can share. I hope it may be interesting to the ATC-related community.
+The GPT-5 generated a document that I want share. I hope it may be interesting to the ATC-related community.
 
 *I believe that the analysis and estimations presented in the document below support the idea that we need to validate/double-check results produced by LLM for ATC commands, and semantic parsing is one of the options as a validation tool.*
 
@@ -159,7 +159,7 @@ Problems with GPT-4.5 response:
 }
 ```
 
-GPT-5 response is correct and much more detailed compared to GPT-4.5 respons.
+GPT-5 response is correct and much more detailed compared to GPT-4.5 response.
 
 3. Semantic parsing response:
 
