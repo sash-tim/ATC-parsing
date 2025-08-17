@@ -1,10 +1,17 @@
-# A note about GPT-5 and ATC command understanding #
+# A note about GPT-5 and ATC command understanding
 
-## Why do we may need semantic parsing if we have GPT-5 and other LLMs? ##
+## Contents
+- [Why semantic parsing?](#why-semantic-parsing)
+- [Understanding ATC Command Interpretation: GPT-4.5 vs GPT-5](#understanding-atc-command-interpretation-gpt-45-vs-gpt-5)
+- [Appendix](#appendix)
 
-Working previously with GPT-4.5, I discovered a few ATC commands where the model had some problems with its interpretation.
+## Why semantic parsing?
 
-Recently, I tested the same commands using GPT-5 and got correct results. I started a discussion with GPT-5 about the difference between these two versions in the context of ATC commands interpretation. Also, I asked GPT-5 if this is possible to estimate the probability of error in the interpretation of ATC commands by the model itself.
+Why do we may need semantic parsing if we have GPT-5 and other LLMs?
+
+Working previously with GPT-4.5, I discovered a few ATC commands where the model had some problems with its interpretation. Recently, I tested the same commands using GPT-5 and got correct results. Please see examples in [Appendix](#Appendix)
+
+I started a discussion with GPT-5 about the difference between these two versions in the context of ATC commands interpretation. Also, I asked GPT-5 if this is possible to estimate the probability of error in the interpretation of ATC commands by the model itself.
 
 The GPT-5 generated a document that I can share. I hope it may be interesting to the ATC-related community.
 
@@ -12,9 +19,9 @@ The GPT-5 generated a document that I can share. I hope it may be interesting to
 
 Please note that these are not official estimations but the product of GPT-5.
 
-## Author: GPT-5 ##
 
-## Understanding ATC Command Interpretation: GPT-4.5 vs GPT-5 ##
+## Understanding ATC Command Interpretation: GPT-4.5 vs GPT-5 
+### by GPT-5
 
 **1. Background**
 
@@ -74,3 +81,116 @@ This schema makes it possible to consistently parse, validate, and train on ATC 
 - The structured schema provides a foundation for training pilots, validating readbacks, or simulating ATC interactions.
 
 *In short: GPT-5 is much closer to how real-world ATC instructions are parsed and understood, though stress-testing with complex and unusual commands is still advisable.*
+
+## Appendix
+
+ATC command:
+```
+Emirates 215 fly heading 330 vectors around weather advise when able direct DAG
+```
+1. GPT-4.5 response:
+
+```
+{
+  "aircraft_identification": "Emirates 215",
+  "maneuver": {
+    "action": "fly heading",
+    "heading": 330,
+    "unit": "degrees",
+    "condition": {
+      "phrase": "when able",
+      "applies_to": "maneuver",
+      "meaning": "turn to heading 330 when the aircraft is able"
+    }
+  },
+  "reason": {
+    "phrase": "vectors around weather"
+  },
+  "navigation": {
+    "action": "direct",
+    "destination": "DAG"
+  }
+}
+
+```
+
+Problems with GPT-4.5 response:
+- Condition applied to *heading*. This is incorrect because the *heading* command from a controller is based on radar data and should be executed by the pilot immediately.
+- *Advise* instruction dropped.
+
+2. GPT-5 response:
+
+```
+{
+  "aircraft_identification": "Emirates 215",
+  "reason": {
+    "phrase": "vectors around weather",
+    "meaning": "temporary heading assignment to avoid weather cells"
+  },
+  "maneuver": {
+    "action": "fly heading",
+    "heading": 330,
+    "unit": "degrees"
+  },
+  "navigation": {
+    "action": "proceed direct",
+    "destination": "DAG",
+    "type": "waypoint (Daggett, California)",
+    "condition": {
+      "phrase": "when able",
+      "applies_to": "navigation",
+      "meaning": "pilot may proceed direct DAG when the aircraft is capable (e.g., after clearing weather)"
+    }
+  },
+  "communication": {
+    "action": "advise",
+    "meaning": "inform ATC when ready to proceed direct DAG"
+  },
+  "operational_context": {
+    "phase": "enroute",
+    "controller_intent": "Vector aircraft around weather on heading 330, then allow a return to the planned route via direct DAG when conditions permit"
+  },
+  "pilot_response_expected": [
+    "Read back: 'heading 330, vectors around weather, will advise when able direct DAG, Emirates 215'",
+    "Fly heading 330 immediately",
+    "Monitor weather and determine when able to go direct DAG",
+    "Advise ATC when able to proceed direct DAG"
+  ]
+}
+```
+
+GPT-5 response is correct and much more detailed compared to GPT-4.5 respons.
+
+3. Semantic parsing response:
+
+```
+{
+  "CALLSIGN_1": {
+    "AIRCRAFT_1": "Emirates",
+    "INTNUMBER_1": "215"
+  },
+  "HEADING_1": {
+    "NAVIGATION_1": "fly",
+    "HEADING_2": {
+      "HEADING_3": "heading",
+      "INTNUMBER_2": "330"
+    }
+  },
+  "RADAR_1": {
+    "RADAR_2": "vectors",
+    "AROUND_1": "around",
+    "WEATHER_1": "weather"
+  },
+  "REPORT_1": {
+    "REPORT_2": "advise",
+    "WHEN_1": {
+      "WHEN_2": "when",
+      "STATUS_1": "able"
+    }
+  },
+  "DIRECTION_1": {
+    "DIRECTION_2": "direct",
+    "FIX_1": "DAG"
+  }
+}
+```
