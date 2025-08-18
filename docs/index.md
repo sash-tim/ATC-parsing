@@ -2,7 +2,7 @@
 
 You can use this library to parse Air Traffic Control commands using CCG semantic parsing from NLTK.
 
-- Home: index.md
-- Content:
+Home: index.md
+Content:
     - Getting Started: Short description.md
     - Advanced: A note about GPT-5 and ATC commands understanding.md
