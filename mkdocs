@@ -1,0 +1,16 @@
+site_name: ATC command semantic parsing
+site_url: https://sash-tim.github.io/ATC-parsing/
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Content:
+      - Getting Started: Short description.md
+      - Advanced: A note about GPT-5 and ATC commands understanding.md
+  
