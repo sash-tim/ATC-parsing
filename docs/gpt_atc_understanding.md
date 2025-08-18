@@ -32,7 +32,7 @@ Earlier model versions (e.g., GPT-4.5) sometimes misapplied conditions or droppe
 **2. Key Improvements in GPT-5**
 
 | **Area**     | **GPT-4.5 Typical Issue** |**GPT-5 Improvement** |
-|:------------|:-----:|-------:|
+|------------|-----|-------|
 | Conditions (“when able”) |Often attached to wrong element (e.g., heading instead of navigation). | Tracks scope correctly; attaches conditions to maneuver, navigation, or comms depending on syntax. |
 | Multi-part clearances| Flattened or dropped secondary instructions (“advise,” “contact”).| Preserves hierarchy: maneuver / navigation / communication separated.|
 |Reasons (“due to traffic”)|Ignored or unclassified.|Explicitly recorded in structured output.|
@@ -40,12 +40,14 @@ Earlier model versions (e.g., GPT-4.5) sometimes misapplied conditions or droppe
 |Communication vs Maneuver|Sometimes confused (“contact Ground” treated like a maneuver).|Clear distinction between communication and flight-path instructions.|
 |Operational context|Rarely provided.|Adds *operational_context* with phase of flight and controller intent.|
 |Pilot response|Usually missing.|Provides pilot_response_expected for training and validation.|
----------------------------------
+
+
 
 ## 3. Estimated Reliability in GPT-5 ##
 
+
 |**Command Type**|**Reliability (Approx.)**|
-|:----------|------:|
+|----------|------|
 |Simple single clearances|~99%|
 |Clearance with reason|~97%|
 |Maneuver + conditional navigation|~95%|
@@ -53,7 +55,7 @@ Earlier model versions (e.g., GPT-4.5) sometimes misapplied conditions or droppe
 |Route rejoin/resume|~93%|
 |Complex chained clearances|~85–90%|
 |Non-standard phraseology|~75–80%|
------------------------------------
+
 
 ## 4. JSON Schema Template ##
 
