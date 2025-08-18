@@ -11,6 +11,6 @@ theme:
 nav:
   - Home: index.md
   - Content:
-      - Getting Started: Short description.md
-      - Advanced: A note about GPT-5 and ATC commands understanding.md
+      - Getting Started: getting_started.md
+      - GPT-5 and ATC command understanding: gpt_atc_understanding.md
   
