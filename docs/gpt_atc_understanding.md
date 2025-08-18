@@ -86,11 +86,12 @@ This schema makes it possible to consistently parse, validate, and train on ATC 
 
 ## Appendix
 
-ATC command:
+**ATC command:**
 ```
 Emirates 215 fly heading 330 vectors around weather advise when able direct DAG
 ```
-1. GPT-4.5 response:
+
+**GPT-4.5 response:**
 
 ```
 {
@@ -120,7 +121,7 @@ Problems with GPT-4.5 response:
 - Condition applied to *heading*. This is incorrect because the *heading* command from a controller is based on radar data and should be executed by the pilot immediately.
 - *Advise* instruction dropped.
 
-2. GPT-5 response:
+**GPT-5 response:**
 
 ```
 {
@@ -163,7 +164,7 @@ Problems with GPT-4.5 response:
 
 GPT-5 response is correct and much more detailed compared to GPT-4.5 response.
 
-3. Semantic parsing response:
+**Semantic parsing response:**
 
 ```
 {
