@@ -13,4 +13,9 @@ nav:
   - Content:
       - Getting Started: getting_started.md
       - GPT-5 and ATC command understanding: gpt_atc_understanding.md
-  
+
+markdown_extensions:
+  - tables
+  - pymdownx.extra
+  - pymdownx.superfences
+
