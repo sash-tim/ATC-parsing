@@ -249,6 +249,11 @@ r"\bflight\s+line\b"
 
 #Airspace
 r"\bairspace\b"
+r"\bGander\s+oceanic\b"
+r"\bGander\b"
+r"\bShanwick\s+oceanic\b"
+r"\bShanwick\b"
+r"\bNAT\b"
 r"\bFATO\b"
 r"\bMOA[s]*\b"
 r"\bairspace\b"
@@ -793,6 +798,8 @@ r"\bfirst\b"
 r"\bsecond\b"
 r"\bwhilst\b"
 
+
+
 #If
 r"\bonce\b"
 r"\bif\b"
@@ -895,7 +902,7 @@ r"\b[VJTQLY]\d+\s+to\s+([a-z]{3})\b"
 
 r"\babc\b"
 r"\babq\b"
-r"\bxyz\b"
+r"\batl\b"
 r"\baus\d*\b"
 r"\bcrg\d*\b"
 r"\bdag\d*\b"
@@ -915,6 +922,7 @@ r"\bpgs\d*\b"
 r"\bphl\d*\b"
 r"\btay\d*\b"
 r"\btnp\d*\b"
+r"\bxyz\b"
 r"\bzun\d*\b"
 
 r"\bintercept\s+llz\b"
@@ -945,6 +953,7 @@ r"\b(level)\s+flevel\d\b"
 r"\bFL\d+\b"
 
 #FLevelValue
+r"\bflight\s+level\s+(\d+)\b"
 r"\bflight\s+level\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand))\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\bflight\s+level\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand))\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\bFL\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|ninerhundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand))\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
@@ -1209,6 +1218,9 @@ r"\brunway\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 #RealWordNum 
 r"\b(decimal\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))*(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))*)\b"
+
+
+
 #Of
 r"\bof\b"
 
@@ -1275,7 +1287,6 @@ r"\b[A-Z]\d*\b"
 r"\bmaastricht\b"
 r"\bKSEA\b"
 r"\bKPDX\b"
-r"\bgander\b"
 r"\balbuquerque\b"
 r"\binternational\b"
 r"\bmontgomery\b"
@@ -1314,7 +1325,6 @@ r"\blubbock\b"
 r"\bamarillo\b"
 r"\btulsa\b"
 r"\bdenver\b"
-r"\bgander\b"
 r"\bJFK\b"
 r"\bnew\s+york\b"
 r"\bscottish\b"
@@ -1556,10 +1566,18 @@ r"\bover\s+to\b"
 r"\b(continue\s+to)\s+ground\b"
 r"\bswitching\s+to\b"
 
+#coordinate
+r"\b\d+\s+north\b"
+r"\b\d+\s+west\b"
+r"\b\d+\s*n\b"
+r"\b\d+\s*w\b"
+
+
 #report
 r"\bsay\b"
 r"\bpilot\s+reports\b"
 r"\breports*\b"
+r"\breport\s+estimating\b"
 r"\breported\b"
 r"\badvise\b"
 
@@ -1698,6 +1716,7 @@ r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
+r"\btrack\b"
 r"\bthe\s+(hold)\b"
 r"\bairway\b"
 r"\bglide\s+slope\b"
@@ -1862,6 +1881,7 @@ r"\bnorku\d\b"
 r"\bnovem\d\b"
 r"\bnubar\d\b"
 r"\bmakal\d\b"
+r"\bmalot\d\b"
 r"\bmarem\d\b"
 r"\bmarev\d\b"
 r"\bmasur\d\b"
@@ -2277,6 +2297,7 @@ r"\bnorku\b"
 r"\bnovem\b"
 r"\bnubar\b"
 r"\bmakal\b"
+r"\bmalot\b"
 r"\bmarem\b"
 r"\bmarev\b"
 r"\bmasur\b"

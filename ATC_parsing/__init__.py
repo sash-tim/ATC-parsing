@@ -1,1 +1,1 @@
-from .semantic_parsing import make_lexicon, parsing, logicalForm2JSON
+from .semantic_parsing import make_lexicon, parsing, logicalForm2JSON, parsing_debug
