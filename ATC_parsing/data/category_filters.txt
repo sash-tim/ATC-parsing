@@ -8,6 +8,7 @@ at
 before
 by
 cancelled
+conj
 cleared
 confirmation
 confirmed
@@ -28,6 +29,7 @@ off
 on
 out
 phoneticalphabet
+realnumber
 report
 restriction
 status
