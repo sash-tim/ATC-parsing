@@ -343,6 +343,7 @@ r"\b(?:descend)\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|
 
 #altitudechange
 r"\binitial\s+climb\b"
+r"\bstep\s+climb\b"
 r"\bdescent\b"
 r"\bfurther\s+descent\b"
 r"\bclimb\s+and\s+maintain\b"
@@ -927,6 +928,8 @@ r"\bocn\d*\b"
 r"\bolm\d*\b"
 r"\bpgs\d*\b"
 r"\bphl\d*\b"
+r"\bric\d*\b"
+r"\bspy\d*\b"
 r"\btay\d*\b"
 r"\btnp\d*\b"
 r"\bxyz\b"
@@ -952,9 +955,11 @@ r"\blevel\s+at\s+(\d+[.,]?\d*)\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\blevel\s+at\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\blevel\b(?![\s\w\d]*\s+feet)(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+measure)"
 r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(final)\b"
-r"\bfinal\s+level\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
+r"\bfinal\s+level\b(?![\s\w\d]*\s+altitude)
+r"\bfinal\s+level\b(?![\s\w\d]*\s+feet)"
 r"\bfinal\s+requested\b"
-r"\bflight\s+level\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
+r"\bflight\s+level\b(?![\s\w\d]*\s+altitude)
+r"\bflight\s+level\b(?![\s\w\d]*\s+feet)"
 r"\b(level)\s+flight\b"
 r"\b(level)\s+flevel\d\b"
 r"\bFL\d+\b"
@@ -1289,6 +1294,7 @@ r"\bZulu\b"
 r"\b[A-Z]\d*\b"
 
 #Place
+r"\bnorfolk\b"
 r"\bsan\s+francisco\b"
 r"\bFrankfurt\b"
 r"\bmaastricht\b"
@@ -1581,6 +1587,7 @@ r"\b\d+\s*w\b"
 
 
 #report
+r"\b((say|report|advise)\s+intentions*)\b"
 r"\bsay\b"
 r"\bpilot\s+reports\b"
 r"\breports*\b"
@@ -1691,7 +1698,6 @@ r"\bline\s+up\b"
 r"\bwait\b"
 
 r"\bremain\b"
-r"\bsay\s+intentions\b"
 r"\bgo\s+ahead\b"
 r"\bpass\s+your\s+message\b"
 r"\bfollow\b"
