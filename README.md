@@ -69,6 +69,17 @@ Logical Form:   _CALLSIGN_(*DAL456*); _NAVIGATION_(_NAVIGATION_(_NAVIGATION_(_NA
 
 JSON:   {"CALLSIGN_1":"DAL456", "NAVIGATION_1":{"NAVIGATION_2":{"NAVIGATION_3":{"NAVIGATION_4":{"NAVIGATION_5":{"NAVIGATION_6":"cross","MEASURE_1":{"MEASURE_2":"40","MEASURE_3":{"MEASURE_4":"miles","DIRECTIONMAGNETIC_1":"east"}}}},"OF_1":"of","FIX_1":"PGS"}},"AT_1":"at","FLEVEL_1":{"COMPARISONOR_1":"or above","FLEVEL_2":"FL330"}}}
 ```
+Please note that you may use another version of the parsing function:
+
+```
+dPlaceholders = {}
+
+logicalForm = atc.parsing_debug(command, number_of_steps, dData, dPlaceholders)
+    
+```
+The ```dPlaceholders``` dictionary contains placeholders generated for each parsing step. This information may be useful to understand problems with parsing and fix them with an update of the files in the data folder.
+
+
 
 ## Please provide feedback ##
 
