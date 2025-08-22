@@ -4,6 +4,7 @@ r"\bWilco\b"
 
 
 #AIRCRAFT
+r"\bbritish\s+airways\b"
 r"\bNorwegian\b"
 r"\bNorwegian\s+Air\s+Shuttle\b"
 r"\bNor\s+Shuttle\b"
@@ -548,7 +549,7 @@ r"\band\b"
 r"\babracadabra\b"
 
 #Controller
-
+r"\bcontact\s+(approach)\b"
 r"\bcentral\b"
 r"\bagency\b"
 r"\bCentre\b"
@@ -793,8 +794,6 @@ r"\bwonderful\s+day\b"
 #Logic
 r"\bif\s+you\s+read\b"
 r"\bwhile\b"
-r"\bon\s+the\s+missed\s+approach\b"
-r"\bon\s+the\s+missed\b"
 r"\bawait\b"
 r"\bto\s+be\b"
 r"\botherwise\b"
@@ -935,6 +934,8 @@ r"\btnp\d*\b"
 r"\bxyz\b"
 r"\bzun\d*\b"
 
+r"\bcoast\s+vor\b"
+
 r"\bintercept\s+llz\b"
 r"\bllz\s+intercept\b"
 r"\bfix\b"
@@ -1010,6 +1011,9 @@ r"\bradio\s+check\b"
 r"\bfrom\b"
 
 #GoAround
+r"\bunable\s+approach\b"
+r"\bon\s+the\s+missed\s+approach\b"
+r"\bon\s+the\s+missed\b"
 r"\bon\s+the\s+go\b"
 r"\bmissed\s+approach\b"
 r"\bmissed\b"
@@ -1039,6 +1043,11 @@ r"\b(one\s+two\s+one\s+(nine|niner))\b"
 r"\b(one\s+two\s+one\s+decimal\s+(nine|niner))\b"
 r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 
+#GroundMovement
+r"\btaxi\b"
+r"\btaxiing\b"
+
+
 #Measure
 r"\bfeet\b"
 r"\bmile[s]?\b"
@@ -1055,7 +1064,6 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(mile|miles|nautical miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
 
 #Movement
-r"\btaxiing\b"
 r"\bair\s+taxiing\b"
 r"\btaking\s+off\b"
 
@@ -1168,7 +1176,6 @@ r"\bcall\s+you\s+establish\b"
 r"\bcontinuing\b"
 
 r"\bstanding\b"
-r"\bapproaching\b"
 r"\breducing\b"
 r"\baccelarating\b"
 r"\breaching\b"
@@ -1294,6 +1301,7 @@ r"\bZulu\b"
 r"\b[A-Z]\d*\b"
 
 #Place
+r"\bhonolulu\b"
 r"\bnorfolk\b"
 r"\bsan\s+francisco\b"
 r"\bFrankfurt\b"
@@ -1705,7 +1713,6 @@ r"\bexit\b"
 r"\bturn\s+on\s+in\b"
 r"\bturn\s+around\s+there\b"
 r"\bmonitor\b"
-r"\btaxi\b"
 r"\bair\s+taxi\b"
 
 r"\bgo\b"
@@ -1847,6 +1854,7 @@ r"\bdenis\d\b"
 r"\bdlray\d\b"
 r"\bdlrey\d\b"
 r"\bdocal\d\b"
+r"\bdogal\d\b"
 r"\bdokel\d\b"
 r"\bdomal\d\b"
 r"\bdonad\d\b"
@@ -1889,6 +1897,7 @@ r"\bliege\d\b"
 r"\bliksa\d\b"
 r"\blomki\d\b"
 r"\bmates\d\b"
+r"\bmerce\d\b"
 r"\bmerit\d\b"
 r"\bnakid\d\b"
 r"\bnavti\d\b"
@@ -1970,6 +1979,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bapproaching\b"
 r"\bclear\s+of\s+conflict\b"
 r"\boff\s+course\b"
 r"\bestablished\s+inbound\b"
@@ -2040,6 +2050,7 @@ r"\bthank\s+you\s+very\s+much\b"
 r"\bthanks\b"
 
 #Taxiway
+r"\bhold\s+short\s+line\b"
 r"\bintersection\b"
 r"\bfirst\s+(high\s+speed)\b"
 r"\bsecond\s+(high\s+speed)\b"
@@ -2268,6 +2279,7 @@ r"\bdenis\b"
 r"\bdlray\b"
 r"\bdlrey\b"
 r"\bdocal\b"
+r"\bdogal\b"
 r"\bdokel\b"
 r"\bdomal\b"
 r"\bdonad\b"
@@ -2310,6 +2322,7 @@ r"\bliege\b"
 r"\bliksa\b"
 r"\blomki\b"
 r"\bmates\b"
+r"\bmerce\b"
 r"\bmerit\b"
 r"\bnakid\b"
 r"\bnavti\b"
