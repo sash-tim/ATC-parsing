@@ -289,7 +289,7 @@ def make_lexicon(dData):
         dCategoryFilter = {}
         for record in lines:
             
-            if record.strip(' \n') == '':
+            if record.strip(' \n') == '' or str(record).startswith('-') :
                 continue
             else:
                 dCategoryFilter[record.strip(' \n').upper()] = 1
@@ -724,13 +724,13 @@ def parsing(command, number_of_steps, dData):
             if match:
                 command = re.sub(match.group(1),"re", command, count=0)
 
-        pattern = r"\b[a-z](\-)[a-z]+"
+        pattern = r"\b[a-z]+(\-)[a-z]+"
         p = re.compile(pattern, re.I)
         iterator = p.finditer(command)
         for match in iterator:
             if match:
-                command = re.sub(match.group(1),"=", command, count=0)
-
+                command = re.sub(match.group(1)," ", command, count=0)
+                
 
         pattern = r"\b\d+(\-)\d\b"
         p = re.compile(pattern, re.I)

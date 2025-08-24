@@ -4,6 +4,9 @@ r"\bWilco\b"
 
 
 #AIRCRAFT
+r"\bAgriDrone\b"
+r"\bskyranger\b"
+r"\bdrone\b"
 r"\bbritish\s+airways\b"
 r"\bNorwegian\b"
 r"\bNorwegian\s+Air\s+Shuttle\b"
@@ -219,6 +222,7 @@ r"\b(PA[\-\s+]*(zero|one|two|three|four|five|six|seven|eight|nine|ninety)(\s+(ze
 
 #Aircrafttype
 r"\buav\b"
+r"\bcargo\s+uav\b"
 r"\btype\b"
 r"\bliner\b"
 r"\bsingle\s+engine\b"
@@ -422,6 +426,7 @@ r"\bprior\b"
 r"\bby\b"
 
 #CALLSIGN
+r"\bsurvey\s+\d+\b"
 r"\bBAW\d+\b"
 r"\bAFR\d+\b"
 r"\bNAX\d+\b"
@@ -761,6 +766,7 @@ r"\buse\s+caution\b"
 r"\bbe\s+advised\b"
 r"\bgps\s+notam\b"
 r"\blost\b"
+r"\blost\s+link\s+procedure\b"
 r"\bchecklist\b"
 r"\bswallowing\s+up\b"
 r"\bovertake\b"
@@ -790,6 +796,13 @@ r"\bgood\s+evening\b"
 r"\bhello\b"
 r"\bmorning\b"
 r"\bwonderful\s+day\b"
+
+#HoldingPoint
+r"\b(holding\s+(point|position))\b"
+
+#LaunchSite
+r"\blaunch\s+site\b"
+
 
 #Logic
 r"\bif\s+you\s+read\b"
@@ -1081,6 +1094,8 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\boperate\b"
+r"\breturn\b"
 r"\binbound\b"
 r"\boutbound\b"
 r"\bfull\s+stop\b"
@@ -1095,6 +1110,7 @@ r"\bnavigation\b"
 r"\breroute\b"
 r"\bproceeding\b"
 r"\bproceed\b"
+r"\bproceed\s+inbound\b"
 r"\brollout\b"
 r"\balternate\s+navigation\b"
 r"\binbound\s+to\b"
@@ -1555,6 +1571,7 @@ r"\bper\s+minute\b"
 
 #Responsibility
 #Restriction
+r"\bremain\b"
 r"\bgeofence\b"
 r"\brequired\b"
 r"\bclear\s+of\s+clouds\b"
@@ -1705,7 +1722,6 @@ r"\b(make|do)\b"
 r"\bline\s+up\b"
 r"\bwait\b"
 
-r"\bremain\b"
 r"\bgo\s+ahead\b"
 r"\bpass\s+your\s+message\b"
 r"\bfollow\b"
@@ -1736,6 +1752,7 @@ r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
+r"\bcorridor\b"
 r"\btrack\b"
 r"\bthe\s+(hold)\b"
 r"\bairway\b"
@@ -1745,6 +1762,7 @@ r"\bglide\s+path\b"
 r"\barc\b"
 r"\barc\s+south\b"
 r"\broute\b"
+r"\bprogrammed\s+route\b"
 r"\btransition\s+route\b"
 r"\bshort\s*cut[s]*\b"
 r"\b(?:via|cross)\s+([a-z]\d+)\b"
@@ -1979,6 +1997,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bclear\s+of\s+corridor\b"
 r"\bapproaching\b"
 r"\bclear\s+of\s+conflict\b"
 r"\boff\s+course\b"
@@ -2067,7 +2086,7 @@ r"\btaxiway\b"
 r"\b(holding\s+(point|position)\s+(\w\d))\b"
 r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"\b(holding\s+(point|position))\b"
+
 #TEMPERATURE
 r"\btemperature\b"
 r"\btemperature\s+([+-]?\d+\b(\s+celsius\b)*)"
@@ -2127,6 +2146,7 @@ r"\binto\b"
 r"\btowards\b"
 #Traffic
 r"\btraffic\b"
+r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
 
 
@@ -2205,6 +2225,11 @@ r"\bqnh\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hun
 r"\bqfe\b"
 r"\bqfe\s+(\d+)\b"
 r"\bqfe\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred)(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*)\b"
+
+#unmanned
+r"\buas\b"
+r"\bbvlos\b"
+r"\bbvlos\s+operations*\b"
 
 #until
 r"\b(until|untill)\b"
