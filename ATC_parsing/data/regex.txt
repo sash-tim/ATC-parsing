@@ -417,6 +417,9 @@ r"\bas\b"
 #At 
 r"\bat\b"
 
+#Be
+r"\bbe\b"
+
 #before
 r"\bbefore\b"
 r"\bprior\b"
@@ -1126,7 +1129,6 @@ r"\bmaneuvering\b"
 r"\bfly\b"
 r"\bvacate\b"
 r"\btransition\b"
-r"\bcross\b"
 r"\bturn\b"
 r"\bturn\s+left\b"
 r"\bturn\s+right\b"
@@ -1570,7 +1572,9 @@ r"\brate\b"
 r"\bper\s+minute\b"
 
 #Responsibility
+
 #Restriction
+r"\bcross\b"
 r"\bremain\b"
 r"\bgeofence\b"
 r"\brequired\b"
@@ -1828,6 +1832,7 @@ r"\b(loop\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\s+departu
 r"\b(loop\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"#\b[a-z]{3,5}\d\s+departure\b"
 
+r"\babbey\d\b"
 r"\bablog\d\b"
 r"\babrak\d\b"
 r"\babrax\d\b"
@@ -2260,6 +2265,7 @@ r"\bvisibility\b"
 
 r"\b\d+\s+north\s+\d+\s+west\b"
 r"\b\d+\s*n\s+\d+\s*w\b"
+r"\babbey\b"
 r"\bablog\b"
 r"\babrak\b"
 r"\babrax\b"
