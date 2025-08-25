@@ -10,6 +10,7 @@ by
 cancelled
 conj
 cleared
+comparisonor
 confirmation
 confirmed
 database

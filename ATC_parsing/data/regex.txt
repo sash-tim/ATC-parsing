@@ -1097,6 +1097,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\b(cross)\s+runway\b"
 r"\boperate\b"
 r"\breturn\b"
 r"\binbound\b"
