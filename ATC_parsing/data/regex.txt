@@ -472,6 +472,7 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
+r"\bmaintain\b"
 r"\bpushback\s+and\s+taxi\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
 r"\bcleared\s+(VFR\s+on\s+top)\b"
@@ -784,6 +785,7 @@ r"\bheading\b"
 r"\bcourse\s+heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
+r"\bpresent\s+heading\b"
 
 #Height
 r"\bheight\b"
@@ -846,6 +848,8 @@ r"\bappear\b"
 r"\bthis\s+is\b"
 
 #speed
+r"\bindicated\b"
+r"\b(IAS|TAS|GS)\b"
 r"\bkt\b"
 r"\bknots*\b"
 r"\bMach\b"
@@ -1063,7 +1067,6 @@ r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 r"\btaxi\b"
 r"\btaxiing\b"
 
-
 #Measure
 r"\bfeet\b"
 r"\bmile[s]?\b"
@@ -1097,7 +1100,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
-r"\b(cross)\s+runway\b"
+r"\bcross\b"
 r"\boperate\b"
 r"\breturn\b"
 r"\binbound\b"
@@ -1165,6 +1168,7 @@ r"\bRNAV\s+\d\b"
 
 #Negation
 r"\bdid\s+not\b"
+r"\bdo\s+not\b"
 r"\bdidn\s+t\b"
 r"\bno[tn]?\b"
 r"\bnegative\b"
@@ -1575,7 +1579,6 @@ r"\bper\s+minute\b"
 #Responsibility
 
 #Restriction
-r"\bcross\b"
 r"\bremain\b"
 r"\bgeofence\b"
 r"\brequired\b"
@@ -1630,6 +1633,7 @@ r"\badvise\b"
 r"#\brequest\b"
 
 #RequestInstruction
+r"\bexceed\b"
 r"\bcoordinate\b"
 r"\bclear\b"
 r"\blanding\b"
@@ -1718,7 +1722,6 @@ r"\bfrequency\s+change\b"
 r"\bairport\s+advisory\b"
 r"\bkeep\b"
 r"\bstay\b"
-r"\bmaintain\b"
 r"\bchange\b"
 r"\badvise\s+on\b"
 
@@ -1855,6 +1858,7 @@ r"\bbavok\d\b"
 r"\bbepas\d\b"
 r"\bberne\d\b"
 r"\bbethl\d\b"
+r"\bbexet\d\b"
 r"\bboach\d\b"
 r"\bbodal\d\b"
 r"\bboksu\d\b"
@@ -2288,6 +2292,7 @@ r"\bbavok\b"
 r"\bbepas\b"
 r"\bberne\b"
 r"\bbethl\b"
+r"\bbexet\b"
 r"\bboach\b"
 r"\bbodal\b"
 r"\bboksu\b"
