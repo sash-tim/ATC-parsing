@@ -740,7 +740,7 @@ def parsing(command, number_of_steps, dData):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1387,11 +1387,13 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
         command = command.strip('.,?!\n”"')
+
+        print('???'+command)
 
         return command
     

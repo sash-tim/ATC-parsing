@@ -441,7 +441,7 @@ r"\bcallsign\b"
 r"\bheavy\s+777\b"
 r"\bn\d+[a-z]*\b"
 r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
-r"\b[a-z]\-[a-z]+"
+r"\b[a-z]\-[a-z]+\b"
 r"\b(?!\d{1,2}[lr])\d+[a-z]{1,3}\b"
 
 #cancellation
@@ -487,11 +487,11 @@ r"\bcurrent\s+clearance\b"
 r"(?<!\bIFR\s)\bdeparture\s+clearance\b"
 r"\btaxi\s+clearance\b"
 
+#ClearanceSTOP
+r"\bstop clearence inference\b"
 
 #ClockPosition
-r"\bo'clock\b"
-r"\bo’clock\b"
-r"\bo\s+clock\b"
+r"\boclock\b"
 
 #Confirmation
 r"\bcopy\s+it\b"
