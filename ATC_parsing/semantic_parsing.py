@@ -1303,7 +1303,7 @@ def parsing(command, number_of_steps, dData):
                         command_new = ''
 
         if step > 0:
-            LF_final = LF_final.replace('STOP_(','_(')            
+            #LF_final = LF_final.replace('STOP_(','_(')            
             LF_final = LF_final.replace('\n*','')            
                 
                             
@@ -1317,6 +1317,7 @@ def parsing(command, number_of_steps, dData):
     for i in range(number_of_steps):
         if i == 0:
             LF = parse_command(command_parser, command, dData, i)
+            
             if LF == LF_old:
                 break
             else:
@@ -1327,6 +1328,8 @@ def parsing(command, number_of_steps, dData):
                 break
             else:
                 LF_old = LF
+    
+    LF = LF.replace('STOP_(','_(')
 
     return LF
 
@@ -1956,7 +1959,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                         command_new = ''
 
         if step > 0:
-            LF_final = LF_final.replace('STOP_(','_(')            
+            #LF_final = LF_final.replace('STOP_(','_(')            
             LF_final = LF_final.replace('\n*','')            
                 
                             
@@ -1980,6 +1983,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 break
             else:
                 LF_old = LF
+
+    LF = LF.replace('STOP_(','_(')
 
     return LF
 
