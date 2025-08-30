@@ -22,6 +22,7 @@ goaround
 heading
 if
 in
+intnumber
 is
 for
 from
@@ -33,6 +34,7 @@ phoneticalphabet
 realnumber
 report
 -restriction
+speed
 status
 then
 through
@@ -41,6 +43,7 @@ to
 trafficcircuit
 trafficpattern
 until
+untilstop
 upto
 via
 waypoint
