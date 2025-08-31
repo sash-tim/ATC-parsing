@@ -10,9 +10,11 @@ by
 cancelled
 conj
 cleared
+comparisonor
 confirmation
 confirmed
 database
+departure
 directionmagnetic
 due
 emergency
@@ -21,6 +23,7 @@ goaround
 heading
 if
 in
+intnumber
 is
 for
 from
@@ -31,7 +34,8 @@ out
 phoneticalphabet
 realnumber
 report
-restriction
+-restriction
+speed
 status
 then
 through
@@ -40,6 +44,7 @@ to
 trafficcircuit
 trafficpattern
 until
+untilstop
 upto
 via
 waypoint

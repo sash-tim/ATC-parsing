@@ -20,7 +20,7 @@ Air Traffic Control (ATC) commands semantic parsing using CCG.
 2. Install *ATC_parsing* python library running
 
 ``` 
-pip install .
+pip install -e .
 ``` 
 in the folder with *setup.py* file.
 

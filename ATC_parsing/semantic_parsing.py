@@ -289,7 +289,7 @@ def make_lexicon(dData):
         dCategoryFilter = {}
         for record in lines:
             
-            if record.strip(' \n') == '':
+            if record.strip(' \n') == '' or str(record).startswith('-') :
                 continue
             else:
                 dCategoryFilter[record.strip(' \n').upper()] = 1
@@ -724,13 +724,13 @@ def parsing(command, number_of_steps, dData):
             if match:
                 command = re.sub(match.group(1),"re", command, count=0)
 
-        pattern = r"\b[a-z](\-)[a-z]+"
+        pattern = r"\b[a-z]+(\-)[a-z]+"
         p = re.compile(pattern, re.I)
         iterator = p.finditer(command)
         for match in iterator:
             if match:
-                command = re.sub(match.group(1),"=", command, count=0)
-
+                command = re.sub(match.group(1)," ", command, count=0)
+                
 
         pattern = r"\b\d+(\-)\d\b"
         p = re.compile(pattern, re.I)
@@ -740,7 +740,7 @@ def parsing(command, number_of_steps, dData):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1303,7 +1303,7 @@ def parsing(command, number_of_steps, dData):
                         command_new = ''
 
         if step > 0:
-            LF_final = LF_final.replace('STOP_(','_(')            
+            #LF_final = LF_final.replace('STOP_(','_(')            
             LF_final = LF_final.replace('\n*','')            
                 
                             
@@ -1317,6 +1317,7 @@ def parsing(command, number_of_steps, dData):
     for i in range(number_of_steps):
         if i == 0:
             LF = parse_command(command_parser, command, dData, i)
+            
             if LF == LF_old:
                 break
             else:
@@ -1327,6 +1328,8 @@ def parsing(command, number_of_steps, dData):
                 break
             else:
                 LF_old = LF
+    
+    LF = LF.replace('STOP_(','_(')
 
     return LF
 
@@ -1387,11 +1390,13 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("O'","O")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
         command = command.strip('.,?!\n”"')
+
+        print('???'+command)
 
         return command
     
@@ -1954,7 +1959,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                         command_new = ''
 
         if step > 0:
-            LF_final = LF_final.replace('STOP_(','_(')            
+            #LF_final = LF_final.replace('STOP_(','_(')            
             LF_final = LF_final.replace('\n*','')            
                 
                             
@@ -1978,6 +1983,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 break
             else:
                 LF_old = LF
+
+    LF = LF.replace('STOP_(','_(')
 
     return LF
 
