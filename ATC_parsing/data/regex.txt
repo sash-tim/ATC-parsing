@@ -374,6 +374,7 @@ r"\brequest\s+(contact\s+approach)\b"
 r"\brequesting\s+(contact\s+approach)\b"
 r"\b(contact\s+approach)\s+approved\b"
 r"\bfinal\s+approach\b"
+r"\bILS\s+approach\b"
 r"\bapproaches\b"
 
 #approved
@@ -1024,7 +1025,6 @@ r"\bVFR\s+flight\b"
 r"\bspecial\s+VFR\b"
 r"\bIFR\b"
 r"\bIFR\s+flight\b"
-r"\bILS\s+approach\b"
 
 
 #For
