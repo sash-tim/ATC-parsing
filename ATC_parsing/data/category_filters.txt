@@ -27,6 +27,7 @@ intnumber
 is
 for
 from
+measure
 of
 off
 on
@@ -35,6 +36,8 @@ phoneticalphabet
 realnumber
 report
 -restriction
+route
+side
 speed
 status
 then

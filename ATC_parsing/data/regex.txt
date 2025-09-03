@@ -374,6 +374,7 @@ r"\brequest\s+(contact\s+approach)\b"
 r"\brequesting\s+(contact\s+approach)\b"
 r"\b(contact\s+approach)\s+approved\b"
 r"\bfinal\s+approach\b"
+r"\bILS\s+approach\b"
 r"\bapproaches\b"
 
 #approved
@@ -1024,7 +1025,6 @@ r"\bVFR\s+flight\b"
 r"\bspecial\s+VFR\b"
 r"\bIFR\b"
 r"\bIFR\s+flight\b"
-r"\bILS\s+approach\b"
 
 
 #For
@@ -1332,6 +1332,7 @@ r"\bZulu\b"
 r"\b[A-Z]\d*\b"
 
 #Place
+r"\bdubai\b"
 r"\bhonolulu\b"
 r"\bnorfolk\b"
 r"\bsan\s+francisco\b"
@@ -1522,6 +1523,7 @@ r"\btouch\s*down\b"
 r"\bbetween\s+(you)\b"
 r"\bmy\s+position\b"
 r"\bposition\b"
+r"\bpresent\s+position\b"
 r"\bend\b"
 
 
@@ -1784,6 +1786,7 @@ r"\barc\s+south\b"
 r"\broute\b"
 r"\bprogrammed\s+route\b"
 r"\btransition\s+route\b"
+r"\barrival\s+route\b"
 r"\bshort\s*cut[s]*\b"
 r"\b(?:via|cross)\s+([a-z]\d+)\b"
 r"\b(?:via|cross)\s+([a-z]\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
