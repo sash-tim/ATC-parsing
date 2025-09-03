@@ -1646,6 +1646,7 @@ r"\brequest\b"
 r"\brequire\b"
 
 #RequestInstruction
+r"\brelease\b"
 r"\bexceed\b"
 r"\bcoordinate\b"
 r"\bclear\b"
@@ -1706,7 +1707,6 @@ r"\bstart\b"
 r"\bstartup\b"
 r"\bstop\b"
 r"\breduce\b"
-r"\bstand\s*by\b"
 r"\bsay\s+again\b"
 r"\bsay\s+it\s+again\b"
 r"\bfile\b"
@@ -2018,6 +2018,10 @@ r"\bsquak\b"
 r"\bcode\b"
 r"\bsquawk\s+(VFR)\b"
 r"\bsquawking\b"
+
+#standby
+r"\bstand\s*by\b"
+
 
 #STAR
 r"waypoint\s+version"
