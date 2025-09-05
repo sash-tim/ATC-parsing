@@ -28,7 +28,7 @@ is
 for
 from
 navaid
-measure
+-measure
 of
 off
 on

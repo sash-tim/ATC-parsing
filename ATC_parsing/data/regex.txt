@@ -290,6 +290,7 @@ r"\bfeet\s+AGL\b"
 
 
 
+
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
 
 
@@ -380,6 +381,7 @@ r"\bapproaches\b"
 
 #ApproachNAVAID
 r"\bILS\b"
+r"\blocalizer\b"
 
 #approved
 r"\bapproved\b"
@@ -1055,7 +1057,6 @@ r"\bfrom\b"
 r"\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
 r"\bon\s+the\s+missed\b"
-r"\bon\s+the\s+go\b"
 r"\bmissed\s+approach\b"
 r"\bmissed\b"
 r"\bgoing\s+missed\b"
@@ -1110,7 +1111,6 @@ r"\btaking\s+off\b"
 #NAVAID
 r"\bgps\b"
 r"\bmarker\b"
-r"\blocalizer\b"
 r"\bdme\b"
 r"\bdme\s+capability\b"
 r"\bNDB\b"
@@ -1234,6 +1234,7 @@ r"\breading\s+you\b"
 r"\blooking\s+for\s+traffic\b"
 r"\blooking\s+out\b"
 r"\btraffic\s+in\s+sight\b"
+r"\bnegative\s+contact\b"
 r"\brunway\s+in\s+sight\b"
 r"\bairport\s+in\s+sight\b"
 r"\baerodrome\s+in\s+sight\b"
@@ -2054,6 +2055,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bon\s+the\s+go\b"
 r"\bunable\s+landing\s+clearance\b"
 r"\bclear\s+of\s+corridor\b"
 r"\bapproaching\b"
@@ -2204,6 +2206,7 @@ r"\binto\b"
 r"\btowards\b"
 #Traffic
 r"\btraffic\b"
+r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
 
