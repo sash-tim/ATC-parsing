@@ -27,7 +27,8 @@ intnumber
 is
 for
 from
-measure
+navaid
+-measure
 of
 off
 on
