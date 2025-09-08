@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ATC_parsing",
-    version="1.2.4",
+    version="1.2.5",
     packages=find_packages(),
     include_package_data=True,
     package_data={"ATC_parsing":["data/*"]},
