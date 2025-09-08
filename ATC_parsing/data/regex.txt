@@ -438,6 +438,7 @@ r"\bbut\b"
 r"\bby\b"
 
 #CALLSIGN
+r"\bpilot\b"
 r"\bsurvey\s+\d+\b"
 r"\bBAW\d+\b"
 r"\bAFR\d+\b"
@@ -573,6 +574,7 @@ r"\babracadabra\b"
 #Controller
 r"\bdelivery\b"
 r"\bcontact\s+(approach)\b"
+r"\bmonitor\s+(approach)\b"
 r"\bcentral\b"
 r"\bagency\b"
 r"\bCentre\b"
@@ -895,6 +897,7 @@ r"\bslowly\b"
 
 
 #Feature
+r"\bbackup\b"
 r"\bcontinuous\b"
 r"\bnearest\s+suitable\b"
 r"\bfull\s+length\b"
@@ -1043,7 +1046,10 @@ r"\bIFR\s+flight\b"
 
 #For
 r"\bfor\b"
+
 #Frequency
+r"\b\bguard\s+121.5\b\b"
+r"\b\b121.5\b\b"
 r"\b\b122.2\b\b"
 r"\bcontact\s+ground\s+on\s+(\d+[.,]?\d*)\b"
 r"\bcontact\s+norcal\s+approach\s+(\d+[.,]?\d*)\b"
@@ -1087,6 +1093,7 @@ r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 
 #GroundMovement
 r"\btaxi\b"
+r"\btaxis\b"
 r"\btaxiing\b"
 
 #Measure
@@ -1633,6 +1640,8 @@ r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
 #Contact
+r"\blistens*\b"
+r"\bmonitor\b"
 r"\breceiving\b"
 r"\bcontact\b"
 r"\bover\s+to\b"
@@ -1677,6 +1686,7 @@ r"\bexecute\b"
 r"\battention\b"
 r"#\brequire\b"
 r"\binstructions*\b"
+r"\binstructed\b"
 r"\balternate\s+instructions*\b"
 r"\binstructions*\b"
 r"\bfurther\s+instructions*\b"
@@ -1766,7 +1776,6 @@ r"\bfollow\b"
 r"\bexit\b"
 r"\bturn\s+on\s+in\b"
 r"\bturn\s+around\s+there\b"
-r"\bmonitor\b"
 r"\bair\s+taxi\b"
 
 r"\bgo\b"

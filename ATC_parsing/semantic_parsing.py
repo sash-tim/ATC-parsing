@@ -2087,17 +2087,19 @@ def logicalForm2JSON(LF):
         ```
         where instead of 'the' may be any word from
         ```
-        ['the','have','your','are','over','be','an']
+        ['the','have','your','are','over','be','an',...]
         ```
         """
 
+        print('>>>>>'+sJSON)
+
         for word in ['the','have','your',
                     'are','over','be',
-                    'an']:
-            for brackets in ['0','1','2','3']:
+                    'an','just']:
+            for brackets in ['0','1','2','3','4','5']:
                 while True:
                     
-                    pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                    pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
                     p = re.compile(pattern, re.I)
                     iterator = p.finditer(sJSON)
                     for match in iterator:
@@ -2105,6 +2107,9 @@ def logicalForm2JSON(LF):
                         
                             to_replace = str(match.group())
                             replace_by = str(match.group(1))
+
+                            print('???to_replace:::'+to_replace )
+                            print('???replace_by:::'+replace_by )
                             
                             n_open = 0
                             n_close = 0
@@ -2130,7 +2135,8 @@ def logicalForm2JSON(LF):
                         sJSON = sJSON_new
                         
                     break
-    
+        print('<<<<<'+sJSON)
+
         return sJSON
     
 
