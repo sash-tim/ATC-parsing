@@ -2091,8 +2091,6 @@ def logicalForm2JSON(LF):
         ```
         """
 
-        print('>>>>>'+sJSON)
-
         for word in ['the','have','your',
                     'are','over','be',
                     'an','just']:
@@ -2108,8 +2106,6 @@ def logicalForm2JSON(LF):
                             to_replace = str(match.group())
                             replace_by = str(match.group(1))
 
-                            print('???to_replace:::'+to_replace )
-                            print('???replace_by:::'+replace_by )
                             
                             n_open = 0
                             n_close = 0
@@ -2135,8 +2131,7 @@ def logicalForm2JSON(LF):
                         sJSON = sJSON_new
                         
                     break
-        print('<<<<<'+sJSON)
-
+        
         return sJSON
     
 
