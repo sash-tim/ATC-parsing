@@ -87,6 +87,7 @@ r"\bmidland\b"
 r"\bboeing\b"
 r"\bboeing\s+737\b"
 r"\bboeing\s+seven\s+three\s+seven\b"
+r"\bboeing\s+seven\s+fifty\s+seven\b"
 r"\bthe\s+(737)\b"
 r"\bcompany\s+boeing\b"
 r"\bluft\s+transport\b"
@@ -1314,6 +1315,7 @@ r"\bfacing\b"
 
 #out
 r"\bout\b"
+r"\boutside\b"
 
 #Sequence
 r"\b(number)\s+\d+\b"
@@ -2131,6 +2133,7 @@ r"#\bcleared\s+to\s+land\b"
 r"\bcan\s+begin\b"
 r"\bwill\s+be\s+provided\b"
 r"\bprovided\b"
+r"\bservices\s+provided\b"
 r"\bin\s+progress\b"
 r"\brequested\b"
 
