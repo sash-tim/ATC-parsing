@@ -1,5 +1,6 @@
 after
 altitude
+altitudechange
 approach
 approved
 around
@@ -32,12 +33,15 @@ navaid
 of
 off
 on
+ongoingaction
 out
 phoneticalphabet
+position
 realnumber
 report
 -restriction
 route
+runway
 side
 speed
 status
