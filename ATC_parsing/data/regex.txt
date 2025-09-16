@@ -290,7 +290,7 @@ r"\bassigned\s+altitude\b"
 r"\blevel\b"
 r"\bAGL\b"
 r"\bfeet\s+AGL\b"
-
+r"\bVFR\s+altitude\b"
 
 
 
@@ -398,6 +398,7 @@ r"\barea\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[
 r"\baround\b"
 
 #arrival
+r"\boption\b"
 r"\barrival\b"
 r"\blong\s+landing\b"
 r"\bbound\b"
@@ -742,6 +743,15 @@ r"\bnorthwest\s*bound\b"
 r"\bsouthwest\s*bound\b"
 r"\bsouth\s*bound\b"
 
+#discretion
+r"\bpilot\s+discretion\b"
+r"\bdiscretion\b"
+r"\bown\s+discretion\b"
+r"\byour\s+discretion\b"
+r"\bdiscretion\s+FATO\b"
+r"\bdiscretion\s+leveled\b"
+
+
 
 #distance
 
@@ -933,10 +943,6 @@ r"\breadability\b"
 r"\bsimultaneous\b"
 r"\bvisual\b"
 r"\binstrument\b"
-r"\bpilot\s+discretion\b"
-r"\bdiscretion\b"
-r"\bown\s+discretion\b"
-r"\bdiscretion\s+FATO\b"
 r"\blow\b"
 r"\bshear\b"
 
@@ -1243,13 +1249,6 @@ r"\bradio\s+check\b"
 r"\breading\s+you\b"
 r"\blooking\s+for\s+traffic\b"
 r"\blooking\s+out\b"
-r"\btraffic\s+in\s+sight\b"
-r"\bnegative\s+contact\b"
-r"\brunway\s+in\s+sight\b"
-r"\bairport\s+in\s+sight\b"
-r"\baerodrome\s+in\s+sight\b"
-r"\bfield\s+in\s+sight\b"
-r"\bin\s+sight\b"
 r"\bstarting\b"
 r"\bgoing\s+to\b"
 r"\bcoming\s+up\b"
@@ -1329,6 +1328,8 @@ r"\btime\s+based\s+spacing\b"
 r"\bsequencing\b"
 r"\bresequencing\b"
 r"\bsequence\b"
+
+
 
 
 #PhoneticAlphabet
@@ -1895,6 +1896,7 @@ r"\babrax\d\b"
 r"\badado\d\b"
 r"\badaro\d\b"
 r"\bagava\d\b"
+r"\baldan\d\b"
 r"\bamtek\d\b"
 r"\bancol\d\b"
 r"\baneki\d\b"
@@ -1963,6 +1965,7 @@ r"\bhektr\d\b"
 r"\bigala\d\b"
 r"\bjacki\d\b
 r"\bJAKSN\d\b
+r"\bjanes\d\b"
 r"\bkbely\d\b"
 r"\bkelly\d\b"
 r"\bkemad\d\b"
@@ -2076,6 +2079,13 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\btraffic\s+in\s+sight\b"
+r"\bnegative\s+contact\b"
+r"\bin\s+sight\b"
+r"\brunway\s+in\s+sight\b"
+r"\bairport\s+in\s+sight\b"
+r"\baerodrome\s+in\s+sight\b"
+r"\bfield\s+in\s+sight\b"
 r"\badvised\b"
 r"\bon\s+the\s+go\b"
 r"\bunable\s+landing\s+clearance\b"
@@ -2112,7 +2122,6 @@ r"\breleased\b"
 r"\bblocked\b"
 r"\bpossible\b"
 r"\bexpired\b"
-r"\bdiscretion\s+leveled\b"
 r"\bable\b"
 r"\bis\s+able\b"
 r"\bcompleted\b"
@@ -2246,6 +2255,9 @@ r"\bopposite\s+traffic\b"
 r"\blanding\s+traffic\b"
 r"\btraffic\s+landing\b"
 r"\bunidentified\s+traffic\b"
+
+
+
 #TrafficCircuit
 r"\bcircuit[s]*\b"
 r"\bcircling\b"
@@ -2354,6 +2366,7 @@ r"\babrax\b"
 r"\badado\b"
 r"\badaro\b"
 r"\bagava\b"
+r"\baldan\b"
 r"\bamtek\b"
 r"\bancol\b"
 r"\baneki\b"
@@ -2422,6 +2435,7 @@ r"\bhektr\b"
 r"\bigala\b"
 r"\bjacki\b
 r"\bJAKSN\b
+r"\bjanes\b"
 r"\bkbely\b"
 r"\bkelly\b"
 r"\bkemad\b"

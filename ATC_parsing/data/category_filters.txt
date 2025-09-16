@@ -17,6 +17,7 @@ confirmed
 database
 departure
 directionmagnetic
+discretion
 due
 emergency
 fix
