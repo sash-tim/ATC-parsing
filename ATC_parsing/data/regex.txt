@@ -290,7 +290,7 @@ r"\bassigned\s+altitude\b"
 r"\blevel\b"
 r"\bAGL\b"
 r"\bfeet\s+AGL\b"
-r"\bVFR\s+altitude\b"
+r"#\bVFR\s+altitude\b"
 
 
 
@@ -1138,6 +1138,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\bcircle\b"
 r"\bcross\b"
 r"\boperate\b"
 r"\breturn\b"
@@ -1364,6 +1365,8 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\bgreenville\b"
+r"\bDallas[\-\s]+Fort\s+Worth\s+Airport\b"
 r"\bdubai\b"
 r"\bhonolulu\b"
 r"\bnorfolk\b"
@@ -1673,6 +1676,7 @@ r"\b\d+\s*w\b"
 
 #report
 r"\b((say|report|advise)\s+intentions*)\b"
+r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
 r"\bpilot\s+reports\b"
 r"\breports*\b"
@@ -2079,6 +2083,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\btraffic\s+observed\b"
 r"\btraffic\s+in\s+sight\b"
 r"\bnegative\s+contact\b"
 r"\bin\s+sight\b"
@@ -2206,6 +2211,7 @@ r"\bthis\s+time\b"
 r"\bnow\b"
 r"\bimmediately\b"
 r"\bimmediate\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty)\s+minutes)\b"
 
 #TimeMinSec
 r"\bminutes*\b"

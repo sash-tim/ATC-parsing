@@ -15,12 +15,13 @@ comparisonor
 confirmation
 confirmed
 database
-departure
+-departure
 directionmagnetic
 discretion
 due
 emergency
 fix
+frequency
 goaround
 heading
 if
