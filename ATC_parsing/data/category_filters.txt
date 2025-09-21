@@ -16,6 +16,7 @@ confirmation
 confirmed
 database
 -departure
+direction
 directionmagnetic
 discretion
 due
