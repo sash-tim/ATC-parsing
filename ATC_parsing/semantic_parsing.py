@@ -1054,7 +1054,7 @@ def parsing(command, number_of_steps, dData):
                         dReplacement[X_id] = match.group(0)
 
                         
-                
+            
             return new_command
 
         
@@ -2004,6 +2004,7 @@ def logicalForm2JSON(LF):
         """
         Clean JSON string.
         """
+        
         """
         Delete '{' and '}' around '"..."'
         """
@@ -2024,6 +2025,7 @@ def logicalForm2JSON(LF):
                 break
             else:
                 sJSON = sJSON_new
+
 
         """
         Delete ',' and '\s' before '}'
@@ -2090,12 +2092,10 @@ def logicalForm2JSON(LF):
         ['the','have','your','are','over','be','an',...]
         ```
         """
-
-        print('>>>>>'+sJSON)
-
-        for word in ['the','have','your',
+        
+        for word in ['have','your',
                     'are','over','be',
-                    'an','just']:
+                    'an','just','the',]:
             for brackets in ['0','1','2','3','4','5']:
                 while True:
                     
@@ -2108,9 +2108,7 @@ def logicalForm2JSON(LF):
                             to_replace = str(match.group())
                             replace_by = str(match.group(1))
 
-                            print('???to_replace:::'+to_replace )
-                            print('???replace_by:::'+replace_by )
-                            
+                        
                             n_open = 0
                             n_close = 0
                             OK = True
@@ -2130,12 +2128,16 @@ def logicalForm2JSON(LF):
                             if OK:
                                 replace_by = '\"'+word+' '+replace_by[1:]
                                 sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
+                                
 
-                    if sJSON_new != sJSON:
-                        sJSON = sJSON_new
+                        if sJSON_new != sJSON:
+                            sJSON = sJSON_new
+
                         
+                            
                     break
-        print('<<<<<'+sJSON)
+        
+        
 
         return sJSON
     
