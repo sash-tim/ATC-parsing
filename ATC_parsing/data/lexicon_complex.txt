@@ -307,6 +307,7 @@ CALLSIGN/WORDNUMPHONEALPHABET {\\x._CALLSIGN_(_CALLSIGN_(callsign1), x)}
 -(CALLSIGN/STATUS)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/FLIGHTPLAN)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/PLACE)/AT {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
+(CALLSIGN/PLACE)/FROM {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/POSITION)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 
 #Comparison
@@ -1541,6 +1542,7 @@ ROUTE/PHONETICALPHABET {\\x._ROUTE_(_ROUTE_(route1), x)}
 (ROUTE/WAYPOINT)/TO {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
 ROUTE/NAVAID {\\x._ROUTE_(_ROUTE_(route1), x)}
 (ROUTE/PLACE)/TO {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
+(ROUTE/PLACE)/AFTER {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
 (ROUTE/FLEVEL)/AT {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
 ROUTE/ROUTE {\\x._ROUTE_(_ROUTE_(route1), x)}
 ROUTE/FIX {\\x._ROUTE_(_ROUTE_(route1), x)}
@@ -1754,6 +1756,7 @@ TIMEMINSEC/SEQUENCE {\\x._TIMEMINSEC_(_TIMEMINSEC_(timeminsec1),x)}
 
 
 #Then
+THEN/EXPECT {\\x._THEN_(_THEN_(then1),x)}
 THEN/TRANSITION {\\x._THEN_(_THEN_(then1),x)}
 THEN/ALTITUDECHANGE {\\x._THEN_(_THEN_(then1),x)}
 THEN/HEADING {\\x._THEN_(_THEN_(then1),x)}
