@@ -1,6 +1,7 @@
 after
+afterword
 altitude
-altitudechange
+-altitudechange
 approach
 approved
 around
