@@ -307,7 +307,7 @@ CALLSIGN/WORDNUMPHONEALPHABET {\\x._CALLSIGN_(_CALLSIGN_(callsign1), x)}
 (CALLSIGN/NAVIGATION)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 -(CALLSIGN/STATUS)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/FLIGHTPLAN)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
-(CALLSIGN/PLACE)/AT {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
+-(CALLSIGN/PLACE)/AT {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/PLACE)/FROM {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 (CALLSIGN/POSITION)/IS {\\x y._CALLSIGN_(_CALLSIGN_(callsign1), x,y)}
 
