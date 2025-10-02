@@ -1408,6 +1408,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\bwilmington\b"
 r"\bistanbul\b"
 r"\bcompton\b"
 r"\bcleveland\b"
@@ -1902,7 +1903,7 @@ r"\bQuebec\s+\d+\b"
 r"\bJ\s*\d+\b"
 r"\b((T|Q|L|Y)[\s\-]*\d+)\b"
 r"\b((Alfa|Alpha|Bravo|Golf|Lima|Mike|Papa|Romeo)\s+\d+)\b"
-r"\b(Uniform\s+(Alfa|Alpha|Bravo|Golf|Lima|Mike|Papa|Romeo)\s+\d+)\b"
+r"\b(Uniform\s+(Alfa|Alpha|Bravo|Golf|Lima|Mike|November|Papa|Romeo)\s+\d+)\b"
 
 #Changes
 r"\breflect\b"
@@ -2269,6 +2270,7 @@ r"\btemperature\b"
 r"\btemperature\s+([+-]?\d+\b(\s+celsius\b)*)"
 r"\btemperature\s+((minus\s+)*(plus\s+)*(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))*(\s+celsius\b)*)"
 #Time
+r"\binitially\b"
 r"\bshortly\b"
 r"#\bthereafter\b"
 r"\bfor\s+the\s+moment\b"
