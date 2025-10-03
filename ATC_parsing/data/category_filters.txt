@@ -34,6 +34,7 @@ intnumber
 is
 for
 from
+fix
 navaid
 -measure
 of
@@ -47,6 +48,7 @@ realnumber
 report
 -restriction
 route
+routing
 runway
 side
 speed

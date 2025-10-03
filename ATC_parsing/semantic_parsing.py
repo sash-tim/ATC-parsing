@@ -211,7 +211,7 @@ def make_lexicon(dData):
         dPlaceholderNumber["TO"] = 6
         dPlaceholderNumber["WORDNUMBER"] = 30
         
-        dPlaceholderNumber["OTHER"] = 5 #default value
+        dPlaceholderNumber["OTHER"] = 12 #default value
 
         dData['placeholder_number'] = dPlaceholderNumber           
 

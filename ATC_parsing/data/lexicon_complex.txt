@@ -47,6 +47,7 @@ AIRFIELD/INTNUMBER {\\x._AIRFIELD_(_AIRFIELD_(airfield1), x)}
 #Airspace
 AIRSPACE/STATUS {\\x._AIRSPACE_(_AIRSPACE_(airspace1), x)}
 (ROUTE/ROUTE)/VIA {\\x y._ROUTE_(_AIRSPACE_(airspace1), x, y)}
+ROUTE/ROUTE {\\x._ROUTE_(_AIRSPACE_(airspace1), x)}
 CONTROLLER/CONTROLLER {\\x._CONTROLLER_(_AIRSPACE_(airspace1), x)}
 AIRSPACE/PHONETICALPHABET {\\x._AIRSPACE_(_AIRSPACE_(airspace1), x)}
 AIRSPACE\\PHONETICALPHABET {\\x._AIRSPACE_(_AIRSPACE_(airspace1), x)}
@@ -247,6 +248,7 @@ CLEARANCESTOP/INTNUMBER {\\x._CLEARANCESTOP_(_CLEARANCE_(clearancestop1),x)}
 
 #Cleared
 CLEARED/RUNWAY {\\x._CLEARED_(_CLEARED_(cleared1),x)}
+CLEARED/ROUTING {\\x._CLEARED_(_CLEARED_(cleared1),x)}
 (CLEARED/COMPARISONOR)/AT {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
 CLEARED/SIDE {\\x._CLEARED_(_CLEARED_(cleared1),x)}
 CLEARED/PROCEDURE {\\x._CLEARED_(_CLEARED_(cleared1),x)}
@@ -520,6 +522,7 @@ EMERGENCY/EMERGENCY {\\x._EMERGENCY_(_EMERGENCY_(emergency1), x)}
 
 #estimate
 ESTIMATE/WAYPOINT {\\x._ESTIMATE_(_ESTIMATE_(estimate1), x)}
+(ESTIMATE/WORDNUMBER)/WAYPOINT {\\x y._ESTIMATE_(_ESTIMATE_(estimate1), x,_TIME_(y))}
 
 #except
 EXCEPT/NAVIGATION {\\x._EXCEPT_(_EXCEPT_(except1), x)}
@@ -688,6 +691,9 @@ VISIBILITY/DEPARTURE {\\x._DEPARTURE_(_FEATURE_(feature1),x)}
 VISIBILITY/VISIBILITY {\\x._VISIBILITY_(_FEATURE_(feature1),x)} 
 
 #FIX
+ROUTING/WAYPOINT {\\x._ROUTING_(_FIX_(fix1),x)}
+ROUTING/ROUTE {\\x._ROUTING_(_FIX_(fix1),x)}
+ROUTING/FIX {\\x._ROUTING_(_FIX_(fix1),x)}
 PROCEDURE/VERSION {\\x._PROCEDURE_(_FIX_(fix1),x)}
 (STAR/ARRIVAL)/VERSION {\\x y._STAR_(_FIX_(fix1),x,y)}
 FIX/NAVAID {\\x._FIX_(_FIX_(fix1),x)}
@@ -696,8 +702,8 @@ APPROACH/APPROACH {\\x._APPROACH_(_FIX_(fix1),x)}
 -FIX\\CONTEXT {\\x._FIX_(_CONTEXT_(x), _FIX_(fix1))}
 FIX/RUNWAY {\\x._FIX_(_FIX_(fix1),x)}
 (FIX/TIMEINFO)/AT {\\x y._FIX_(_FIX_(fix1),x,y)}
-FIX/FIX {\\x._FIX_(_FIX_(fix1),x)}
-ROUTE/ROUTE {\\x._ROUTE_(_FIX_(fix1),x)}
+-FIX/FIX {\\x._FIX_(_FIX_(fix1),x)}
+-ROUTE/ROUTE {\\x._ROUTE_(_FIX_(fix1),x)}
 SID/DEPARTURE {\\x._SID_(_FIX_(fix1),x)}
 (SID/DEPARTURE)/INTNUMBER {\\x y._SID_(_FIX_(fix1),x,y)}
 ((SID/DEPARTURE)/PHONETICALPHABET)/INTNUMBER {\\x y z._SID_(_FIX_(fix1),x,y,z)}
@@ -1146,6 +1152,7 @@ FLIGHT\\FLIGHT {\\x._FLIGHT_(x,phoneticalphabet1)}
 -CALLSIGN/CALLSIGN {\\x._CALLSIGN_(_PHONETICALPHABET_(phoneticalphabet1),x)}
 WORDNUMPHONEALPHABET\\WORDNUMBER {\\x._WORDNUMPHONEALPHABET_(x,_PHONETICALPHABET_(phoneticalphabet1))}
 #Place
+(PLACE/ROUTING)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 -(PLACE/PLACE)/THEN {\\x y._PLACE_(_PLACE_(place1),x,y)}
 PLACE/PLACE {\\x._PLACE_(_PLACE_(place1),x)}
 TRANSITION/TRANSITION {\\x._TRANSITION_(_PLACE_(place1),x)}
@@ -1156,6 +1163,7 @@ TRAFFIC/TRAFFIC {\\x._TRAFFIC_(_PLACE_(place1),x)}
 FIX/FIX {\\x ._FIX_(_PLACE_(place1),x)}
 FIX/NAVAID {\\x ._FIX_(_PLACE_(place1),x)}
 (PLACE/WAYPOINT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
+(PLACE/ROUTE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/PROCEDURE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/SID)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/CONTEXT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, _context_(y))}
@@ -1270,6 +1278,7 @@ REPORT/PLACE {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/POSITION {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/CONFIRMATION {\\x._REPORT_(_REPORT_(report1),x)}
 (REPORT/WAYPOINT)/AT {\\x y._REPORT_(_REPORT_(report1),x,y)}
+REPORT/WAYPOINT {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/TRAFFICCIRCUIT {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/NEGATION {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/NOTIFICATION {\\x._REPORT_(_REPORT_(report1),x)}
@@ -1547,6 +1556,9 @@ REQUESTINSTRUCTIONCORRECTION/PHONETICALPHABET {\\x._REQUESTINSTRUCTIONCORRECTION
 REQUESTINSTRUCTIONIDENT/TIME {\\x._REQUESTINSTRUCTIONIDENT_(_REQUESTINSTRUCTIONIDENT_(requestinstructionident1),x)}
 
 #Route
+ROUTING/WAYPOINT {\\x._ROUTING_(_ROUTE_(route1),x)}
+ROUTING/ROUTE {\\x._ROUTING_(_ROUTE_(route1),x)}
+ROUTING/FIX {\\x._ROUTING_(_ROUTE_(route11),x)}
 ROUTE/PHONETICALPHABET {\\x._ROUTE_(_ROUTE_(route1), x)}
 ROUTE/INTNUMBER {\\x._ROUTE_(_ROUTE_(route1), x)}
 -(ROUTE/WAYPOINT)/AT {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
@@ -1556,9 +1568,16 @@ ROUTE/NAVAID {\\x._ROUTE_(_ROUTE_(route1), x)}
 (ROUTE/PLACE)/TO {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
 -(ROUTE/PLACE)/AFTER {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
 (ROUTE/FLEVEL)/AT {\\x y._ROUTE_(_ROUTE_(route1), x, y)}
-ROUTE/ROUTE {\\x._ROUTE_(_ROUTE_(route1), x)}
-ROUTE/FIX {\\x._ROUTE_(_ROUTE_(route1), x)}
+-ROUTE/ROUTE {\\x._ROUTE_(_ROUTE_(route1), x)}
+-ROUTE/FIX {\\x._ROUTE_(_ROUTE_(route1), x)}
 (ROUTE/FIX)/TO {\\x y._ROUTE_(_ROUTE_(route1), x,y)}
+
+#routing
+ROUTING/WAYPOINT {\\x._ROUTING_(_ROUTING_(routing1),x)}
+ROUTING/ROUTE {\\x._ROUTING_(_ROUTING_(routing1),x)}
+ROUTING/FIX {\\x._ROUTING_(_ROUTING_(routing1),x)}
+ROUTING/ROUTING {\\x._ROUTING_(_ROUTING_(routing1),x)}
+
 
 #Changes
 -CHANGES/AFTER {\\x._CHANGES_(_CHANGES_(changes1),x)}
@@ -1903,6 +1922,9 @@ VISIBILITY/WORDNUMBER {\\x._VISIBILITY_(_VISIBILITY_(visibility1),x)}
 VISIBILITY\\WORDNUMBER {\\x._VISIBILITY_(x,visibility1)}
 
 #Waypoint
+ROUTING/WAYPOINT {\\x._ROUTING_(_WAYPOINT_(waypoint1),x)}
+ROUTING/ROUTE {\\x._ROUTING_(_WAYPOINT_(waypoint1),x)}
+ROUTING/FIX {\\x._ROUTING_(_WAYPOINT_(waypoint1),x)}
 PROCEDURE/VERSION {\\x._PROCEDURE_(_WAYPOINT_(waypoint1),x)}
 FIX/FIX {\\x._FIX_(_WAYPOINT_(waypoint1),x)}
 FIX/NAVAID {\\x._FIX_(_WAYPOINT_(waypoint1),x)}
@@ -1910,7 +1932,7 @@ FIX/NAVAID {\\x._FIX_(_WAYPOINT_(waypoint1),x)}
 (STAR/ARRIVAL)/WORDNUMBER {\\x y._STAR_(_WAYPOINT_(waypoint1),x,y)}
 STAR/ARRIVAL {\\x._STAR_(_WAYPOINT_(waypoint1),x)}
 (WAYPOINT/TIMEINFO)/AT {\\x y._WAYPOINT_(_WAYPOINT_(waypoint1),x,y)}
-WAYPOINT/WAYPOINT {\\x._WAYPOINT_(_WAYPOINT_(waypoint1),x)}
+-WAYPOINT/WAYPOINT {\\x._WAYPOINT_(_WAYPOINT_(waypoint1),x)}
 (WAYPOINT/WAYPOINT)/TO {\\x y._WAYPOINT_(_WAYPOINT_(waypoint1),x,y)}
 SID/DEPARTURE {\\x._SID_(_WAYPOINT_(waypoint1),x)}
 (SID/DEPARTURE)/INTNUMBER {\\x y._SID_(_WAYPOINT_(waypoint1),x,y)}
@@ -1935,7 +1957,7 @@ WAYPOINT/PHONETICALPHABET {\\x._WAYPOINT_(_WAYPOINT_(waypoint1), x)}
 (WAYPOINT/PHONETICALPHABET)/VIA {\\x y._WAYPOINT_(_WAYPOINT_(waypoint1), x, y)}
 (WAYPOINT/WAYPOINT)/FOR {\\x y._WAYPOINT_(_WAYPOINT_(waypoint1), x, y)}
 
-WAYPOINT/AIRSPACE {\\x._AIRSPACE_(_WAYPOINT_(waypoint1), x)}
+-WAYPOINT/AIRSPACE {\\x._AIRSPACE_(_WAYPOINT_(waypoint1), x)}
 (WAYPOINT/TAXIWAY)/VIA {\\x y._WAYPOINT_(_WAYPOINT_(waypoint1), x,y)}
 WAYPOINT/DIRECTIONOFFLIGHT {\\x._DIRECTIONOFFLIGHT_(_WAYPOINT_(waypoint1), x)}
 ALTIMETER/ALTIMETER {\\x._ALTIMETER_(_WAYPOINT_(waypoint1),x)}  
