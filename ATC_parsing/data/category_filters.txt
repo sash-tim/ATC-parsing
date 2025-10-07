@@ -68,3 +68,4 @@ when
 while
 will
 with
+wordnumphonealphabet
