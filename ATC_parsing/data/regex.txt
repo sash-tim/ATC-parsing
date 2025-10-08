@@ -325,9 +325,15 @@ r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|nin
 r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
 r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
 
+r"\bmaintain\s+(\d+[.,]?\d*)\s+feet\b"
+
 
 r"\bclimbing\s+through\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+to\s+(\d+[.,]?\d*)\b"
+r"\bclimb\s+initially\s+(\d+[.,]?\d*)\b"
+
+r"\bdescend\s+to\s+(\d+[.,]?\d*)\b"
+
 
 r"\bclimb\s+to\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
 r"\bclimb\s+to\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
