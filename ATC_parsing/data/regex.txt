@@ -327,6 +327,7 @@ r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|nin
 
 r"\bmaintain\s+(\d+[.,]?\d*)\s+feet\b"
 
+r"\bpassing\s+(\d+[.,]?\d*)\s+feet\b"
 
 r"\bclimbing\s+through\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+to\s+(\d+[.,]?\d*)\b"
