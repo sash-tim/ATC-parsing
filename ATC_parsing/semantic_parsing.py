@@ -740,7 +740,7 @@ def parsing(command, number_of_steps, dData):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1390,7 +1390,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("o'","o")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1888,6 +1888,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         if step == 0:
             new_command_1 = text2placeholders(command, dData, dReplacement_1)
             new_command_2 = replace_unknown_phrases(new_command_1, dData, dReplacement_2)
+
+            
             command_new = new_command_2
             
             pattern = r"\b(x)\d+\b"
@@ -1908,6 +1910,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         maxExpansion = 1
         
         LF_replacement = parse_segment(parser, command_new, maxExpansion, dReplacement_1, dReplacement_2)
+        
+        
         if LF_replacement != '':
 
             """
@@ -1938,7 +1942,9 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                         continue
                     segment =  ' '.join(command_new_words[0:j+1])
                     LF_replacement = parse_segment(parser, segment, maxExpansion, dReplacement_1, dReplacement_2)
-                    
+
+        
+
                     if LF_replacement != '':
                         # replace function _context_() by its argument if it is another function
                         pattern = r"\b_context_\(_(.+)\)"
@@ -1973,6 +1979,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     for i in range(number_of_steps):
         if i == 0:
             LF = parse_command(command_parser, command, dData, i, dPlaceholders)
+
+            
             if LF == LF_old:
                 break
             else:
