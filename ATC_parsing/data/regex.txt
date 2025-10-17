@@ -292,6 +292,7 @@ r"\bzone\b"
 r"\bzone\s+boundary\b"
 r"\bcontrol\s+zone\b"
 r"\bcontrolled\s+airspace\b"
+r"\bcontrol\s+area\b"
 
 #After
 r"\bafter\b"
@@ -356,7 +357,7 @@ r"\bremaining\s+at\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|t
 r"\bremaining\s+at\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
 
 
-r"\baltitude\b"
+r"\baltitudes*\b"
 r"\b(same)\s+altitude
 
 r"\b(?:climbing)\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
@@ -459,6 +460,9 @@ r"\bbe\b"
 #before
 r"\bbefore\b"
 r"\bprior\b"
+
+#block
+r"\bblock\b"
 
 #but
 r"\bbut\b"
@@ -913,6 +917,7 @@ r"\bwith\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[
 
 #Interval
 r"\bbetween\b"
+
 #IS
 r"\bis\b"
 r"\bindicate[s]?\b"
@@ -1064,8 +1069,8 @@ r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(final)\b"
 r"\bfinal\s+level\b(?![\s\w\d]*\s+altitude)
 r"\bfinal\s+level\b(?![\s\w\d]*\s+feet)"
 r"\bfinal\s+requested\b"
-r"\bflight\s+level\b(?![\s\w\d]*\s+altitude)
-r"\bflight\s+level\b(?![\s\w\d]*\s+feet)"
+r"\bflight\s+levels*\b(?![\s\w\d]*\s+altitude)
+r"\bflight\s+level*\b(?![\s\w\d]*\s+feet)"
 r"#\b(level)\s+flight\b"
 r"\blevel\s+flight\b"
 r"\b(level)\s+flevel\d\b"
@@ -1336,6 +1341,9 @@ r"\bwith\b"
 
 #WordNumber
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+
+
 #RealNumber
 r"[+-]?\b\d+[.,]+\d+\b"
 r"\b((decimal|point)\s+\d+)\b"
@@ -2144,6 +2152,7 @@ r"\bmikov\d\b"
 r"\boakes\d\b"
 r"\bOATHE\d\b"
 r"\bodett\d\b"
+r"\bodlum\d\b"
 r"\bodnem\d\b"
 r"\bolono\d\b"
 r"\bomelo\d\b"
@@ -2464,6 +2473,7 @@ r"\blight\s+turbulence\b"
 r"\bwake\s+turbulence\b"
 r"\bturbulence\s+heavy\b"
 r"\bmoderate\s+turbulence\b"
+r"\bmoderate\s+turbulence\s+reports\b"
 r"\bchop\b"
 r"\bride\b"
 
@@ -2647,6 +2657,7 @@ r"\b(?:the\s+)?mikov\b"
 r"\b(?:the\s+)?oakes\b"
 r"\b(?:the\s+)?OATHE\b"
 r"\b(?:the\s+)?odett\b"
+r"\b(?:the\s+)?odlum\b"
 r"\b(?:the\s+)?odnem\b"
 r"\b(?:the\s+)?olono\b"
 r"\b(?:the\s+)?omelo\b"
