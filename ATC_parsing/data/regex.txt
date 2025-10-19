@@ -687,9 +687,9 @@ r"\bavailable\s+ASDA\b"
 r"\bavailable\s+lda\b"
 
 r"\btora\s+[\s\d\w]*\b(\d+\s+feet)\b"
-r"\bdeclareddistance\d\s+[\s\d\w]*\b(\d+\s+feet)\b"
+r"\bdeclared\s*distance\d\s+[\s\d\w]*\b(\d+\s+feet)\b"
 r"\b(\d+\s+feet)\s+tora\b"
-r"\b(\d+\s+feet)\s+declareddistance\d\b"
+r"\b(\d+\s+feet)\s+declared\s*distance\d\b"
 
 r"\btoda\s+[\s\d\w]*\b(\d+\s+feet)\b"
 r"\b(\d+\s+feet)\s+toda\b"
@@ -998,6 +998,8 @@ r"\bPOB\b"
 
 r"\blocal\s+flight\b"
 r"\bweight\b"
+
+
 
 #fix
 
@@ -1342,6 +1344,7 @@ r"\bwith\b"
 #WordNumber
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+feet)\b"
 
 
 #RealNumber
@@ -1526,6 +1529,7 @@ r"\btulsa\b"
 r"\bdenver\b"
 r"\bJFK\b"
 r"\bnew\s+york\b"
+r"\bnew\s+york\s+kennedy\b"
 r"\bscottish\b"
 r"\bheathrow\b"
 r"\blondon\b"

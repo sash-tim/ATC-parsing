@@ -33,6 +33,7 @@ if
 in
 intnumber
 is
+feet
 for
 from
 fix
