@@ -740,7 +740,7 @@ def parsing(command, number_of_steps, dData):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1390,7 +1390,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 command = re.sub(match.group(1),"", command, count=0)
 
         
-        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o")
+        command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -2018,7 +2018,7 @@ def logicalForm2JSON(LF):
         """
         while True:
             sJSON_new = sJSON
-            pattern = r"\{\"[\w\d\s\.\'\-]+\"\}" 
+            pattern = r"\{\"[\w\d\s\.\:\'\-]+\"\}" 
             p = re.compile(pattern, re.I)
             iterator = p.finditer(sJSON)
             for match in iterator:
