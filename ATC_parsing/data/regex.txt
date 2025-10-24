@@ -16,6 +16,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\beasyjet\b"
 r"\bqatar\b"
 r"\bairbus\s+330\b"
 r"\baegean\b"
@@ -289,9 +290,7 @@ r"\bTRSA\b"
 r"\bsurface\s+area\b"
 r"\b(class\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu))\b"
 r"\bclass\b"
-r"\bcontrol\s+zone\s+boundary\b"
 r"\bzone\b"
-r"\bzone\s+boundary\b"
 r"\bcontrol\s+zone\b"
 r"\bcontrolled\s+airspace\b"
 r"\bcontrol\s+area\b"
@@ -465,6 +464,9 @@ r"\bprior\b"
 
 #block
 r"\bblock\b"
+
+#boundary
+r"\bboundary\b"
 
 #but
 r"\bbut\b"
@@ -889,8 +891,6 @@ r"\blaunch\s+site\b"
 
 #Logic
 r"\bif\s+you\s+read\b"
-r"\bwhile\b"
-r"\bawait\b"
 r"\bto\s+be\b"
 r"\botherwise\b"
 r"\bthere\s+is\b"
@@ -1743,6 +1743,10 @@ r"\bradial\b"
 r"\brate\b"
 r"\bper\s+minute\b"
 
+#point
+r"\breporting\s+point\b"
+r"\bpoint\b"
+
 #Responsibility
 
 #Restriction
@@ -2114,6 +2118,7 @@ r"\bgratz\d\b"
 r"\bgolop\d\b"
 r"\bgomup\d\b"
 r"\bgosek\d\b"
+r"\bhanka\d\b"
 r"\bhektr\d\b"
 r"\b(?:the\s+)?holtz\d\b"
 r"\bigala\d\b"
@@ -2155,6 +2160,7 @@ r"\bnapsa\d\b"
 r"\bnateb\d\b"
 r"\bnavti\d\b"
 r"\bnelpa\d\b"
+r"\bnirsi\d\b"
 r"\bnorku\d\b"
 r"\bnovem\d\b"
 r"\bnubar\d\b"
@@ -2214,6 +2220,7 @@ r"\btumka\d\b"
 r"\btyler\d\b"
 r"\bvambo\d\b"
 r"\bvarik\d\b"
+r"\bvebit\d\b"
 r"\bvenox\d\b"
 r"\bvemut\d\b"
 r"\bverma\d\b"
@@ -2227,6 +2234,7 @@ r"\bzippy\d\b"
 r"\b\b[0-9][a-z]\b\b"
 
 #Side
+r"\b((north|east|south|west)\s+side)\b"
 r"\brunway[s]?\s+\d+\s+(left|right|center)\b(?!\s+hand)"
 r"\b\d+\s+(left|right|center)\b(?!\s+hand)"
 r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
@@ -2240,6 +2248,7 @@ r"\bsquawking\b"
 
 #standby
 r"\bstand\s*by\b"
+r"\bawait\b"
 
 
 #STAR
@@ -2630,6 +2639,7 @@ r"\b(?:the\s+)?gratz\b"
 r"\b(?:the\s+)?golop\b"
 r"\b(?:the\s+)?gomup\b"
 r"\b(?:the\s+)?gosek\b"
+r"\b(?:the\s+)?hanka\b"
 r"\b(?:the\s+)?hektr\b"
 r"\b(?:the\s+)?holtz\b"
 r"\b(?:the\s+)?igala\b"
@@ -2671,6 +2681,7 @@ r"\b(?:the\s+)?napsa\b"
 r"\b(?:the\s+)?nateb\b"
 r"\b(?:the\s+)?navti\b"
 r"\b(?:the\s+)?nelpa\b"
+r"\b(?:the\s+)?nirsi\b"
 r"\b(?:the\s+)?norku\b"
 r"\b(?:the\s+)?novem\b"
 r"\b(?:the\s+)?nubar\b"
@@ -2730,6 +2741,7 @@ r"\b(?:the\s+)?tumka\b"
 r"\b(?:the\s+)?tyler\b"
 r"\b(?:the\s+)?vambo\b"
 r"\b(?:the\s+)?varik\b"
+r"\b(?:the\s+)?vebit\b"
 r"\b(?:the\s+)?venox\b"
 r"\b(?:the\s+)?vemut\b"
 r"\b(?:the\s+)?verma\b"
