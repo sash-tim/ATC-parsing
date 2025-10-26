@@ -16,6 +16,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\brobin\b"
 r"\beasyjet\b"
 r"\bqatar\b"
 r"\bairbus\s+330\b"
@@ -292,6 +293,7 @@ r"\b(class\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Julie
 r"\bclass\b"
 r"\bzone\b"
 r"\bcontrol\s+zone\b"
+r"\bCTR\b"
 r"\bcontrolled\s+airspace\b"
 r"\bcontrol\s+area\b"
 
@@ -1217,6 +1219,8 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\boverfly\b"
+r"\bentry\b"
 r"\bcircle\b"
 r"\bcross\b"
 r"\boperate\b"
@@ -1249,8 +1253,6 @@ r"\bcrossing\b"
 r"\bmaneuvering\b"
 r"\bfly\b"
 r"\bvacate\b"
-r"\btransition\b"
-r"\btransitioning\b"
 r"\bturn\b"
 r"\bturn\s+left\b"
 r"\bturn\s+right\b"
@@ -1331,8 +1333,7 @@ r"\blooking\s+out\b"
 r"\bstarting\b"
 r"\bgoing\s+to\b"
 r"\bcoming\s+up\b"
-r"\bis\s+off\b"
-r"\bremaining\b"
+
 #IntNumber
 r"[+-]?\b\d+\b"
 
@@ -1400,6 +1401,10 @@ r"\bfacing\b"
 #out
 r"\bout\b"
 r"\boutside\b"
+r"\bremain\s+(clear)\b"
+r"\bremaining\s+(clear)\b"
+r"\bis\s+off\b"
+
 
 #Sequence
 r"\b(number)\s+\d+\b"
@@ -1760,6 +1765,8 @@ r"\bexpediting\b"
 r"\bexpediting\s+vacating\b"
 r"\bexpedite\s+vacating\b"
 r"\bremain\b"
+r"\bremaining\b"
+
 r"\bgeofence\b"
 r"\brequired\b"
 r"\bclear\s+of\s+clouds\b"
@@ -1923,12 +1930,7 @@ r"\bRead\s*back\b"
 r"\bmake\s*an\s*offset\b"
 r"\borbit\b"
 
-
-
-r"\boverfly\b"
 r"\bout\s+of\b"
-
-r"\btransit\b"
 #REQUESTINSTRUCTIONCORRECTION
 r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
@@ -2368,6 +2370,10 @@ r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|
 r"\btemperature\b"
 r"\btemperature\s+([+-]?\d+\b(\s+celsius\b)*)"
 r"\btemperature\s+((minus\s+)*(plus\s+)*(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))*(\s+celsius\b)*)"
+
+#Terrain
+r"\bterrain\b"
+
 #Time
 r"\binitially\b"
 r"\bshortly\b"
@@ -2497,6 +2503,9 @@ r"\bclosed\s+right\s+traffic\b"
 
 #TRANSITION
 r"\btransition\b"
+r"\btransit\b"
+r"\btransitioning\b"
+
 
 #turbulence
 r"\bturbulence\b"
