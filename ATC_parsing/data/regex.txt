@@ -522,8 +522,6 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
-r"\bmaintain\b"
-MAINTAINING FLIGHT LEVEL 310, DELTA 84.r"\bpushback\s+and\s+taxi\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
 r"\bcleared\s+(VFR\s+on\s+top)\b"
 r"\bmaintain\s+(VFR\s+on\s+top)\b"
@@ -1178,6 +1176,12 @@ r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 r"\btaxi\b"
 r"\btaxis\b"
 r"\btaxiing\b"
+
+#maintain
+r"\bmaintain\b"
+
+#maintainstop
+r"to stop inference"
 
 #Measure
 r"\bfeet\b"

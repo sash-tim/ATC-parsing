@@ -23,6 +23,7 @@ directionmagnetic
 discretion
 due
 emergency
+except
 fix
 flevel
 frequency
