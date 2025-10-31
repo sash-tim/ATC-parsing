@@ -546,7 +546,6 @@ r"\boclock\b"
 r"\breducing\b"
 r"\bmaintaining\b"
 r"\bcopy\s+it\b"
-r"\bcopy\s+that\b"
 r"\bcopy\b"
 r"\bCopy\s+GPS\s+NOTAM\b"
 r"\bready\s+to\s+copy\b"
@@ -1834,6 +1833,7 @@ r"\brequest\b"
 r"\brequire\b"
 
 #RequestInstruction
+r"\bcopy\s+that\b"
 r"\bpushback\s+and\s+start\b"
 r"\brelease\b"
 r"\bexceed\b"
@@ -2267,6 +2267,8 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bthe\s+go\b"
+r"\bnormal\s+procedures\s+apply\b"
 r"\bapply\b"
 r"\bapplies\b"
 r"\btraffic\s+observed\b"
