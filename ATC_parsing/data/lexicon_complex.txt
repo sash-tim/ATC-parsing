@@ -566,9 +566,11 @@ EXCEPT/MAINTAIN {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 EXCEPT/CLEARANCESTOP {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 EXCEPT/NAVIGATION {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 (EXCEPT/FLEVEL)/AT {\\x y._EXCEPT_(_EXCEPT_(except1), x,y)}
+EXCEPT/FLEVEL {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 
 
 #expect
+(EXPECT/SAFETY)/TO {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 (EXPECT/WAYPOINT)/TO {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 EXPECT/PROCEDURE {\\x._EXPECT_(_EXPECT_(expect1), x)}
 EXPECT/GROUNDMOVEMENT {\\x._EXPECT_(_EXPECT_(expect1), x)}
@@ -605,6 +607,7 @@ EXPECT/TRAFFICCIRCUIT {\\x._EXPECT_(_EXPECT_(expect1), x)}
 (EXPECT/REQUESTINSTRUCTION)/TO {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 
 #Safety
+SAFETY/TERRAIN {\\x._SAFETY_(_SAFETY_(safety1), x)}
 SAFETY/TURBULENCE {\\x._SAFETY_(_SAFETY_(safety1), x)}
 SAFETY/WEATHER {\\x._SAFETY_(_SAFETY_(safety1), x)}
 -SAFETY/REQUESTINSTRUCTION {\\x._SAFETY_(_SAFETY_(safety1), x)}
@@ -624,6 +627,7 @@ SAFETY/TRAFFIC {\\x._SAFETY_(_SAFETY_(safety1), x)}
 SAFETY/WIND {\\x._SAFETY_(_SAFETY_(safety1), x)}
 
 #Heading
+(HEADING/MAINTAINSTOP)/TO {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
 HEADING/CONFIRMED {\\x._HEADING_(_HEADING_(heading1), x)}
 (HEADING/REQUESTINSTRUCTION)/TO {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
 (HEADING/CLEARANCESTOP)/TO {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
@@ -1355,6 +1359,7 @@ RATE/WORDNUMBER {\\x._RATE_(_RATE_(rate1),x)}
 RATE/COMPARISONOR {\\x._RATE_(_RATE_(rate1),x)}
 
 #report
+REPORT/INTNUMBER {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/BOUNDARY {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/PHONETICALPHABET {\\x._REPORT_(_REPORT_(report1),x)}
 REPORT/TRAFFICINFO {\\x._REPORT_(_REPORT_(report1),x)}
@@ -1701,6 +1706,7 @@ CHANGES/NAVIGATION {\\x._CHANGES_(_CHANGES_(changes1),x)}
 #Runway
 RUNWAY/RUNWAYNUMBER {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
 RUNWAY/DEPARTURE {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
+(DEPARTURE/DEPARTURE)/INTNUMBER {\\x y._DEPARTURE_(_RUNWAY_(runway1), x,y)}
 -RUNWAY/CLEARED {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
 RUNWAY/RESTRICTION {\\x ._RUNWAY_(_RUNWAY_(runway1), x)}
 (RUNWAY/RESTRICTION)/IS {\\x y._RUNWAY_(_RUNWAY_(runway1), x,y)}
@@ -1881,8 +1887,13 @@ TAXIWAY/INTNUMBER {\\x._TAXIWAY_(_TAXIWAY_(taxiway1),x)}
 (TAXIWAY/PHONETICALPHABET)/VIA {\\x y._TAXIWAY_(_TAXIWAY_(taxiway1),x,y)}
 (TAXIWAY/PHONETICALPHABET)/OF {\\x y._TAXIWAY_(_TAXIWAY_(taxiway1),x,y)}
 TAXIWAY/PHONETICALPHABET {\\x._TAXIWAY_(_TAXIWAY_(taxiway1),x)}      
+
 #Temperature
 TEMPERATURE/TEMPERATURE {\\x._TEMPERATURE_(_TEMPERATURE_(temperature1),x)}
+
+#terrain
+TERRAIN/DIRECTION {\\x._TERRAIN_(_TERRAIN_(terrain1),x)}
+TERRAIN/DIRECTIONMAGNETIC {\\x._TERRAIN_(_TERRAIN_(terrain1),x)}
 
 #Time
 (EMERGENCY/EMERGENCY)/OF {\\x y._EMERGENCY_(_TIME_(time1),x,y)}
@@ -2015,6 +2026,10 @@ UNTIL/DISTANCE {\\x._UNTIL_(_UNTIL_(until1), x)}
 UNTIL/COORDINATE {\\x._UNTIL_(_UNTIL_(until1), x)}
 UNTIL/POSITION {\\x._UNTIL_(_UNTIL_(until1), x)}
 UNTIL/WAYPOINT {\\x._UNTIL_(_UNTIL_(until1), x)}
+
+#untilstop
+UNTILSTOP/ALTITUDE {\\x._UNTILSTOP_(_UNTIL_(untilstop1), x)}
+
 
 #Verify
 VERIFY/RESTRICTION {\\x._VERIFY_(_VERIFY_(verify1), x)}

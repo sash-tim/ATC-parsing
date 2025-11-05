@@ -2380,6 +2380,7 @@ r"\btemperature\s+((minus\s+)*(plus\s+)*(zero|one|two|three|four|five|six|seven|
 
 #Terrain
 r"\bterrain\b"
+r"\bhigh\s+terrain\b"
 
 #Time
 r"\binitially\b"
