@@ -309,6 +309,8 @@ r"\baltimeter\s+(\d+[.,]?\d+\b)"
 r"\baltimeter\b"
 #Altitude
 r"\bassigned\s+altitude\b"
+r"\bMinimum\s+enroute\s+altitude\b"
+r"\bMinimum\s+vectoring\s+altitude\b"
 r"\blevel\b"
 r"\bAGL\b"
 r"\bfeet\s+AGL\b"
@@ -317,6 +319,7 @@ r"#\bVFR\s+altitude\b"
 
 
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
 
 
 r"\bdescending\s+through\s+(\d+[.,]?\d*)\b"
@@ -522,6 +525,7 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
+r"\bterrain\s+clearance\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
 r"\bcleared\s+(VFR\s+on\s+top)\b"
 r"\bmaintain\s+(VFR\s+on\s+top)\b"
@@ -579,6 +583,7 @@ r"\b(few(\s+at)*)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hun
 
 
 #Comparison
+r"\blower\b"
 r"\blater\s+than\b"
 r"\bcouple\s+more\b"
 r"\bhigher\b"
@@ -860,7 +865,7 @@ r"\bglider\s+activity\b"
 r"\bcaution\b"
 
 #Heading
-r"\bheading\b"
+r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
@@ -1533,7 +1538,7 @@ r"\bLIT\b"
 r"\bbigbee\b"
 r"\bbakersfield\b"
 r"\boakland\b"
-r"\barea\b"
+r"\b(?:that\s+)?area\b"
 r"\bLAX\b"
 r"\bSpringfield\b"
 r"\blakeview\b"
@@ -1951,6 +1956,7 @@ r"\bglide\s+path\b"
 r"\barc\b"
 r"\barc\s+south\b"
 r"\broute\b"
+r"\ben\s*route\b"
 r"\bjet\s+route\b"
 r"\bjet\s+\d+\b"
 r"\bprogrammed\s+route\b"
@@ -2341,18 +2347,21 @@ r"\bservices\s+provided\b"
 r"\bin\s+progress\b"
 r"\brequested\b"
 
-r"\ben\s+route\b"
 r"\bactivated\b"
 r"\bestablished\b"
 r"\bestablish\b"
 r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
+
 #Thankyou
 r"\bappreciate\b"
 r"\bthank\s+you\b"
 r"\bthank\s+you\s+very\s+much\b"
 r"\bthanks\b"
+
+#statusstop
+r"\bto stop status inference\b"
 
 #Taxiway
 r"\bhold\s+short\s+line\b"
@@ -2381,6 +2390,8 @@ r"\btemperature\s+((minus\s+)*(plus\s+)*(zero|one|two|three|four|five|six|seven|
 #Terrain
 r"\bterrain\b"
 r"\bhigh\s+terrain\b"
+r"\bterrain\s+elevation\b"
+r"\bterraing\s+(rising\s+rapidly)\b"
 
 #Time
 r"\binitially\b"
