@@ -308,6 +308,7 @@ r"\bbehind\b"
 r"\baltimeter\s+(\d+[.,]?\d+\b)"
 r"\baltimeter\b"
 #Altitude
+r"\bprevious\s+altitude\b"
 r"\bassigned\s+altitude\b"
 r"\bMinimum\s+enroute\s+altitude\b"
 r"\bMinimum\s+vectoring\s+altitude\b"
@@ -318,8 +319,8 @@ r"#\bVFR\s+altitude\b"
 
 
 
-r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
-r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
+r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
+r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
 
 
 r"\bdescending\s+through\s+(\d+[.,]?\d*)\b"
@@ -403,7 +404,7 @@ r"\broll\s+down\b"
 
 
 #Approach
-r"\bapproach\b"
+r"\b(?:the\s+)?approach\b"
 r"\bRNAV\s+Y\b"
 r"\bRNAV\s+Z\b"
 
@@ -416,7 +417,7 @@ r"\bapproaches\b"
 
 #ApproachNAVAID
 r"\bILS\b"
-r"\blocalizer\b"
+r"\b(?:the\s+)?localizer\b"
 
 #approved
 r"\bapproved\b"
@@ -849,6 +850,11 @@ r"\bexpecting\b"
 
 
 #Safety
+r"\bnote\b"
+r"\bwarning\b"
+r"\bMayday\s+Mayday\s+Mayday\b"
+r"\bmayday\b"
+r"\bterrain\s+alert\b"
 r"\buse\s+caution\b"
 r"\bbe\s+advised\b"
 r"\bgps\s+notam\b"
@@ -860,6 +866,7 @@ r"\bovertake\b"
 r"\bovertaking\b"
 r"\bavoid\b"
 r"\bavoiding\b"
+r"\bavoidance\b"
 r"\bmilitary\s+activity\b"
 r"\bglider\s+activity\b"
 r"\bcaution\b"
@@ -1303,6 +1310,7 @@ r"\bnegative\b"
 
 
 #Notification
+r"\binitiating\b"
 r"\blooking\b"
 r"\bvacating\b"
 r"\bcorrecting\b"
@@ -1946,6 +1954,7 @@ r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
+r"\b(?:the\s+)?approach\s+path\b"
 r"\bcorridor\b"
 r"\btrack\b"
 r"\bthe\s+(hold)\b"
@@ -1955,7 +1964,7 @@ r"\bglide\s+path\b"
 
 r"\barc\b"
 r"\barc\s+south\b"
-r"\broute\b"
+r"\b(?:the\s+)?route\b"
 r"\ben\s*route\b"
 r"\bjet\s+route\b"
 r"\bjet\s+\d+\b"
@@ -2239,6 +2248,7 @@ r"\bvemut\d\b"
 r"\bverma\d\b"
 r"\bvenom\d\b"
 r"\bwesix\d\b"
+r"\bwigle\d\b"
 r"\byorke\d\b"
 r"\bzeday\d\b"
 r"\bzippy\d\b"
@@ -2273,6 +2283,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bclear\s+of\b"
 r"\bthe\s+go\b"
 r"\bnormal\s+procedures\s+apply\b"
 r"\bapply\b"
@@ -2389,6 +2400,7 @@ r"\btemperature\s+((minus\s+)*(plus\s+)*(zero|one|two|three|four|five|six|seven|
 
 #Terrain
 r"\bterrain\b"
+r"\brising\s+terrain\b"
 r"\bhigh\s+terrain\b"
 r"\bterrain\s+elevation\b"
 r"\bterraing\s+(rising\s+rapidly)\b"
@@ -2775,6 +2787,7 @@ r"\b(?:the\s+)?vemut\b"
 r"\b(?:the\s+)?verma\b"
 r"\b(?:the\s+)?venom\b"
 r"\b(?:the\s+)?wesix\b"
+r"\b(?:the\s+)?wigle\b"
 r"\b(?:the\s+)?yorke\b"
 r"\b(?:the\s+)?zeday\b"
 r"\b(?:the\s+)?zippy\b"
