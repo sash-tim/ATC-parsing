@@ -1,12 +1,15 @@
+above
 after
+afterword
 altitude
-altitudechange
+-altitudechange
 approach
 approved
 around
 as
 at
 before
+block
 by
 cancelled
 conj
@@ -19,8 +22,10 @@ database
 direction
 directionmagnetic
 discretion
+distance
 due
 emergency
+except
 fix
 flevel
 frequency
@@ -31,8 +36,10 @@ if
 in
 intnumber
 is
+feet
 for
 from
+fix
 navaid
 -measure
 of
@@ -46,6 +53,7 @@ realnumber
 report
 -restriction
 route
+routing
 runway
 side
 speed
@@ -65,3 +73,4 @@ when
 while
 will
 with
+wordnumphonealphabet
