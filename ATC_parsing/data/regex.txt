@@ -876,7 +876,6 @@ r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
-r"\bpresent\s+heading\b"
 
 #Height
 r"\bheight\b"
