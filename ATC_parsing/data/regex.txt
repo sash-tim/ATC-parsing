@@ -16,6 +16,8 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bglider\b"
+r"\bfalcon\b"
 r"\brobin\b"
 r"\beasyjet\b"
 r"\bqatar\b"
@@ -193,6 +195,7 @@ r"\bgerman\s+wings\b"
 r"\bklm\b"
 r"\bhelicopter\b"
 r"\bheli\b"
+r"\bsp[\s+\-]*heli\b"
 r"\biberia\b"
 r"\bairbaltic\b"
 r"\bair\s*berlin\b"
@@ -950,6 +953,7 @@ r"\bassigned\s+Mach\b"
 r"\bfinal\s+approach\s+speed\b"
 r"\bminimum\s+approach\s+speed\b"
 r"\bgood\s+speed\b"
+r"\bpattern\s+speed\b"
 r"\bnormal\s+speed\b"
 r"\bspeed\s+up\b"
 r"\bminimum\s+clean\s+speed\b"
@@ -985,7 +989,6 @@ r"\bgreen\b"
 r"\bblue\b"
 r"\blocal\b"
 r"\bhospital\s+flight\b"
-r"\bnoise\b"
 r"\bmach\s+number\b"
 r"\bbackground\s+noise\b"
 r"\bthreshold\s+wind\b"
@@ -1308,6 +1311,9 @@ r"\bdidn\s+t\b"
 r"\bno[tn]?\b"
 r"\bnegative\b"
 
+#noise
+r"\bnoise\b"
+r"\bnoise\s+abatement\b"
 
 #Notification
 r"\binitiating\b"
@@ -1422,6 +1428,8 @@ r"\bremain\s+(clear)\b"
 r"\bremaining\s+(clear)\b"
 r"\bis\s+off\b"
 
+#over
+r"\bover\b"
 
 #Sequence
 r"\b(number)\s+\d+\b"
@@ -1469,6 +1477,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\briver\b"
 r"\bMUNCHEN\b"
 r"\bdetling\b"
 r"\borlando\b"
