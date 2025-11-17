@@ -552,7 +552,6 @@ r"\bstop clearence inference\b"
 r"\boclock\b"
 
 #Confirmation
-r"\breducing\b"
 r"\bmaintaining\b"
 r"\bcopy\s+it\b"
 r"\bcopy\b"
@@ -974,6 +973,10 @@ r"\bhigher\s+rate\b"
 r"\bnormal\s+rate\b"
 r"\bminimum\s+rate\b"
 r"\bslowly\b"
+
+#speedreduce
+r"\breduce\b"
+r"\breducing\b"
 
 
 #Feature
@@ -1905,7 +1908,6 @@ r"\breach\b"
 r"\bstart\b"
 r"\bstartup\b"
 r"\bstop\b"
-r"\breduce\b"
 r"\bsay\s+again\b"
 r"\bsay\s+it\s+again\b"
 r"\bfile\b"
