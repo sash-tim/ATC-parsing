@@ -877,6 +877,8 @@ r"\bcaution\b"
 #Heading
 r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
+r"\bleft\s+heading\b"
+r"\bright\s+heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
 
@@ -1282,7 +1284,7 @@ r"\bright\s+turn\b"
 
 
 r"\bturning\s+left\b"
-r"\bturnings+right\b"
+r"\bturning\s+right\b"
 r"\bleft\s+turning\b"
 r"\bright\s+turning\b"
 r"\bhold\s+short\b"
@@ -1845,6 +1847,8 @@ r"\b\d+\s+west\b"
 r"\b\d+\s*n\b"
 r"\b\d+\s*w\b"
 
+#CORRECTION
+r"\bcorrection\b"
 
 #report
 r"\b((say|report|advise)\s+intentions*)\b"
@@ -1966,8 +1970,6 @@ r"\bmake\s*an\s*offset\b"
 r"\borbit\b"
 
 r"\bout\s+of\b"
-#REQUESTINSTRUCTIONCORRECTION
-r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
@@ -2242,6 +2244,8 @@ r"\brodon\d\b"
 r"\brodux\d\b"
 r"\brotev\d\b"
 r"\brozee\d\b"
+r"\b(?:the\s+)?sabra\d\b"
+r"\b(?:the\s+)?sabey\d\b"
 r"\bsadde\d\b"
 r"\bsakes\d\b"
 r"\bsasal\d\b"
@@ -2781,6 +2785,8 @@ r"\b(?:the\s+)?rodon\b"
 r"\b(?:the\s+)?rodux\b"
 r"\b(?:the\s+)?rotev\b"
 r"\b(?:the\s+)?rozee\b"
+r"\b(?:the\s+)?sabra\b"
+r"\b(?:the\s+)?sabey\b"
 r"\b(?:the\s+)?sadde\b"
 r"\b(?:the\s+)?sakes\b"
 r"\b(?:the\s+)?sasal\b"

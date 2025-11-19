@@ -742,6 +742,7 @@ def parsing(command, number_of_steps, dData):
         
         command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
+        command = command.replace("…","")
         command = command.replace("ü","u").replace("Ü","U")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1393,6 +1394,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         
         command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
+        command = command.replace("…","")
         command = command.replace("ü","u").replace("Ü","U")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
