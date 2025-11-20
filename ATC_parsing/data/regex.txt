@@ -21,6 +21,7 @@ r"\bfalcon\b"
 r"\brobin\b"
 r"\beasyjet\b"
 r"\bqatar\b"
+r"\bairbus\s+321\b"
 r"\bairbus\s+330\b"
 r"\baegean\b"
 r"\brepublic\b"
@@ -877,8 +878,8 @@ r"\bcaution\b"
 #Heading
 r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
-r"\bleft\s+heading\b"
-r"\bright\s+heading\b"
+r"\b(?:left\s+)?heading\b"
+r"\b(?:right\s+)?heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
 
@@ -1369,6 +1370,7 @@ r"\bcoming\s+up\b"
 
 #IntNumber
 r"[+-]?\b\d+\b"
+r"\b\d+\s+at\s+\d+\b"
 
 #When
 r"\bwhen\b"
