@@ -58,6 +58,7 @@ runway
 side
 speed
 status
+surface
 then
 through
 time

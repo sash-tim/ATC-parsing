@@ -983,6 +983,10 @@ r"\breducing\b"
 
 
 #Feature
+r"\bstanding\s+water\s+observed\b"
+r"\bdamp\b"
+r"\bwet\b"
+r"\bgood\b"
 r"\bbackup\b"
 r"\bcontinuous\b"
 r"\bnearest\s+suitable\b"
@@ -2397,6 +2401,11 @@ r"\bthanks\b"
 
 #statusstop
 r"\bto stop status inference\b"
+
+#surface
+r"\bsurface\b"
+r"\bsurface\s+conditions*\b"
+r"\bbraking\s+action\b"
 
 #Taxiway
 r"\bhold\s+short\s+line\b"
