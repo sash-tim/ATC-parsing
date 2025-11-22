@@ -59,6 +59,7 @@ side
 speed
 status
 surface
+surfacefeature
 then
 through
 time

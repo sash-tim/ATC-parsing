@@ -983,9 +983,8 @@ r"\breducing\b"
 
 
 #Feature
-r"\bstanding\s+water\s+observed\b"
-r"\bdamp\b"
-r"\bwet\b"
+r"\bdepth\b"
+r"\bpoor\b"
 r"\bgood\b"
 r"\bbackup\b"
 r"\bcontinuous\b"
@@ -1209,6 +1208,8 @@ r"to stop inference"
 
 #Measure
 r"\bfeet\b"
+r"\bmillimeter\b"
+r"\binch\b"
 r"#\bmile[s]?\b"
 r"#\bnautical\s+mile[s]?\b"
 r"#\btrack\s+mile[s]?\b"
@@ -1393,6 +1394,7 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 
 
 #RealNumber
+r"\bhalf\b"
 r"[+-]?\b\d+[.,]+\d+\b"
 r"\b((decimal|point)\s+\d+)\b"
 r"\d+\bdecimal\s+\d+\b"
@@ -1460,7 +1462,9 @@ r"\bresequencing\b"
 r"\bsequence\b"
 
 
-
+#percent
+r"\b\d+\s+percent\b"
+r"\b\d+[.,]+\d+\s+percent\b"
 
 #PhoneticAlphabet
 
@@ -2407,7 +2411,17 @@ r"\bsurface\b"
 r"\bsurface\s+conditions*\b"
 r"\bbraking\s+action\b"
 
+#surfacefeature
+r"\bslush\b"
+r"\bpatchy\s+contamination\b"
+r"\bstanding\s+water\s+observed\b"
+r"\bdamp\b"
+r"\bwet\b"
+r"\bdry\s+snow\b"
+r"\bcovered\s+with\s+ice\b"
+
 #Taxiway
+
 r"\bhold\s+short\s+line\b"
 r"\bfirst\s+(high\s+speed)\b"
 r"\bsecond\s+(high\s+speed)\b"
