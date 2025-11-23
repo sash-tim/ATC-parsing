@@ -1,6 +1,7 @@
 above
 after
 afterword
+aircraft
 altitude
 -altitudechange
 approach
@@ -56,6 +57,7 @@ route
 routing
 runway
 side
+spacing
 speed
 status
 surface
