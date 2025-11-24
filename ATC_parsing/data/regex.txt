@@ -984,6 +984,7 @@ r"\breducing\b"
 
 
 #Feature
+r"\bmedium\s+to\s+poor\b"
 r"\bmedium\b"
 r"\bdepth\b"
 r"\bpoor\b"
@@ -1726,7 +1727,8 @@ r"\bGrand\s+Prairie\b"
 r"\bFort\s+Worth\b"
 r"\bBorton\b"
 #Position
-r"\bpast the midfield\b"
+r"\brollout\s+end\b"
+r"\bpast\s+the\s+midfield\b"
 r"\bthreshold\b"
 r"\bdisplaced\s+threshold\b"
 r"\bjust\s+over\b"
@@ -2414,21 +2416,33 @@ r"\bto stop status inference\b"
 #surface
 r"\bsurface\b"
 r"\bsurface\s+conditions*\b"
-r"\bbraking\s+action\b"
+
 
 #surfacefeature
+r"\bloose\s+sand\b"
+r"\bsnowplow\s+operations*\b"
+r"\brunway\s+condition\s+report\b"
+r"\bRCR\b"
+r"\bRunway\s+condition\s+code\b"
+r"\bcondition\s+code\b"
+r"\bRWYCC\b"
+r"\bbraking\s+action\b"
 r"\bpoor\s+braking\b"
 r"\bgood\s+braking\b"
 r"\bslush\b"
 r"\bpatchy\s+contamination\b"
+r"\bsignificant\s+contamination\b"
 r"\bstanding\s+water\s+observed\b"
 r"\bdamp\b"
 r"\bwet\b"
 r"\bdry\s+snow\b"
 r"\bcovered\s+with\s+ice\b"
+r"\bpatchy\s+ice\b"
+r"\bwet\s+ice\b"
+r"\bslippery\s+surface\b"
 
 #Taxiway
-
+r"\ball\s+taxiways\b"
 r"\bhold\s+short\s+line\b"
 r"\bfirst\s+(high\s+speed)\b"
 r"\bsecond\s+(high\s+speed)\b"
