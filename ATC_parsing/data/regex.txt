@@ -843,6 +843,7 @@ r"\bof\s+(fuel)\b"
 #estimate
 r"\bestimating\b"
 r"\bestimate\b"
+r"\bestimated\b"
 
 #except
 r"\bexcept\b"
@@ -861,6 +862,7 @@ r"\bMayday\s+Mayday\s+Mayday\b"
 r"\bmayday\b"
 r"\bterrain\s+alert\b"
 r"\buse\s+caution\b"
+r"\bexercise\s+caution\b"
 r"\bbe\s+advised\b"
 r"\bgps\s+notam\b"
 r"\blost\b"
@@ -943,14 +945,15 @@ r"\bbetween\b"
 #IS
 r"\bis\b"
 r"\bindicate[s]?\b"
+r"\bindicated\b"
 r"\bappear\b"
 r"\bthis\s+is\b"
 
 #speed
-r"\bindicated\b"
 r"\b(IAS|TAS|GS)\b"
 r"\bkt\b"
 r"\bknots*\b"
+r"\bknots*\s+indicated\b"
 r"\bMach\b"
 r"\bassigned\s+Mach\b"
 r"\bfinal\s+approach\s+speed\b"
@@ -1434,6 +1437,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\boperating\b"
 r"\bfollowing\b"
 r"\bturning\b"
 r"\breturning\b"
@@ -1732,6 +1736,7 @@ r"\bBorton\b"
 #Position
 r"\brollout\s+end\b"
 r"\bpast\s+the\s+midfield\b"
+r"\bmidfield\b"
 r"\bthreshold\b"
 r"\bdisplaced\s+threshold\b"
 r"\bjust\s+over\b"
@@ -1754,6 +1759,7 @@ r"\bSID\b"
 
 
 #Question
+r"\bany\b"
 r"\bstill\b"
 r"\bwanna\s+make\s+sure\b"
 r"\bcan\s+we\b"
@@ -1887,6 +1893,9 @@ r"\badvise\b"
 r"\brequest\b"
 r"\brequire\b"
 
+#REQUESTSTOP
+r"\bjust to stop inference\b"
+
 #RequestInstruction
 r"\bcopy\s+that\b"
 r"\bpushback\s+and\s+start\b"
@@ -1953,6 +1962,7 @@ r"\bWe\s+are\s+going\b"
 r"\bWe're\s+executing\b"
 r"\bWe\s+are\s+executing\b"
 r"\bopen\b"
+r"\breopening\b"
 r"\bclose\b"
 
 
@@ -2423,6 +2433,8 @@ r"\brunway\s+surface\s+conditions*\b"
 
 
 #surfacefeature
+r"\bde[\s+\-]*iced\b"
+r"\btreated\s+with\s+chemicals\b"
 r"\bdepth\b"
 r"\bisolated\s+patches\s+of\s+water\b"
 r"\bwater\b"
@@ -2430,12 +2442,14 @@ r"\bisolated\s+patches\b"
 r"\bloose\s+sand\b"
 r"\bsnowplow\s+operations*\b"
 r"\brunway\s+condition\s+report\b"
+r"\bcontamination\s+observed\b"
 r"\bRCR\b"
 r"\bRunway\s+condition\s+code\b"
 r"\bcondition\s+code\b"
 r"\bRWYCC\b"
 r"\bbraking\s+action\b"
 r"\bpoor\s+braking\b"
+r"\bmedium\s+braking\b"
 r"\bgood\s+braking\b"
 r"\bslush\b"
 r"\bpatchy\s+contamination\b"
@@ -2443,7 +2457,9 @@ r"\bsignificant\s+contamination\b"
 r"\bstanding\s+water\s+observed\b"
 r"\bdamp\b"
 r"\bwet\b"
+r"\bsnow\s+removal\b"
 r"\bdry\s+snow\b"
+r"\bthin\s+layer\s+of\s+dry\s+snow\b"
 r"\bcovered\s+with\s+ice\b"
 r"\bpatchy\s+ice\b"
 r"\bwet\s+ice\b"
@@ -2502,6 +2518,8 @@ r"\bwheels\s+up\s+time\b"
 r"\barrival\s+time\b"
 r"\bthis\s+time\b"
 r"\bnow\b"
+r"\blatest\b"
+r"\blast\b"
 r"\bimmediately\b"
 r"\bimmediate\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty)\s+minutes)\b"
@@ -2584,7 +2602,7 @@ r"\bfour\s+five\s+degree\s+entry\b"
 r"\bfour\s+five\s+departure\b"
 r"\bfour\s+five\s+degree\s+departure\b"
 r"\bstright\s*-?\s*out\s+departure\b"
-r"\bmidfield\b"
+
 
 #TRafficDirection
 r"\btraffic\s+(inbound)\b"
@@ -2654,8 +2672,12 @@ r"\bconfirm\b"
 
 #VIA
 r"\bvia\b"
+
 #Vehicle
 r"\bvehicle\b"
+r"\bSweeper\s+vehicles*\b"
+r"\bsand\s+trucks*\b"
+
 #VISIBILITY
 r"\breduced\s+visibility\b" 
 r"\bvisibility\s+(\bmissing\b)" 
