@@ -75,7 +75,8 @@ def make_lexicon(dData):
     """
     prepositions_file = files("ATC_parsing.data").joinpath("prepositions.txt").read_text()
     """
-    The *prepositions.txt* file contains the list of standard prepositions. In the parsing process they play slightly
+    The *prepositions.txt* file contains the list of standard prepositions. In the parsing process 
+    they play slightly
     different role compared to other words if only they are not assigned a special category in
     *regex.txt* as, for example, category *TO* for 'to' and 'into'.
 
@@ -353,7 +354,8 @@ def make_lexicon(dData):
                     good_entry = False
                     for good_category in dData['category_filter']:
                     
-                        if lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0:
+                        if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
+                            lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
                             good_entry = True
                             break
                     if good_entry == True:

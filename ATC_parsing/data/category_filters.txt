@@ -7,9 +7,11 @@ altitude
 approach
 approved
 around
+arrivingdeparting
 as
 at
 before
+behind
 block
 by
 cancelled
