@@ -3,6 +3,8 @@ r"\broger\b"
 r"\bWilco\b"
 
 #advisory
+r"\badvised\b"
+r"\bfurther\s+advised\b"
 r"\bsuggest\b"
 r"\badvisory\s+only\b"
 r"\badvisory\s+service\s+only\b"
@@ -16,7 +18,6 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
-r"\bDash[\s\-]*8\b"
 r"\bembraer\b"
 r"\bglider\b"
 r"\bfalcon\b"
@@ -480,6 +481,7 @@ r"\bprior\b"
 
 #behind
 r"\bbehind\b"
+r"\btrail\s+behind\b"
 
 #block
 r"\bblock\b"
@@ -496,6 +498,10 @@ r"\bby\b"
 #CALLSIGN
 r"\bpilot\b"
 r"\bsurvey\s+\d+\b"
+r"\bqtr\d+\w*\b"
+r"\bdhl\d+\w*\b"
+r"\bezy\d+\w*\b"
+r"\bDash[\s\-]*8\b"
 r"\bBAW\d+\b"
 r"\bAFR\d+\b"
 r"\bNAX\d+\b"
@@ -1214,6 +1220,7 @@ r"\b(one\s+two\s+one\s+decimal\s+(nine|niner))\b"
 r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 
 #GroundMovement
+r"\bback\s*track\b"
 r"\btaxi\b"
 r"\btaxis\b"
 r"\btaxiing\b"
@@ -1951,7 +1958,6 @@ r"\bhave\s+to\b"
 r"\bkeep\s+an\s+eyes\b"
 r"\bpush\s*back\b"
 r"\bsend\s+delay\s+message\b"
-r"\bback\s*track\b"
 r"\bbreak\b"
 r"\bbreak\s+break\b"
 r"\bincrease\b"
@@ -2363,8 +2369,6 @@ r"\brunway\s+in\s+sight\b"
 r"\bairport\s+in\s+sight\b"
 r"\baerodrome\s+in\s+sight\b"
 r"\bfield\s+in\s+sight\b"
-r"\badvised\b"
-r"\bfurther\s+advised\b"
 r"\bon\s+the\s+go\b"
 r"\bunable\s+landing\s+clearance\b"
 r"\bclear\s+of\s+corridor\b"
@@ -2515,6 +2519,7 @@ r"\bterrain\s+elevation\b"
 r"\bterraing\s+(rising\s+rapidly)\b"
 
 #Time
+r"\balready\b"
 r"\bas\s+soon\s+as\s+ready\b"
 r"\binitially\b"
 r"\bshortly\b"
