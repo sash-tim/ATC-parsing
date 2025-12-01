@@ -2,6 +2,7 @@ above
 after
 afterword
 aircraft
+airfield
 altitude
 -altitudechange
 approach
