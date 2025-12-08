@@ -280,7 +280,7 @@ r"\bturbo\s+jet\b"
 r"\bturbo\s+jet\s+aircraft\b"
 r"\bslant\s+golf\b"
 
-#airfield
+#apron
 r"\bstand\b"
 r"\bfuel\b"
 r"\bfuel\s+station\b"
@@ -293,13 +293,12 @@ r"\bsouth\s+side\s+hangar[s]?\b"
 r"\btransient\s+parking\b"
 r"\bgate\b"
 r"\bgate\s+[a-z]\d+\b"
-
-
-r"\bsignature\b"
 r"\bapron\b"
 r"\bhangar\b"
 r"\bline\s+of\s+flight\b"
 r"\bflight\s+line\b"
+r"\b(gate\s+(Alfa|Alpha|Bravo|Golf|Lima|Mike|Papa|Romeo)\s+\d+)\b"
+
 
 #Airspace
 r"\bairspace\b"
@@ -578,6 +577,7 @@ r"\bcurrent\s+clearance\b"
 r"\bmaintain\s+current\s+clearance\b"
 r"(?<!\bIFR\s)\bdeparture\s+clearance\b"
 r"\btaxi\s+clearance\b"
+
 
 #ClearanceSTOP
 r"\bstop clearence inference\b"
@@ -918,6 +918,7 @@ r"\b(?:right\s+)?heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
 
+
 #Height
 r"\bheight\b"
 #Hello
@@ -1099,6 +1100,7 @@ r"\blbl\d*(?:\s+intersection)?\b\b"
 r"\blkt\d*(?:\s+intersection)?\b\b"
 r"\blon\d*(?:\s+intersection)?\b\b"
 r"\bmlf(?:\s+intersection)?\b\b"
+r"\bmol(?:\s+intersection)?\b\b"
 r"\bmzb\d*(?:\s+intersection)?\b\b"
 r"\bock\d*(?:\s+intersection)?\b\b"
 r"\bocn\d*(?:\s+intersection)?\b\b"
@@ -1322,6 +1324,7 @@ r"\brollout\b"
 r"\balternate\s+navigation\b"
 r"\binbound\s+to\b"
 
+r"\blanding\b"
 r"\bentering\b"
 r"\bflying\b"
 r"\bdiverting\b"
@@ -1476,7 +1479,9 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
-r"\blanding\b"
+r"\b(landing)\s+behind\b"
+r"\bbehind\s+the\s+(landing)\b"
+r"\bis\s+(landing)\b"
 r"\bcrossing\b"
 r"\bapproaching\b"
 r"\boperating\b"
@@ -2228,6 +2233,7 @@ r"\bgidan\d\b"
 r"\bgisti\d\b"
 r"\bgodos\d\b"
 r"\bgratz\d\b"
+r"\b(?:the\s+)?greki\d\b"
 r"\bgolop\d\b"
 r"\bgomup\d\b"
 r"\bgosek\d\b"
@@ -2603,7 +2609,7 @@ r"\b(?:that\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
-
+r"\btraffic\s+no\s+factor\b"
 
 #TrafficInfo
 r"\bopposite\s+direction\s+VFR\s+traffic\b"
@@ -2816,6 +2822,7 @@ r"\b(?:the\s+)?gidan\b"
 r"\b(?:the\s+)?gisti\b"
 r"\b(?:the\s+)?godos\b"
 r"\b(?:the\s+)?gratz\b"
+r"\b(?:the\s+)?greki\b"
 r"\b(?:the\s+)?golop\b"
 r"\b(?:the\s+)?gomup\b"
 r"\b(?:the\s+)?gosek\b"
