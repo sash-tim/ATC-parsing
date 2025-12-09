@@ -776,6 +776,7 @@ r"\balong\b"
 r"\bahead\b"
 r"\b\d+\s+degrees\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees)\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred)\s+degrees)\b"
 r"\bleft\b"
 r"\blittle\s+left\b"
 r"\bslightly\s+left\b"
@@ -1077,6 +1078,7 @@ r"\b[VJTQLY]\d+\s+to\s+([a-z]{3})(?:\s+intersection)?\b\b"
 
 r"\babc(?:\s+intersection)?\b\b"
 r"\babq(?:\s+intersection)?\b\b"
+r"\balto(?:\s+intersection)?\b\b"
 r"\batl(?:\s+intersection)?\b\b"
 r"\baus\d*(?:\s+intersection)?\b\b"
 r"\bbig\d*(?:\s+intersection)?\b\b"
@@ -1456,6 +1458,10 @@ r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
 r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
+
+#reason
+r"\bfor\s+(fuel\s+efficiency)\b"
+
 
 #RunwayNumber
 r"\btaxi\s+to\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
@@ -2979,6 +2985,7 @@ r"\bhim\b"
 r"\bwill\b"
 
 #Wind
+r"\bwindshear\b"
 r"\bwinds*\b"
 r"\bwind\s+(\b\d+\s+@\s+\d+\b)"
 r"\bwind\s+(\b\d+\s+at\s+\d+\b)" 
