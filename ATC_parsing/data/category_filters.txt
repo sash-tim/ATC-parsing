@@ -38,6 +38,7 @@ goaround
 heading
 if
 in
+instead
 intnumber
 is
 feet

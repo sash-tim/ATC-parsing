@@ -10,6 +10,7 @@ have
 has
 if
 in
+instead
 into
 is
 it
