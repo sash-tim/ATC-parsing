@@ -1251,6 +1251,7 @@ r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 #GroundMovement
 r"\bback\s*track\b"
 r"\btaxi\b"
+r"\bprogressive\s+taxi\b"
 r"\btaxis\b"
 r"\btaxiing\b"
 
@@ -1473,6 +1474,8 @@ r"\bfor\s+(fuel\s+efficiency)\b"
 r"\bonboard\s+issue\b"
 r"\bnav\s+issue\b"
 r"\bnavigation\s+issue\b"
+r"\boperational\s+reasons\b"
+r"\bunfamiliar\s+with\s+the\s+airport\b"
 
 #RunwayNumber
 r"\btaxi\s+to\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
@@ -1924,6 +1927,7 @@ r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
 #Contact
+r"\bpick\s+up\b"
 r"\blistens*\b"
 r"\bmonitor\b"
 r"\breceiving\b"
@@ -1947,6 +1951,7 @@ r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
 r"\bpilot\s+reports*\b"
 r"\breports*\b"
+r"\breport\s+back\b"
 r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
@@ -1957,6 +1962,8 @@ r"\badvise\b"
 #Request
 r"\brequest\b"
 r"\brequire\b"
+r"\brequesting\b"
+
 
 #REQUESTSTOP
 r"\bjust to stop inference\b"
@@ -2019,7 +2026,6 @@ r"\bcomply\b"
 r"#\brequest\b"
 r"\bdirect\s+request\b"
 r"\bdeparture\s+information\b"
-r"\brequesting\b"
 
 r"\bWe're\s+going\b"
 r"\bWe\s+are\s+going\b"
@@ -2991,7 +2997,9 @@ r"#\byou\s+will\b"
 r"\byou\b"
 r"\bhim\b"
 
-
+#whose
+r"\bmy\b"
+r"\byour\b"
 
 #Why
 

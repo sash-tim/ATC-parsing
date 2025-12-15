@@ -2109,7 +2109,7 @@ def logicalForm2JSON(LF):
         
         for word in ['have','your',
                     'are','over','be',
-                    'an','just','the',]:
+                    'an','just','the','my','this']:
             for brackets in ['0','1','2','3','4','5']:
                 while True:
                     
