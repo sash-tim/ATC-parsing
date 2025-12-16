@@ -3028,5 +3028,3 @@ r"\bwind[s]?\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(ze
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+knots)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+knots)\b"
 
-#your
-r"\byour\b"
