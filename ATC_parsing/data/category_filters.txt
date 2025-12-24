@@ -21,6 +21,7 @@ cleared
 comparisonor
 confirmation
 confirmed
+condition
 database
 -departure
 direction
@@ -41,12 +42,14 @@ in
 instead
 intnumber
 is
+feature
 feet
 for
 from
 fix
 navaid
 -measure
+modality
 of
 off
 on
@@ -55,6 +58,7 @@ out
 question
 phoneticalphabet
 position
+procedure
 realnumber
 report
 -restriction

@@ -608,6 +608,11 @@ r"\byeah\s+of\s+course\b"
 r"\byes\s+of\s+course\b"
 r"\bokay\b"
 
+#condition
+r"\bif\b"
+r"\bonce\b"
+
+
 #Confirmed
 r"\bconfirmed\b"
 
@@ -888,6 +893,7 @@ r"\bexcept\b"
 #expect
 r"\bexpect\b"
 r"\bexpecting\b"
+r"\bawait\b"
 
 
 
@@ -962,8 +968,8 @@ r"\b[a-z]\d+\b"
 r"\b\b\b[a-z]\s+\d+\b\b\b"
 
 #If
-r"\bonce\b"
-r"\bif\b"
+r"#\bonce\b"
+r"#\bif\b"
 
 
 
@@ -1220,8 +1226,8 @@ r"\bradio\s+check\b"
 #From
 r"\bfrom\b"
 
-#GoAround
-r"\bunable\s+approach\b"
+#APPROACHNOTCOMPLETED
+r"#\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
 r"\bon\s+the\s+missed\b"
 r"\bmissed\s+approach\b"
@@ -1296,6 +1302,10 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+millimeters*)\b\b\b\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+millimeters*)\b\b\b\b"
+
+#modality
+r"\brequired\b"
+r"\bunable\b"
 
 
 #Movement
@@ -1826,6 +1836,9 @@ r"\bpresent\s+weather\s+identification\s+(not\s+available\b)"
 #Procedure
 r"\bSTAR\b"
 r"\bSID\b"
+r"\bdifferent\s+procedure\b"
+r"\bnormal\s+procedures*\b"
+r"\bnormal\s+procedures\s+apply\b"
 
 
 
@@ -1888,7 +1901,7 @@ r"\bpoint\b"
 #Responsibility
 
 #Restriction
-r"\bspacing\s+required\b"
+
 r"\baltitude\s+restrictions?\b"
 r"\bcharted\s+restrictions\b"
 r"\ball\s+charted\s+restrictions\b"
@@ -1902,7 +1915,6 @@ r"\bremain\b"
 r"\bremaining\b"
 
 r"\bgeofence\b"
-r"\brequired\b"
 r"\bclear\s+of\s+clouds\b"
 r"\bhearing\s+interference\b"
 r"\bcompany\s+gate\s+location\b"
@@ -1930,6 +1942,7 @@ r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
 #Contact
+r"\battention\b"
 r"\b(?:will\s+)?call\b"
 r"\bpick\s+up\b"
 r"\blistens*\b"
@@ -1985,7 +1998,6 @@ r"\bbegin\b"
 r"\ballow\b"
 r"\bextend\b"
 r"\bexecute\b"
-r"\battention\b"
 r"#\brequire\b"
 r"\binstructions*\b"
 r"\binstructed\b"
@@ -2395,7 +2407,7 @@ r"\bsquawking\b"
 
 #standby
 r"\bstand\s*by\b"
-r"\bawait\b"
+
 
 
 #STAR
@@ -2407,9 +2419,9 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"#\bunable\b"
 r"\bclear\s+of\b"
 r"\bthe\s+go\b"
-r"\bnormal\s+procedures\s+apply\b"
 r"\bapply\b"
 r"\bapplies\b"
 r"\btraffic\s+observed\b"
@@ -2421,7 +2433,7 @@ r"\bairport\s+in\s+sight\b"
 r"\baerodrome\s+in\s+sight\b"
 r"\bfield\s+in\s+sight\b"
 r"\bon\s+the\s+go\b"
-r"\bunable\s+landing\s+clearance\b"
+r"#\bunable\s+landing\s+clearance\b"
 r"\bclear\s+of\s+corridor\b"
 r"\bclear\s+of\s+weather\b"
 r"\bclear\s+of\s+conflict\b"
@@ -2430,12 +2442,9 @@ r"\bestablished\s+inbound\b"
 r"\bestablished\s+outbound\b"
 r"\bcan\s+accept\b"
 r"\baccepted\b"
-r"\bdifferent\s+procedure\s+required\b"
-r"\bnormal\s+procedures*\b"
 r"\bshortened\b"
 
 r"\bvoid\b"
-r"\bunable\b"
 r"\bunsure\b"
 r"\brecommended\b"
 r"\bas\s+published\b"
