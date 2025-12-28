@@ -608,6 +608,7 @@ r"\byeah\s+of\s+course\b"
 r"\byes\s+of\s+course\b"
 r"\bokay\b"
 
+
 #condition
 r"\bif\b"
 r"\bonce\b"
@@ -989,6 +990,7 @@ r"\binstead\b"
 r"\binstead\s+of\b"
 
 
+
 #Interval
 r"\bbetween\b"
 
@@ -1306,6 +1308,7 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 #modality
 r"\brequired\b"
 r"\bunable\b"
+r"\bable\b"
 
 
 #Movement
@@ -1484,6 +1487,7 @@ r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
 
 #reason
+r"\bto\s+(save\s+time)\b"
 r"\bfor\s+(fuel\s+efficiency)\b"
 r"\bonboard\s+issue\b"
 r"\bnav\s+issue\b"
@@ -1537,6 +1541,7 @@ r"\boutside\b"
 r"\bremain\s+(clear)\b"
 r"\bremaining\s+(clear)\b"
 r"\bis\s+off\b"
+r"\b(clear)\s+of\b"
 
 #over
 r"\bover\b"
@@ -1980,6 +1985,7 @@ r"\badvise\b"
 r"\brequest\b"
 r"\brequire\b"
 r"\brequesting\b"
+r"\brequested\b"
 
 
 #REQUESTSTOP
@@ -2419,8 +2425,8 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
-r"\bclear\s+of\b"
 r"\bthe\s+go\b"
 r"\bapply\b"
 r"\bapplies\b"
@@ -2464,7 +2470,6 @@ r"\breleased\b"
 r"\bblocked\b"
 r"\bpossible\b"
 r"\bexpired\b"
-r"\bable\b"
 r"\bis\s+able\b"
 r"\bcompleted\b"
 r"\bready\b"
@@ -2487,7 +2492,6 @@ r"\bwill\s+be\s+provided\b"
 r"\bprovided\b"
 r"\bservices\s+provided\b"
 r"\bin\s+progress\b"
-r"\brequested\b"
 
 r"\bactivated\b"
 r"\bestablished\b"
