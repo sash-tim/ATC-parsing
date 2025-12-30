@@ -1272,6 +1272,7 @@ INFORMATIONID/INFORMATIONID {\\x._INFORMATIONID_(_WITH_(with1), x)}
 
 
 #when
+WHEN/MODALITY {\\x._WHEN_(_WHEN_(when1), x)}
 WHEN/STATUS {\\x._WHEN_(_WHEN_(when1), x)}
 WHEN/ALTITUDE {\\x._WHEN_(_WHEN_(when1), x)}
 WHEN/FEATURE {\\x._WHEN_(_WHEN_(when1), x)}
