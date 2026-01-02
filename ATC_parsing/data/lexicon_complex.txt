@@ -1356,6 +1356,7 @@ ORIENTATION/DIRECTIONMAGNETIC {\\x._ORIENTATION_(_ORIENTATION_(orientation1),x)}
 
 #out
 (STATUS/RUNWAY)/OF {\\x y._STATUS_(_OUT_(out1),x,y)}
+OUT/UNTIL {\\x._OUT_(_OUT_(out1),x)}
 
 #percent
 SURFACE/SURFACEFEATURE {\\x._SURFACE_(_PERCENT_(percent1),x)}
@@ -2020,6 +2021,7 @@ STAR/ARRIVAL {\\x._STAR_(_STAR_(star1),x)}
 
 
 #Status
+STATUS/UNTIL {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/DEPARTURE)/TO {\\x y._STATUS_(_STATUS_(status1),x,y)}
 STATUS/FEATURE {\\x._STATUS_(_STATUS_(status1),x)}
 STATUS/RESTRICTION {\\x._STATUS_(_STATUS_(status1),x)}

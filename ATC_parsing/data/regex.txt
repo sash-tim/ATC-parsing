@@ -1384,7 +1384,7 @@ r"\b(left)\s+on\b"
 r"\b(right)\s+on\b"
 
 r"\bRNAV\s+visual\b"
-r"\bRNAV\b"
+r"\b(?:the\s+)?RNAV\b"
 
 r"\bRNAV\s+GPS\b"
 r"\bRNAV\s+Del\s*Rey\b"
@@ -2425,6 +2425,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bremain\s+(outside)\b"
 r"\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
 r"\bthe\s+go\b"
