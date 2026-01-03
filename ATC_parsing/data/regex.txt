@@ -994,6 +994,9 @@ r"\binstead\s+of\b"
 #Interval
 r"\bbetween\b"
 
+#intention
+r"\bintentions*\b"
+
 #IS
 r"\bis\b"
 r"\bwill\s+be\b"
@@ -1844,6 +1847,7 @@ r"\bSID\b"
 r"\bdifferent\s+procedure\b"
 r"\bnormal\s+procedures*\b"
 r"\bnormal\s+procedures\s+apply\b"
+r"\bas\s+published\b"
 
 
 
@@ -1968,7 +1972,7 @@ r"\b\d+\s*w\b"
 r"\bcorrection\b"
 
 #report
-r"\b((say|report|advise)\s+intentions*)\b"
+r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
 r"\bpilot\s+reports*\b"
@@ -2426,7 +2430,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 #Status
 r"\bremain\s+(outside)\b"
-r"\bestablished\s+on\s+the\s+localizer\b"
+r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
 r"\bthe\s+go\b"
 r"\bapply\b"
@@ -2454,7 +2458,6 @@ r"\bshortened\b"
 r"\bvoid\b"
 r"\bunsure\b"
 r"\brecommended\b"
-r"\bas\s+published\b"
 r"\bairborne*\b"
 r"\bclosure\b"
 r"\bthere\s+already\b"
