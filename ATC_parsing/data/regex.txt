@@ -429,6 +429,10 @@ r"\bdown\b"
 r"\broll\s+down\b"
 
 
+#applicability
+r"\bapply\b"
+r"\bapplies\b"
+
 
 #Approach
 r"\b(?:the\s+)?approach\b"
@@ -1278,7 +1282,7 @@ r"\bmarshals\b"
 r"\bmaintain\b"
 
 #maintainstop
-r"to stop inference"
+r"\bto stop inference\b"
 
 #Measure
 r"\bfeet\b"
@@ -1462,6 +1466,9 @@ r"\b\d+\s+at\s+\d+\b"
 
 #When
 r"\bwhen\b"
+
+#Whenstop
+r"to stop inference"
 
 #While
 r"\bwhile\b"
@@ -1846,8 +1853,9 @@ r"\bSTAR\b"
 r"\bSID\b"
 r"\bdifferent\s+procedure\b"
 r"\bnormal\s+procedures*\b"
-r"\bnormal\s+procedures\s+apply\b"
+r"#\bnormal\s+procedures\s+apply\b"
 r"\bas\s+published\b"
+
 
 
 
@@ -1982,7 +1990,7 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"\badvise\b"
+r"\br"\b(?:will\s+)?advise\b"
 
 
 #Request
@@ -2433,10 +2441,8 @@ r"\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
 r"\bthe\s+go\b"
-r"\bapply\b"
-r"\bapplies\b"
 r"\btraffic\s+observed\b"
-r"\b(?:that\s+)?traffic\s+in\s+sight\b"
+r"#\b(?:that\s+)?traffic\s+in\s+sight\b"
 r"\bnegative\s+contact\b"
 r"\bin\s+sight\b"
 r"\brunway\s+in\s+sight\b"

@@ -590,9 +590,10 @@ DISTANCE/WAYPOINT {\\x._DISTANCE_(_DISTANCE_(distance1),x)}
 
 #Due
 -DUE/TURBULENCE {\\x ._DUE_(_DUE_(due1), x)}
-(HEADING/HEADING)/TRAFFIC {\\x y._HEADING_(_DUE_(due1), x ,y)}
+-(HEADING/HEADING)/TRAFFIC {\\x y._HEADING_(_DUE_(due1), x ,y)}
 HEADING/HEADING {\\x._HEADING_(_DUE_(due1), x)}
 -DUE/TRAFFIC {\\x._DUE_(_DUE_(due1), x)}
+REASON/TRAFFIC {\\x._REASON_(_DUE_(due1), x)}
 -DUE/TRAFFICINFO {\\x._DUE_(_DUE_(due1), x)}
 -DUE/RESTRICTION {\\x._DUE_(_DUE_(due1), x)}
 (DUE/STATUS)/TRAFFIC {\\x y._DUE_(_DUE_(due1), x,y)}
@@ -782,6 +783,7 @@ IF/NEGATION {\\x._IF_(_IF_(if1), x)}
 ((INTERVAL/FIX)/CONJ)/FIX {\\x y z._INTERVAL_(_INTERVAL_(interval1),x,z)}
 
 #Is
+STATUS/STATUS {\\x._STATUS_(_IS_(is1),x)}
 
 #Feature
 FEATURE/FEATURE {\\x._FEATURE_(_FEATURE_(feature1),x)}
@@ -1008,6 +1010,7 @@ MEASURE/MEASURE {\\x._MEASURE_(_MEASURE_(measure1),x)}
 POSITION/TRAFFICCIRCUIT {\\x._POSITION_(_MEASURE_(measure1),x)}
 
 #modality
+(STATUS/CLEARANCE)/TO {\\x y._STATUS_(_MODALITY_(modality1),x,y)}
 STATUS/ALTITUDE {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/SPEED {\\x._STATUS_(_MODALITY_(modality1),x)}
 (STATUS/MAINTAIN)/TO {\\x y._STATUS_(_MODALITY_(modality1),x,y)}
@@ -1015,7 +1018,7 @@ STATUS/NAVAID {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/CLEARANCE {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/RESTRICTION {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/PHONETICALPHABET {\\x._STATUS_(_MODALITY_(modality1),x)}
-STATUS/NAVIGATION {\\x._STATUS_(_MODALITY_(modality1),x)}
+-STATUS/NAVIGATION {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/APPROACH {\\x._STATUS_(_MODALITY_(modality1),x)}
 STATUS/FEATURE {\\x._STATUS_(_MODALITY_(modality1),x)}
 (DEPARTURE/DEPARTURE)/TO {\\x y._DEPATRURE_(_MODALITY_(modality1),x,y)}
@@ -1274,11 +1277,16 @@ INFORMATIONID/INFORMATIONID {\\x._INFORMATIONID_(_WITH_(with1), x)}
 
 
 #when
-WHEN/ONGOINGACTION {\\x._WHEN_(_WHEN_(when1), x)}
-WHEN/MODALITY {\\x._WHEN_(_WHEN_(when1), x)}
-WHEN/STATUS {\\x._WHEN_(_WHEN_(when1), x)}
-WHEN/ALTITUDE {\\x._WHEN_(_WHEN_(when1), x)}
-WHEN/FEATURE {\\x._WHEN_(_WHEN_(when1), x)}
+
+WHENSTOP/ONGOINGACTION {\\x._WHENSTOP_(_WHEN_(when1), x)}
+WHENSTOP/MODALITY {\\x._WHENSTOP_(_WHEN_(when1), x)}
+WHENSTOP/STATUS {\\x._WHENSTOP_(_WHEN_(when1), x)}
+WHENSTOP/ALTITUDE {\\x._WHENSTOP_(_WHEN_(when1), x)}
+WHENSTOP/FEATURE {\\x._WHENSTOP_(_WHEN_(when1), x)}
+
+#WHENSTOP
+-WHENSTOP/NAVIGATION {\\x._WHENSTOP_(_WHEN_(whenstop1), x)}
+
 
 #while
 WHILE/CHANGES {\\x ._WHILE_(_WHILE_(while1), x)}
@@ -1310,7 +1318,8 @@ MEASURE/MEASURE {\\x._MEASURE_(_WORDNUMBER_(wordnumber1), x)}
 REALNUMBER/COMPARISONOR {\\x._REALNUMBER_(_REALMUMBER_(realnumber1),x)}
 MEASURE/MEASURE {\\x._MEASURE_(_REALMUMBER_(realnumber1),x)}
 
-
+#reason
+HEADING/HEADING {\\x._HEADING_(_REASON_(reason1),x)}
 
 #RunwayNumber
 RUNWAYNUMBER/WORDNUMBER {\\x._RUNWAYNUMBER_(_RUNWAYNUMBER_(runwaynumber1), x)}
@@ -1458,6 +1467,7 @@ QNH/QNH {\\x._QNH_(_QNH_(qnh1),x)}
 #PresentWeatherIdentification
 
 #Procedure
+PROCEDURE/APPLICABILITY {\\x._PROCEDURE_(_PROCEDURE_(procedure1),x)}
 PROCEDURE/MODALITY {\\x._PROCEDURE_(_PROCEDURE_(procedure1),x)}
 (PROCEDURE/PLACE)/FOR {\\x y._PROCEDURE_(_PROCEDURE_(procedure1),x,y)}
 (PROCEDURE/WAYPOINT)/TO {\\x y._PROCEDURE_(_PROCEDURE_(procedure1),x,y)}
@@ -1499,6 +1509,7 @@ RATE/WORDNUMBER {\\x._RATE_(_RATE_(rate1),x)}
 RATE/COMPARISONOR {\\x._RATE_(_RATE_(rate1),x)}
 
 #report
+REPORT/MODALITY {\\x ._REPORT_(_REPORT_(report1),x)}
 REPORT/INTENTION {\\x ._REPORT_(_REPORT_(report1),x)}
 REPORT/CONDITION {\\x ._REPORT_(_REPORT_(report1),x)}
 (REPORT/FREQUENCY)/ON {\\x y._REPORT_(_REPORT_(report1),x,y)}
@@ -1859,6 +1870,7 @@ REQUESTINSTRUCTIONIDENT/TIME {\\x._REQUESTINSTRUCTIONIDENT_(_REQUESTINSTRUCTIONI
 #Route
 RADIAL/RADIAL {\\x._RADIAL_(_ROUTE_(route1), x)}
 ROUTING/WAYPOINT {\\x._ROUTING_(_ROUTE_(route1),x)}
+(ROUTE/WAYPOINT)/AT {\\x y._ROUTE_(_ROUTE_(route1),x,y)}
 ROUTING/ROUTE {\\x._ROUTING_(_ROUTE_(route1),x)}
 ROUTING/FIX {\\x._ROUTING_(_ROUTE_(route11),x)}
 ROUTE/PHONETICALPHABET {\\x._ROUTE_(_ROUTE_(route1), x)}
@@ -2031,13 +2043,14 @@ STATUS/UNTIL {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/DEPARTURE)/TO {\\x y._STATUS_(_STATUS_(status1),x,y)}
 STATUS/FEATURE {\\x._STATUS_(_STATUS_(status1),x)}
 STATUS/RESTRICTION {\\x._STATUS_(_STATUS_(status1),x)}
-STATUS/NAVIGATION {\\x._STATUS_(_STATUS_(status1),x)}
+-STATUS/NAVIGATION {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/PLACE)/FROM {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/TIMEINFO)/AT {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/TRAFFICCIRCUIT)/ON {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/GROUNDMOVEMENT)/TO {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/MAINTAINSTOP)/TO {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/POSITION)/ON {\\x y._STATUS_(_STATUS_(status1),x,y)}
+(STATUS/APPROACH)/ON {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/APPROACHNAVAID)/ON {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/TERRAIN)/DUE {\\x y._STATUS_(_STATUS_(status1),x,y)}
 STATUS/TERRAIN {\\x._STATUS_(_STATUS_(status1),x)}
@@ -2186,6 +2199,7 @@ THEN/TRAFFICPATTERN {\\x._THEN_(_THEN_(then1),x)}
 -((TO/PHONETICALPHABET)/VIA)/APRON {\\x y z._TO_(_TO_(to1),x,y,z)}
 
 #Traffic
+TRAFFICINFO/STATUS {\\x._TRAFFICINFO_(_TRAFFIC_(traffic1), x)}
 TRAFFICINFO/BEHIND {\\x._TRAFFICINFO_(_TRAFFIC_(traffic1), x)}
 TRAFFICINFO/ARRIVINGDEPARTING {\\x._TRAFFICINFO_(_TRAFFIC_(traffic1), x)}
 TRAFFIC/FLEVEL {\\x._TRAFFIC_(_TRAFFIC_(traffic1), x)}
