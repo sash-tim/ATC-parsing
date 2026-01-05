@@ -927,6 +927,7 @@ r"\bmilitary\s+activity\b"
 r"\bglider\s+activity\b"
 r"\bcaution\b"
 
+
 #Heading
 r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
@@ -935,6 +936,10 @@ r"\b(?:right\s+)?heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
 
+
+
+#headingSTOP
+r"is used to stop heading expansion"
 
 #Height
 r"\bheight\b"
