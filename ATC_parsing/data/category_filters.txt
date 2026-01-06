@@ -54,6 +54,7 @@ of
 off
 on
 ongoingaction
+or
 out
 question
 phoneticalphabet
