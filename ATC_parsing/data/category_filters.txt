@@ -54,6 +54,7 @@ of
 off
 on
 ongoingaction
+operation
 or
 out
 question

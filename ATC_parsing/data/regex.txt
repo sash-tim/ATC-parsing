@@ -546,6 +546,7 @@ r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 r"\bcanceling\b"
 r"\bcancel\b"
 
+
 #cancelled
 r"\bcancellation\s+received*\b"
 r"\bcanceled\b"
@@ -570,6 +571,8 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
+r"\breleased\b"
+r"\b\bIFR\s+release\b\b"
 r"\bterrain\s+clearance\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
 r"\bcleared\s+(VFR\s+on\s+top)\b"
@@ -1542,6 +1545,9 @@ r"\bfollowing\b"
 r"\bturning\b"
 r"\breturning\b"
 
+#operation
+r"\bflight\s+plan\s+(closure)\b"
+r"\b(void)\s+if\b"
 
 #OR
 r"\bor\b"
@@ -1959,7 +1965,6 @@ r"\ball\s+SID\s+altitude\s+restrictions?\b"
 r"\bLand\s+and\s+hold\s+short\s+operations\b"
 r"\bLAHSO\b"
 r"\b\bVFR\s+conditions*\b"
-r"\b\bIFR\s+release\b\b"
 r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
@@ -2481,7 +2486,6 @@ r"\bunreadable\b"
 r"\bsuspended\b"
 r"\bstabilized\b"
 r"\bverified\b"
-r"\breleased\b"
 r"\bblocked\b"
 r"\bpossible\b"
 r"\bexpired\b"
