@@ -918,7 +918,6 @@ r"\bexercise\s+caution\b"
 r"\bbe\s+advised\b"
 r"\bgps\s+notam\b"
 r"\blost\b"
-r"\blost\s+link\s+procedure\b"
 r"\bchecklist\b"
 r"\bswallowing\s+up\b"
 r"\bovertake\b"
@@ -1866,6 +1865,7 @@ r"\bnormal\s+procedures*\b"
 r"#\bnormal\s+procedures\s+apply\b"
 r"\bas\s+published\b"
 r"\bon\s+the\s+go\b"
+r"\blost\s+link\s+procedure\b"
 
 
 
@@ -2664,6 +2664,7 @@ r"\binto\b"
 r"\btowards\b"
 #Traffic
 r"\b(?:that\s+)?traffic\b"
+r"\b(?:the\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
