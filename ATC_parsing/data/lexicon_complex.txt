@@ -1534,6 +1534,7 @@ RATE/WORDNUMBER {\\x._RATE_(_RATE_(rate1),x)}
 RATE/COMPARISONOR {\\x._RATE_(_RATE_(rate1),x)}
 
 #report
+REPORT/APPROACHNOTCOMPLETED {\\x ._REPORT_(_REPORT_(report1),x)}
 (REPORT/MODALITY)/WHEN {\\x y._REPORT_(_REPORT_(report1),x,y)}
 REPORT/MODALITY {\\x ._REPORT_(_REPORT_(report1),x)}
 REPORT/INTENTION {\\x ._REPORT_(_REPORT_(report1),x)}
@@ -2071,6 +2072,8 @@ STAR/ARRIVAL {\\x._STAR_(_STAR_(star1),x)}
 
 
 #Status
+(STATUS/REQUESTINSTRUCTION)/FOR {\\x y._STATUS_(_STATUS_(status1),x,y)}
+STATUS/AIRSPACE {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/CLEARANCE)/FOR {\\x y._STATUS_(_STATUS_(status1),x,y)}
 STATUS/UNTIL {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/DEPARTURE)/TO {\\x y._STATUS_(_STATUS_(status1),x,y)}

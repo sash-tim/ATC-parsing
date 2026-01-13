@@ -1242,14 +1242,13 @@ r"\bradio\s+check\b"
 r"\bfrom\b"
 
 #APPROACHNOTCOMPLETED
+r"\bgoing\s+around\b"
 r"#\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
 r"\bon\s+the\s+missed\b"
 r"\bmissed\s+approach\b"
 r"\bmissed\b"
 r"\bgoing\s+missed\b"
-r"\bpublished\s+missed\s+approach\b"
-r"\bpublished\s+missed\b"
 r"\blow\s+approach\b"
 
 
@@ -1452,7 +1451,6 @@ r"\bcontinuing\b"
 r"\bstanding\b"
 r"\baccelarating\b"
 r"\breaching\b"
-r"\bgoing\s+around\b"
 r"\barrived\b"
 r"\bdeparted\b"
 r"\boverhead\b"
@@ -1866,6 +1864,8 @@ r"#\bnormal\s+procedures\s+apply\b"
 r"\bas\s+published\b"
 r"\bon\s+the\s+go\b"
 r"\blost\s+link\s+procedure\b"
+r"\bpublished\s+missed\s+approach\b"
+r"\bpublished\s+missed\b"
 
 
 
