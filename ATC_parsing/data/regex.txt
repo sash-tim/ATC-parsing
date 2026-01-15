@@ -579,7 +579,8 @@ r"\bcleared\s+(VFR\s+on\s+top)\b"
 r"\bmaintain\s+(VFR\s+on\s+top)\b"
 r"\brequest\s+(VFR\s+on\s+top)\b"
 r"\bclearance\b"
-r"\bfurther\s+clearance\b"
+r"\bexpect\s+(further)\b"
+"\bfurther\s+clearance\b"
 r"\blanding\s+clearance\b"
 r"\bapproach\s+clearance\b"
 r"\bIFR\s+clearance\b"
@@ -964,7 +965,7 @@ r"\bholding\b"
 r"\bholding\s+short\b"
 r"\bholding\s+instructions\b"
 r"\b(?:will\s+)?hold\b"
-
+r"\bthe\s+(hold)\b"
 
 #HoldingPoint
 r"\b(holding\s+(point|position))\b"
@@ -973,6 +974,7 @@ r"\bhold\s+short\s+line\b"
 r"\b(holding\s+(point|position)\s+(\w\d))\b"
 r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+
 
 
 
@@ -2126,7 +2128,6 @@ r"\bident\b"
 r"\b(?:the\s+)?approach\s+path\b"
 r"\bcorridor\b"
 r"\btrack\b"
-r"\bthe\s+(hold)\b"
 r"\bairway\b"
 r"\bglide\s+slope\b"
 r"\bglide\s+path\b"
@@ -2457,7 +2458,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
-r"\bremain\s+(outside)\b"
+r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
 r"\bthe\s+go\b"
@@ -2527,6 +2528,13 @@ r"\bestablish\b"
 r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
+
+#Turns
+r"\bright\s+turns\b"
+r"\bstandard\s+right\s+turns\b"
+r"\bleft\s+turns\b"
+r"\bstandard\s+left\s+turns\b"
+
 
 #Thankyou
 r"\bappreciate\b"
@@ -2726,10 +2734,6 @@ r"\btraffic\s+(outbound)\b"
 r"\bgo\s+around\b"
 r"\bpattern\b"
 r"\blegs*\b"
-r"\bright\s+turns\b"
-r"\bstandard\s+right\s+turns\b"
-r"\bleft\s+turns\b"
-r"\bstandard\s+left\s+turns\b"
 r"\bright\s+traffic\b"
 r"\bleft\s+traffic\b"
 r"\bclosed\s+traffic\b"

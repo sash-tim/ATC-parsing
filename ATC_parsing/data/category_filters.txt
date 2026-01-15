@@ -79,6 +79,7 @@ time
 to
 trafficcircuit
 trafficpattern
+turns
 until
 untilstop
 upto

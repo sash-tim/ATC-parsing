@@ -724,6 +724,10 @@ HEADING/WORDNUMBER {\\x._HEADING_(_HEADING_(heading1), x)}
 HEIGHT/MEASURE {\\x._HEIGHT_(_HEIGHT_(height1), x)}
 
 #hold
+(HOLD/RADIAL)/ON {\\x y._HOLD_(_HOLD_(hold1),x,y)}
+HOLD/DISTANCE {\\x ._HOLD_(_HOLD_(hold1), x)}
+HOLD/FLEVEL {\\x ._HOLD_(_HOLD_(hold1), x)}
+HOLD/TURNS {\\x ._HOLD_(_HOLD_(hold1), x)}
 HOLD/PROCEDURE {\\x ._HOLD_(_HOLD_(hold1), x)}
 (HOLD/TAXIWAY)/OF {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/RUNWAY)/OF {\\x y._HOLD_(_HOLD_(hold1), x, y)}
@@ -731,10 +735,13 @@ HOLD/RUNWAY {\\x ._HOLD_(_HOLD_(hold1), x)}
 (HOLD/POSITION)/IN {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 HOLD/POSITION {\\x ._HOLD_(_HOLD_(hold1), x)}
 (HOLD/WAYPOINT)/AT {\\x y._HOLD_(_HOLD_(hold1), x, y)}
+(HOLD/WAYPOINT)/OVER {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/FIX)/AT {\\x y._HOLD_(_HOLD_(hold1), x, y)}
+(HOLD/FIX)/OVER {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 
 
 #HoldingPoint
+(HOLDINGPOINT/WAYPOINT)/AT {\\x y._HOLDINGPOINT_(_HOLDINGPOINT_(holdingpoint1), x,y)}
 HOLDINGPOINT/RUNWAY {\\x._HOLDINGPOINT_(_HOLDINGPOINT_(holdingpoint1), x)}
 HOLDINGPOINT/PHONETICALPHABET {\\x._HOLDINGPOINT_(_HOLDINGPOINT_(holdingpoint1), x)}
 
@@ -999,7 +1006,7 @@ MAINTAINSTOP/FLEVEL {\\x._MAINTAINSTOP_(_MAINTAIN_(maintain1),x)}
 MAINTAINSTOP/ALTITUDE {\\x._MAINTAINSTOP_(_MAINTAIN_(maintain1),x)}
 
 #maintainstop
-MAINTAINSTOP/AFTER {\\x._MAINTAINSTOP_(_MAINTAIN_(maintainstop1),x)}
+-MAINTAINSTOP/AFTER {\\x._MAINTAINSTOP_(_MAINTAIN_(maintainstop1),x)}
 MAINTAINSTOP/PROCEDURE {\\x._MAINTAINSTOP_(_MAINTAIN_(maintainstop1),x)}
 (MAINTAINSTOP/AIRCRAFT)/FROM {\\x y._MAINTAINSTOP_(_MAINTAIN_(maintainstop1),x,y)}
 (MAINTAINSTOP/DISTANCE)/TO {\\x y._MAINTAINSTOP_(_MAINTAIN_(maintainstop1),x,y)}
@@ -2088,6 +2095,7 @@ STAR/ARRIVAL {\\x._STAR_(_STAR_(star1),x)}
 
 
 #Status
+(STATUS/HOLD)/IN {\\x y._STATUS_(_STATUS_(status1),x,y)}
 (STATUS/REQUESTINSTRUCTION)/FOR {\\x y._STATUS_(_STATUS_(status1),x,y)}
 STATUS/AIRSPACE {\\x._STATUS_(_STATUS_(status1),x)}
 (STATUS/CLEARANCE)/FOR {\\x y._STATUS_(_STATUS_(status1),x,y)}
