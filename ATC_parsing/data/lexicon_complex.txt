@@ -724,6 +724,7 @@ HEADING/WORDNUMBER {\\x._HEADING_(_HEADING_(heading1), x)}
 HEIGHT/MEASURE {\\x._HEIGHT_(_HEIGHT_(height1), x)}
 
 #hold
+(HOLD/STATUS)/ON {\\x y._HOLD_(_HOLD_(hold1),x,y)}
 (HOLD/RADIAL)/ON {\\x y._HOLD_(_HOLD_(hold1),x,y)}
 HOLD/DISTANCE {\\x ._HOLD_(_HOLD_(hold1), x)}
 HOLD/FLEVEL {\\x ._HOLD_(_HOLD_(hold1), x)}
