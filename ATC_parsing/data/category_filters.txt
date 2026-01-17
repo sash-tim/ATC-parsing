@@ -26,6 +26,7 @@ database
 -departure
 direction
 directionmagnetic
+directionofflight
 discretion
 distance
 due
@@ -47,6 +48,7 @@ feet
 for
 from
 fix
+legs
 navaid
 -measure
 modality

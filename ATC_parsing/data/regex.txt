@@ -825,8 +825,12 @@ r"\bsouth\s*west\b"
 r"\bEast\b"
 r"\bwest\b" 
 r"\bsouth\b" 
-r"\bnorth\b" 
+r"\bnorth\b"
+
+
 #DIRECTIONOFFLIGHT
+r"\binbound\b"
+r"\boutbound\b"
 r"\b\d+\s+bearing\b"
 r"\beast\s*bound\b"
 r"\bnortheast\s*bound\b"
@@ -982,6 +986,8 @@ r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|
 #LaunchSite
 r"\blaunch\s+site\b"
 
+#LEGS
+r"\blegs\b"
 
 #Logic
 r"\bif\s+you\s+read\b"
@@ -1363,8 +1369,6 @@ r"\bcircle\b"
 r"\bcross\b"
 r"\boperate\b"
 r"\breturn\b"
-r"\binbound\b"
-r"\boutbound\b"
 r"\bfull\s+stop\b"
 r"\bpassing\b"
 r"\bpass\b"
@@ -2734,7 +2738,6 @@ r"\btraffic\s+(outbound)\b"
 #TRafficPattern
 r"\bgo\s+around\b"
 r"\bpattern\b"
-r"\blegs*\b"
 r"\bright\s+traffic\b"
 r"\bleft\s+traffic\b"
 r"\bclosed\s+traffic\b"
