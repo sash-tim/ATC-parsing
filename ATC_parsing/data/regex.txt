@@ -964,17 +964,17 @@ r"\bmorning\b"
 r"\bwonderful\s+day\b"
 
 #Hold
-r"\bjoin\s+the\s+hold\b"
-r"\b(?:will\s+)?hold\s+short\b"
 r"\bholding\b"
 r"\bholding\s+short\b"
+r"\bjoin\s+the\s+hold\b"
+r"\b(?:will\s+)?hold\s+short\b"
 r"\bholding\s+instructions\b"
 r"\b(?:will\s+)?hold\b"
 r"\bthe\s+(hold)\b"
 
 #HoldingPoint
 r"\b(holding\s+(point|position))\b"
-r"\bhold\s+position\b"
+r"#\bhold\s+position\b"
 r"\bhold\s+short\s+line\b"
 r"\b(holding\s+(point|position)\s+(\w\d))\b"
 r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"

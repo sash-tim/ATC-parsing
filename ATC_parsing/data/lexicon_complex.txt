@@ -725,6 +725,7 @@ HEADING/WORDNUMBER {\\x._HEADING_(_HEADING_(heading1), x)}
 HEIGHT/MEASURE {\\x._HEIGHT_(_HEIGHT_(height1), x)}
 
 #hold
+(HOLD/ALTITUDE)/AT {\\x y._HOLD_(_HOLD_(hold1),x,y)}
 (HOLD/STATUS)/ON {\\x y._HOLD_(_HOLD_(hold1),x,y)}
 (HOLD/RADIAL)/ON {\\x y._HOLD_(_HOLD_(hold1),x,y)}
 HOLD/DIRECTIONOFFLIGHT {\\x ._HOLD_(_HOLD_(hold1), x)}
@@ -733,8 +734,10 @@ HOLD/FLEVEL {\\x ._HOLD_(_HOLD_(hold1), x)}
 HOLD/TURNS {\\x ._HOLD_(_HOLD_(hold1), x)}
 HOLD/LEGS {\\x ._HOLD_(_HOLD_(hold1), x)}
 HOLD/PROCEDURE {\\x ._HOLD_(_HOLD_(hold1), x)}
+(HOLD/PHONETICALPHABET)/OF {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/TAXIWAY)/OF {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/RUNWAY)/OF {\\x y._HOLD_(_HOLD_(hold1), x, y)}
+(HOLD/RUNWAY)/ON {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 HOLD/RUNWAY {\\x ._HOLD_(_HOLD_(hold1), x)}
 (HOLD/POSITION)/IN {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 HOLD/POSITION {\\x ._HOLD_(_HOLD_(hold1), x)}
@@ -742,6 +745,7 @@ HOLD/POSITION {\\x ._HOLD_(_HOLD_(hold1), x)}
 (HOLD/WAYPOINT)/OVER {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/FIX)/AT {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 (HOLD/FIX)/OVER {\\x y._HOLD_(_HOLD_(hold1), x, y)}
+(HOLD/PLACE)/OVER {\\x y._HOLD_(_HOLD_(hold1), x, y)}
 
 
 #HoldingPoint
@@ -1427,6 +1431,7 @@ OUT/UNTIL {\\x._OUT_(_OUT_(out1),x)}
 SURFACE/SURFACEFEATURE {\\x._SURFACE_(_PERCENT_(percent1),x)}
 
 #PhoneticAlphabet
+PHONETICALPHABET/CODE {\\x._PHONETICALPHABET_(_PHONETICALPHABET_(phoneticalphabet1),x)}
 ROUTE/ROUTE {\\x._ROUTE_(_PHONETICALPHABET_(phoneticalphabet1),x)}
 (ROUTE/ROUTE)/WORDNUMBER {\\x y._ROUTE_(_PHONETICALPHABET_(phoneticalphabet1),x,y)}
 SID/DEPARTURE {\\x._SID_(_PHONETICALPHABET_(phoneticalphabet1),x)}
@@ -1677,6 +1682,7 @@ CONTACT/REALNUMBER {\\x._CONTACT_(_CONTACT_(contact1),x)}
 (CONTACT/FIX)/ON {\\x y._CONTACT_(_CONTACT_(contact1),x,y)}
 
 #Request
+REQUESTINSTRUCTION/HOLD {\\x._REQUESTINSTRUCTION_(_REQUEST_(request1),x)}
 REQUESTINSTRUCTION/FLIGHTPLAN {\\x._REQUESTINSTRUCTION_(_REQUEST_(request1),x)}
 REQUESTINSTRUCTION/FEATURE {\\x._REQUESTINSTRUCTION_(_REQUEST_(request1),x)}
 REQUESTINSTRUCTION/MEASURE {\\x._REQUESTINSTRUCTION_(_REQUEST_(request1),x)}
@@ -1953,6 +1959,7 @@ ROUTING/ROUTING {\\x._ROUTING_(_ROUTING_(routing1),x)}
 
 
 #Changes
+(CHANGES/RUNWAY)/TO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
 (CHANGES/SID)/TO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
 -CHANGES/AFTER {\\x._CHANGES_(_CHANGES_(changes1),x)}
 (CHANGES/CHANGES)/TO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
@@ -2203,6 +2210,7 @@ TERRAIN/DIRECTIONMAGNETIC {\\x._TERRAIN_(_TERRAIN_(terrain1),x)}
 (TERRAIN/COMPARISON)/IS {\\x y._TERRAIN_(_TERRAIN_(terrain1),x,y)}
 
 #Time
+HOLD/HOLD {\\x._HOLD_(_TIME_(time1),x)}
 LEGS/LEGS {\\x._LEGS_(_TIME_(time1),x)}
 REPORT/REPORT {\\x._REPORT_(_TIME_(time1),x)}
 ALTITUDECHANGE/ALTITUDECHANGE {\\x._ALTITUDECHANGE_(_TIME_(time1),x)}
@@ -2376,6 +2384,7 @@ VERIFY/ALTITUDE {\\x._VERIFY_(_VERIFY_(verify1), x)}
 VERIFY/FLEVEL {\\x._VERIFY_(_VERIFY_(verify1), x)}
 (VERIFY/INFORMATIONID)/WHO {\\x y._VERIFY_(_VERIFY_(verify1), x,y)}
 (VERIFY/NAVIGATION)/WHO {\\x y._VERIFY_(_VERIFY_(verify1), x,y)}
+(VERIFY/HOLD)/WHO {\\x y._VERIFY_(_VERIFY_(verify1), x,y)}
 (VERIFY/FLIGHTPLAN)/WHO {\\x y._VERIFY_(_VERIFY_(verify1), x,y)}
 VERIFY/SQUAWK {\\x._VERIFY_(_VERIFY_(verify1), x)}
 VERIFY/RUNWAY {\\x._VERIFY_(_VERIFY_(verify1), x)}
