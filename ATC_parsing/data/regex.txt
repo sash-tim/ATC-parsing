@@ -1852,6 +1852,7 @@ r"\bGrand\s+Prairie\b"
 r"\bFort\s+Worth\b"
 r"\bBorton\b"
 #Position
+r"\b(?:the\s+)?rollout\b"
 r"\bdownfield\b"
 r"\brollout\s+end\b"
 r"\bpast\s+the\s+midfield\b"
@@ -2462,7 +2463,6 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
-r"\b(?:the\s+)?rollout\b"
 r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
