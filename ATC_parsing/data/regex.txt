@@ -419,14 +419,16 @@ r"\bcontinuous\s+descent\b"
 r"\bclimb\s+and\s+maintain\b"
 r"\bdescend\s+and\s+maintain\b"
 r"\bis\s+in\s+the\s+descent\b"
-r"\bclimbing\b"
 r"\bclimb\b"
 r"\bcontinuous\s+climb\b"
 r"\bclimbout\b"
-r"\bdescending\b"
 r"\bdescend\b"
 r"\bdown\b"
 r"\broll\s+down\b"
+
+#altitudechangeONGOING
+r"\bclimbing\b"
+r"\bdescending\b"
 
 
 #applicability

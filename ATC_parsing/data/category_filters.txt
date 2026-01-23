@@ -5,6 +5,7 @@ aircraft
 airfield
 altitude
 -altitudechange
+altitudechangeongoing
 approach
 approved
 around
@@ -18,6 +19,7 @@ by
 cancelled
 conj
 cleared
+clockposition
 comparisonor
 confirmation
 confirmed
@@ -80,8 +82,9 @@ then
 through
 time
 to
-trafficcircuit
+trafficinfo
 trafficpattern
+trafficcircuit
 turns
 until
 untilstop
