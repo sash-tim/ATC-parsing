@@ -1365,6 +1365,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\bfollow\b"
 r"\boverfly\b"
 r"\bentry\b"
 r"\bcircle\b"
@@ -2112,7 +2113,6 @@ r"\bwait\b"
 
 r"\bgo\s+ahead\b"
 r"\bpass\s+your\s+message\b"
-r"\bfollow\b"
 r"\bexit\b"
 r"\bturn\s+on\s+in\b"
 r"\bturn\s+around\s+there\b"
