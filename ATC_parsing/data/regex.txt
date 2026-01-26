@@ -18,6 +18,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bjetlink\b"
 r"\brobinson\s+r44\b"
 r"\bDiamond\s+DA[\s\-]*40
 r"\bDash[\s\-]*8\b"
@@ -2033,6 +2034,8 @@ r"\brequested\b"
 r"\bjust to stop inference\b"
 
 #RequestInstruction
+r"\bwill\s+(follow)\b"
+r"\b(follow)\s+my\b"
 r"\bcopy\s+that\b"
 r"\bpushback\s+and\s+start\b"
 r"\brelease\b"
@@ -2468,6 +2471,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
+r"\bno\s+factor\b"
 r"\bthe\s+go\b"
 r"\btraffic\s+observed\b"
 r"#\b(?:that\s+)?traffic\s+in\s+sight\b"
@@ -2688,7 +2692,7 @@ r"\b(?:the\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
-r"\btraffic\s+no\s+factor\b"
+
 
 #TrafficInfo
 r"\bopposite\s+direction\s+VFR\s+traffic\b"
