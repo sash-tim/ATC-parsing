@@ -3,6 +3,8 @@ r"\broger\b"
 r"\bWilco\b"
 
 #advisory
+r"\badvised\b"
+r"\bfurther\s+advised\b"
 r"\bsuggest\b"
 r"\badvisory\s+only\b"
 r"\badvisory\s+service\s+only\b"
@@ -16,10 +18,26 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bjetlink\b"
+r"\brobinson\s+r44\b"
+r"\bDiamond\s+DA[\s\-]*40
+r"\bDash[\s\-]*8\b"
+r"\bMD[\s+\-]+11\b"
+r"\bBeechcraft\s+Baron\b"
+r"\bcitabria\b"
+r"\bGulfstream\s+G550\b"
+r"\bembraer\b"
+r"\bembraer\s+175\b"
+r"\bglider\b"
+r"\bfalcon\b"
 r"\brobin\b"
 r"\beasyjet\b"
 r"\bqatar\b"
+r"\bairbus\s+321\b"
 r"\bairbus\s+330\b"
+r"\bAirbus\s+A[\s\-]+three\s+twenty\b"
+r"\bAirbus\s+A[\s\-]*320\b"
+r"\bA[\s\-]*380\b"
 r"\baegean\b"
 r"\brepublic\b"
 r"\bAgriDrone\b"
@@ -104,9 +122,15 @@ r"\blufthansa\s+cargo\b"
 r"\bmidland\b"
 r"\bboeing\b"
 r"\bboeing\s+737\b"
+r"\bboeing\s+757\b"
+r"\bboeing\s+767\b"
+r"\bboeing\s+777\b"
+r"\bheavy\s+777\b"
+r"\bboeing\s+787\b"
 r"\bboeing\s+seven\s+three\s+seven\b"
 r"\bboeing\s+seven\s+fifty\s+seven\b"
 r"\bthe\s+(737)\b"
+r"\bis\s+(737)\b"
 r"\bcompany\s+boeing\b"
 r"\bluft\s+transport\b"
 r"\bcanforce\b"
@@ -193,6 +217,7 @@ r"\bgerman\s+wings\b"
 r"\bklm\b"
 r"\bhelicopter\b"
 r"\bheli\b"
+r"\bsp[\s+\-]*heli\b"
 r"\biberia\b"
 r"\bairbaltic\b"
 r"\bair\s*berlin\b"
@@ -226,7 +251,9 @@ r"\ball\s+stations\b"
 r"\bbigjet\b"
 r"\bseneca\b"
 r"\bcessna\b"
+r"\bcessna\s+caravan\b"
 r"\bcessna\s+421\b"
+r"\bcessna\s+172\b"
 r"\bc\d+\b"
 r"\bskyhawk\b"
 r"\bskylane\b"
@@ -254,7 +281,7 @@ r"\bturbo\s+jet\b"
 r"\bturbo\s+jet\s+aircraft\b"
 r"\bslant\s+golf\b"
 
-#airfield
+#apron
 r"\bstand\b"
 r"\bfuel\b"
 r"\bfuel\s+station\b"
@@ -267,13 +294,12 @@ r"\bsouth\s+side\s+hangar[s]?\b"
 r"\btransient\s+parking\b"
 r"\bgate\b"
 r"\bgate\s+[a-z]\d+\b"
-
-
-r"\bsignature\b"
 r"\bapron\b"
 r"\bhangar\b"
 r"\bline\s+of\s+flight\b"
 r"\bflight\s+line\b"
+r"\b(gate\s+(Alfa|Alpha|Bravo|Golf|Lima|Mike|Papa|Romeo)\s+\d+)\b"
+
 
 #Airspace
 r"\bairspace\b"
@@ -300,7 +326,7 @@ r"\bcontrol\s+area\b"
 #After
 r"\bafter\b"
 r"\bthereafter\b"
-r"\bbehind\b"
+
 
 
 
@@ -388,19 +414,27 @@ r"\b(?:descend)\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|
 r"\binitial\s+climb\b"
 r"\bstep\s+climb\b"
 r"\bdescent\b"
+r"\bearly\s+descent\b"
 r"\bfurther\s+descent\b"
+r"\bcontinuous\s+descent\b"
 r"\bclimb\s+and\s+maintain\b"
 r"\bdescend\s+and\s+maintain\b"
 r"\bis\s+in\s+the\s+descent\b"
-r"\bclimbing\b"
 r"\bclimb\b"
 r"\bcontinuous\s+climb\b"
 r"\bclimbout\b"
-r"\bdescending\b"
 r"\bdescend\b"
 r"\bdown\b"
 r"\broll\s+down\b"
 
+#altitudechangeONGOING
+r"\bclimbing\b"
+r"\bdescending\b"
+
+
+#applicability
+r"\bapply\b"
+r"\bapplies\b"
 
 
 #Approach
@@ -454,6 +488,9 @@ r"\barriving\s+and\s+departure\b"
 r"\blanding\s+and\s+departing\b"
 r"\barriving\b"
 r"\bdeparting\b"
+r"\bdeparting\s+prior\b"
+r"\bdeparting\s+parallel\b"
+
 
 #as
 r"\bas\b"
@@ -467,6 +504,10 @@ r"\bbe\b"
 #before
 r"\bbefore\b"
 r"\bprior\b"
+
+#behind
+r"\bbehind\b"
+r"\btrail\s+behind\b"
 
 #block
 r"\bblock\b"
@@ -483,15 +524,21 @@ r"\bby\b"
 #CALLSIGN
 r"\bpilot\b"
 r"\bsurvey\s+\d+\b"
+r"\bqtr\d+\w*\b"
+r"\bdhl\d+\w*\b"
+r"\bdlh\d+\w*\b"
+r"\bezy\d+\w*\b"
 r"\bBAW\d+\b"
 r"\bAFR\d+\b"
 r"\bNAX\d+\b"
 r"\bSWA\d+\b"
 r"\bAAL\d+\b"
-r"\bUAL\d+\b"
+r"\bUAL\d+\w*\b"
+r"\bUAE\d+\b"
 r"\bDAL\d+\b"
+r"\bRYR\d+\w*\b"
+r"\bJBU\d+\b"
 r"\bcallsign\b"
-r"\bheavy\s+777\b"
 r"\bn\d+[a-z]*\b"
 r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
 r"\b[a-z]\-[a-z]+\b"
@@ -501,6 +548,7 @@ r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 #cancellation
 r"\bcanceling\b"
 r"\bcancel\b"
+
 
 #cancelled
 r"\bcancellation\s+received*\b"
@@ -526,13 +574,16 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
+r"\breleased\b"
+r"\b\bIFR\s+release\b\b"
 r"\bterrain\s+clearance\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
 r"\bcleared\s+(VFR\s+on\s+top)\b"
 r"\bmaintain\s+(VFR\s+on\s+top)\b"
 r"\brequest\s+(VFR\s+on\s+top)\b"
 r"\bclearance\b"
-r"\bfurther\s+clearance\b"
+r"\bexpect\s+(further)\b"
+"\bfurther\s+clearance\b\b"
 r"\blanding\s+clearance\b"
 r"\bapproach\s+clearance\b"
 r"\bIFR\s+clearance\b"
@@ -541,6 +592,7 @@ r"\bmaintain\s+current\s+clearance\b"
 r"(?<!\bIFR\s)\bdeparture\s+clearance\b"
 r"\btaxi\s+clearance\b"
 
+
 #ClearanceSTOP
 r"\bstop clearence inference\b"
 
@@ -548,7 +600,6 @@ r"\bstop clearence inference\b"
 r"\boclock\b"
 
 #Confirmation
-r"\breducing\b"
 r"\bmaintaining\b"
 r"\bcopy\s+it\b"
 r"\bcopy\b"
@@ -567,6 +618,12 @@ r"\byeah\s+no\s+problem\b"
 r"\byeah\s+of\s+course\b"
 r"\byes\s+of\s+course\b"
 r"\bokay\b"
+
+
+#condition
+r"\bif\b"
+r"\bonce\b"
+
 
 #Confirmed
 r"\bconfirmed\b"
@@ -739,6 +796,7 @@ r"\balong\b"
 r"\bahead\b"
 r"\b\d+\s+degrees\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees)\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred)\s+degrees)\b"
 r"\bleft\b"
 r"\blittle\s+left\b"
 r"\bslightly\s+left\b"
@@ -770,8 +828,12 @@ r"\bsouth\s*west\b"
 r"\bEast\b"
 r"\bwest\b" 
 r"\bsouth\b" 
-r"\bnorth\b" 
+r"\bnorth\b"
+
+
 #DIRECTIONOFFLIGHT
+r"\binbound\b"
+r"\boutbound\b"
 r"\b\d+\s+bearing\b"
 r"\beast\s*bound\b"
 r"\bnortheast\s*bound\b"
@@ -838,6 +900,7 @@ r"\bof\s+(fuel)\b"
 #estimate
 r"\bestimating\b"
 r"\bestimate\b"
+r"\bestimated\b"
 
 #except
 r"\bexcept\b"
@@ -846,20 +909,23 @@ r"\bexcept\b"
 #expect
 r"\bexpect\b"
 r"\bexpecting\b"
+r"\bawait\b"
 
 
 
 #Safety
+r"\bsay\s+again\b"
+r"\bsay\s+it\s+again\b"
 r"\bnote\b"
 r"\bwarning\b"
 r"\bMayday\s+Mayday\s+Mayday\b"
 r"\bmayday\b"
 r"\bterrain\s+alert\b"
 r"\buse\s+caution\b"
+r"\bexercise\s+caution\b"
 r"\bbe\s+advised\b"
 r"\bgps\s+notam\b"
 r"\blost\b"
-r"\blost\s+link\s+procedure\b"
 r"\bchecklist\b"
 r"\bswallowing\s+up\b"
 r"\bovertake\b"
@@ -871,12 +937,19 @@ r"\bmilitary\s+activity\b"
 r"\bglider\s+activity\b"
 r"\bcaution\b"
 
+
 #Heading
 r"\b(?:that\s+)?heading\b"
 r"\bcourse\s+heading\b"
+r"\b(?:left\s+)?heading\b"
+r"\b(?:right\s+)?heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
-r"\bpresent\s+heading\b"
+
+
+
+#headingSTOP
+r"is used to stop heading expansion"
 
 #Height
 r"\bheight\b"
@@ -893,12 +966,31 @@ r"\bhello\b"
 r"\bmorning\b"
 r"\bwonderful\s+day\b"
 
+#Hold
+r"\bholding\b"
+r"\bholding\s+short\b"
+r"\bjoin\s+the\s+hold\b"
+r"\b(?:will\s+)?hold\s+short\b"
+r"\bholding\s+instructions\b"
+r"\b(?:will\s+)?hold\b"
+r"\bthe\s+(hold)\b"
+
 #HoldingPoint
 r"\b(holding\s+(point|position))\b"
+r"#\bhold\s+position\b"
+r"\bhold\s+short\s+line\b"
+r"\b(holding\s+(point|position)\s+(\w\d))\b"
+r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+
+
+
 
 #LaunchSite
 r"\blaunch\s+site\b"
 
+#LEGS
+r"\blegs\b"
 
 #Logic
 r"\bif\s+you\s+read\b"
@@ -915,8 +1007,8 @@ r"\b[a-z]\d+\b"
 r"\b\b\b[a-z]\s+\d+\b\b\b"
 
 #If
-r"\bonce\b"
-r"\bif\b"
+r"#\bonce\b"
+r"#\bif\b"
 
 
 
@@ -931,25 +1023,39 @@ r"\b((Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Ki
 r"\b((Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\s+is\s+on\s+board)\b"
 r"\bwith\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 
+#instead
+r"\binstead\b"
+r"\binstead\s+of\b"
+
+
+
 #Interval
 r"\bbetween\b"
 
+#intention
+r"\bintentions*\b"
+
 #IS
 r"\bis\b"
+r"\bwill\s+be\b"
 r"\bindicate[s]?\b"
+r"\bindicated\b"
 r"\bappear\b"
 r"\bthis\s+is\b"
 
+
 #speed
-r"\bindicated\b"
 r"\b(IAS|TAS|GS)\b"
 r"\bkt\b"
 r"\bknots*\b"
+r"\bknots*\s+indicated\b"
 r"\bMach\b"
 r"\bassigned\s+Mach\b"
 r"\bfinal\s+approach\s+speed\b"
 r"\bminimum\s+approach\s+speed\b"
+r"\bbest\s+forward\s+speed\b"
 r"\bgood\s+speed\b"
+r"\bpattern\s+speed\b"
 r"\bnormal\s+speed\b"
 r"\bspeed\s+up\b"
 r"\bminimum\s+clean\s+speed\b"
@@ -963,6 +1069,8 @@ r"\bfaster\b"
 r"\bfaster\s+than\b"
 r"\bhigher\s+speed\b"
 r"\bhigh\s+speed\b"
+r"\bhigh\s+groundspeed\b"
+r"\bgroundspeed\b"
 r"\bslow\s+moving\b"
 r"\bfast\s+moving\b"
 r"\bas\s+fast\s+as\s+possible\b"
@@ -971,12 +1079,20 @@ r"\bnormal\s+rate\b"
 r"\bminimum\s+rate\b"
 r"\bslowly\b"
 
+#speedreduce
+r"\breduce\b"
+r"\breducing\b"
+
 
 #Feature
+r"\bmedium\s+to\s+poor\b"
+r"\bmedium\b"
+
+r"\bpoor\b"
+r"\bgood\b"
 r"\bbackup\b"
 r"\bcontinuous\b"
 r"\bnearest\s+suitable\b"
-r"\bfull\s+length\b"
 r"\bshort\b"
 r"\bloud\b"
 r"\bgrass\b"
@@ -985,7 +1101,6 @@ r"\bgreen\b"
 r"\bblue\b"
 r"\blocal\b"
 r"\bhospital\s+flight\b"
-r"\bnoise\b"
 r"\bmach\s+number\b"
 r"\bbackground\s+noise\b"
 r"\bthreshold\s+wind\b"
@@ -1018,49 +1133,51 @@ r"\bweight\b"
 
 
 #fix
+r"\bintersection\b"
+r"\b[VJTQLY]\d+\s+to\s+([a-z]{3})(?:\s+intersection)?\b\b"
 
-r"\b[VJTQLY]\d+\s+to\s+([a-z]{3})\b"
-
-r"\babc\b"
-r"\babq\b"
-r"\batl\b"
-r"\baus\d*\b"
-r"\bbig\d*\b"
-r"\bbnn\d*\b"
-r"\bbnn\d*\b"
-r"\bcos\d*\b"
-r"\bcpt\d*\b"
-r"\bcrg\d*\b"
-r"\bdag\d*\b"
-r"\bdef\d*\b"
-r"\bdvc\d*\b"
-r"\bghi\d*\b"
-r"\bgow\d*\b"
-r"\bgrr\d*\b"
-r"\bjan\d*\b"
-r"\bjkl\d*\b"
-r"\bkea\d*\b"
-r"\bkok\d*\b"
-r"\blam\d*\b"
-r"\blbl\d*\b"
-r"\blkt\d*\b"
-r"\blon\d*\b"
-r"\bmlf\b"
-r"\bmzb\d*\b"
-r"\bock\d*\b"
-r"\bocn\d*\b"
-r"\bolm\d*\b"
-r"\bpgs\d*\b"
-r"\bphl\d*\b"
-r"\bric\d*\b"
-r"\bsmo\d*\b"
-r"\bspa\d*\b"
-r"\bspy\d*\b"
-r"\btay\d*\b"
-r"\btnp\d*\b"
-r"\bxyz\b"
-r"\byqx\d*\b"
-r"\bzun\d*\b"
+r"\babc(?:\s+intersection)?\b\b"
+r"\babq(?:\s+intersection)?\b\b"
+r"\balto(?:\s+intersection)?\b\b"
+r"\batl(?:\s+intersection)?\b\b"
+r"\baus\d*(?:\s+intersection)?\b\b"
+r"\bbig\d*(?:\s+intersection)?\b\b"
+r"\bbnn\d*(?:\s+intersection)?\b\b"
+r"\bbnn\d*(?:\s+intersection)?\b\b"
+r"\bcos\d*(?:\s+intersection)?\b\b"
+r"\bcpt\d*(?:\s+intersection)?\b\b"
+r"\bcrg\d*(?:\s+intersection)?\b\b"
+r"\bdag\d*(?:\s+intersection)?\b\b"
+r"\bdef\d*(?:\s+intersection)?\b\b"
+r"\bdvc\d*(?:\s+intersection)?\b\b"
+r"\bghi\d*(?:\s+intersection)?\b\b"
+r"\bgow\d*(?:\s+intersection)?\b\b"
+r"\bgrr\d*(?:\s+intersection)?\b\b"
+r"\bjan\d*(?:\s+intersection)?\b\b"
+r"\bjkl\d*(?:\s+intersection)?\b\b"
+r"\bkea\d*(?:\s+intersection)?\b\b"
+r"\bkok\d*(?:\s+intersection)?\b\b"
+r"\blam\d*(?:\s+intersection)?\b\b"
+r"\blbl\d*(?:\s+intersection)?\b\b"
+r"\blkt\d*(?:\s+intersection)?\b\b"
+r"\blon\d*(?:\s+intersection)?\b\b"
+r"\bmlf(?:\s+intersection)?\b\b"
+r"\bmol(?:\s+intersection)?\b\b"
+r"\bmzb\d*(?:\s+intersection)?\b\b"
+r"\bock\d*(?:\s+intersection)?\b\b"
+r"\bocn\d*(?:\s+intersection)?\b\b"
+r"\bolm\d*(?:\s+intersection)?\b\b"
+r"\bpgs\d*(?:\s+intersection)?\b\b"
+r"\bphl\d*(?:\s+intersection)?\b\b"
+r"\bric\d*(?:\s+intersection)?\b\b"
+r"\bsmo\d*(?:\s+intersection)?\b\b"
+r"\bspa\d*(?:\s+intersection)?\b\b"
+r"\bspy\d*(?:\s+intersection)?\b\b"
+r"\btay\d*(?:\s+intersection)?\b\b"
+r"\btnp\d*(?:\s+intersection)?\b\b"
+r"\bxyz(?:\s+intersection)?\b\b"
+r"\byqx\d*(?:\s+intersection)?\b\b"
+r"\bzun\d*(?:\s+intersection)?\b\b"
 
 r"\bcoast\s+vor\b"
 
@@ -1151,15 +1268,14 @@ r"\bradio\s+check\b"
 #From
 r"\bfrom\b"
 
-#GoAround
-r"\bunable\s+approach\b"
+#APPROACHNOTCOMPLETED
+r"\bgoing\s+around\b"
+r"#\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
 r"\bon\s+the\s+missed\b"
 r"\bmissed\s+approach\b"
 r"\bmissed\b"
 r"\bgoing\s+missed\b"
-r"\bpublished\s+missed\s+approach\b"
-r"\bpublished\s+missed\b"
 r"\blow\s+approach\b"
 
 
@@ -1184,18 +1300,26 @@ r"\b(one\s+two\s+one\s+decimal\s+(nine|niner))\b"
 r"\b(one\s+two\s+one\s+point\s+(nine|niner))\b"
 
 #GroundMovement
+r"\bback\s*track\b"
 r"\btaxi\b"
+r"\bprogressive\s+taxi\b"
 r"\btaxis\b"
 r"\btaxiing\b"
+
+#groundstaff
+r"\b(?:the\s+)?marshaller\b"
+r"\bmarshals\b"
 
 #maintain
 r"\bmaintain\b"
 
 #maintainstop
-r"to stop inference"
+r"\bto stop inference\b"
 
 #Measure
 r"\bfeet\b"
+r"\bmillimeter\b"
+r"\binch\b"
 r"#\bmile[s]?\b"
 r"#\bnautical\s+mile[s]?\b"
 r"#\btrack\s+mile[s]?\b"
@@ -1217,6 +1341,14 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:hectopascals*)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+hectopascals*\b"
 
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+millimeters*)\b\b\b\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+millimeters*)\b\b\b\b"
+
+#modality
+r"\brequired\b"
+r"\bunable\b"
+r"\bable\b"
+
 
 #Movement
 r"\bair\s+taxiing\b"
@@ -1234,37 +1366,35 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\bfollow\b"
 r"\boverfly\b"
 r"\bentry\b"
 r"\bcircle\b"
 r"\bcross\b"
 r"\boperate\b"
 r"\breturn\b"
-r"\binbound\b"
-r"\boutbound\b"
 r"\bfull\s+stop\b"
 r"\bpassing\b"
+r"\bpass\b"
 r"\b(join|joining|rejoin)\b"
 r"\bintercept\b"
 r"\bre\s*intercept\b"
 r"\bland\b"
-r"\blanding\b"
 r"\bnavigation\b"
 r"\breroute\b"
 r"\bproceeding\b"
 r"\bproceed\b"
 r"\bproceed\s+VFR\b"
 r"\bproceed\s+inbound\b"
-r"\brollout\b"
 r"\balternate\s+navigation\b"
 r"\binbound\s+to\b"
 
+r"\blanding\b"
 r"\bentering\b"
 r"\bflying\b"
 r"\bdiverting\b"
 r"\bleaving\b"
 r"\bcruising\b"
-r"\bcrossing\b"
 r"\bmaneuvering\b"
 r"\bfly\b"
 r"\bvacate\b"
@@ -1273,18 +1403,19 @@ r"\bturn\s+left\b"
 r"\bturn\s+right\b"
 r"\bleft\s+turn\b"
 r"\bright\s+turn\b"
-r"\bhold\s+short\b"
-r"\bholding\b"
-r"\bholding\s+short\b"
-r"\bhold\b"
-r"\bhold\s+position\b"
+
+
+r"\bturning\s+left\b"
+r"\bturning\s+right\b"
+r"\bleft\s+turning\b"
+r"\bright\s+turning\b"
 
 r"\bshort\s+of\b"
 r"\b(left)\s+on\b"
 r"\b(right)\s+on\b"
 
 r"\bRNAV\s+visual\b"
-r"\bRNAV\b"
+r"\b(?:the\s+)?RNAV\b"
 
 r"\bRNAV\s+GPS\b"
 r"\bRNAV\s+Del\s*Rey\b"
@@ -1308,6 +1439,9 @@ r"\bdidn\s+t\b"
 r"\bno[tn]?\b"
 r"\bnegative\b"
 
+#noise
+r"\bnoise\b"
+r"\bnoise\s+abatement\b"
 
 #Notification
 r"\binitiating\b"
@@ -1336,7 +1470,6 @@ r"\bcontinuing\b"
 r"\bstanding\b"
 r"\baccelarating\b"
 r"\breaching\b"
-r"\bgoing\s+around\b"
 r"\barrived\b"
 r"\bdeparted\b"
 r"\boverhead\b"
@@ -1352,9 +1485,13 @@ r"\bcoming\s+up\b"
 
 #IntNumber
 r"[+-]?\b\d+\b"
+r"\b\d+\s+at\s+\d+\b"
 
 #When
 r"\bwhen\b"
+
+#Whenstop
+r"to stop inference"
 
 #While
 r"\bwhile\b"
@@ -1370,6 +1507,7 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 
 
 #RealNumber
+r"\bhalf\b"
 r"[+-]?\b\d+[.,]+\d+\b"
 r"\b((decimal|point)\s+\d+)\b"
 r"\d+\bdecimal\s+\d+\b"
@@ -1380,6 +1518,15 @@ r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
 r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
+
+#reason
+r"\bto\s+(save\s+time)\b"
+r"\bfor\s+(fuel\s+efficiency)\b"
+r"\bonboard\s+issue\b"
+r"\bnav\s+issue\b"
+r"\bnavigation\s+issue\b"
+r"\boperational\s+reasons\b"
+r"\bunfamiliar\s+with\s+the\s+airport\b"
 
 #RunwayNumber
 r"\btaxi\s+to\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
@@ -1403,10 +1550,19 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\b(landing)\s+behind\b"
+r"\bbehind\s+the\s+(landing)\b"
+r"\bis\s+(landing)\b"
+r"\bcrossing\b"
+r"\bapproaching\b"
+r"\boperating\b"
 r"\bfollowing\b"
 r"\bturning\b"
 r"\breturning\b"
 
+#operation
+r"\bflight\s+plan\s+(closure)\b"
+r"\b(void)\s+if\b"
 
 #OR
 r"\bor\b"
@@ -1421,21 +1577,28 @@ r"\boutside\b"
 r"\bremain\s+(clear)\b"
 r"\bremaining\s+(clear)\b"
 r"\bis\s+off\b"
+r"\b(clear)\s+of\b"
 
+#over
+r"\bover\b"
 
 #Sequence
 r"\b(number)\s+\d+\b"
 r"\b(number)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b"
 r"\btraffic\s+sequencing\b"
-r"\bspacing\b"
-r"\bdeparture\s+spacing\b"
-r"\btime\s+based\s+spacing\b"
 r"\bsequencing\b"
 r"\bresequencing\b"
 r"\bsequence\b"
 
+#spacing
+r"\bspacing\b"
+r"\bdeparture\s+spacing\b"
+r"\btime\s+based\s+spacing\b"
 
 
+#percent
+r"\b\d+\s+percent\b"
+r"\b\d+[.,]+\d+\s+percent\b"
 
 #PhoneticAlphabet
 
@@ -1469,6 +1632,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\briver\b"
 r"\bMUNCHEN\b"
 r"\bdetling\b"
 r"\borlando\b"
@@ -1692,10 +1856,14 @@ r"\bGrand\s+Prairie\b"
 r"\bFort\s+Worth\b"
 r"\bBorton\b"
 #Position
+r"\b(?:the\s+)?rollout\b"
+r"\bdownfield\b"
+r"\brollout\s+end\b"
+r"\bpast\s+the\s+midfield\b"
+r"\bmidfield\b"
 r"\bthreshold\b"
 r"\bdisplaced\s+threshold\b"
 r"\bjust\s+over\b"
-r"\bbehind\s+you\b"
 r"\btouch\s*down\b"
 r"\bbetween\s+(you)\b"
 r"\bmy\s+position\b"
@@ -1710,11 +1878,20 @@ r"\bpresent\s+weather\s+identification\s+(not\s+available\b)"
 #Procedure
 r"\bSTAR\b"
 r"\bSID\b"
+r"\bdifferent\s+procedure\b"
+r"\bnormal\s+procedures*\b"
+r"#\bnormal\s+procedures\s+apply\b"
+r"\bas\s+published\b"
+r"\bon\s+the\s+go\b"
+r"\blost\s+link\s+procedure\b"
+r"\bpublished\s+missed\s+approach\b"
+r"\bpublished\s+missed\b"
+
 
 
 
 #Question
-r"\bstill\b"
+r"\bany\b"
 r"\bwanna\s+make\s+sure\b"
 r"\bcan\s+we\b"
 r"\bdo\s+you\s+intend\b"
@@ -1772,6 +1949,7 @@ r"\bpoint\b"
 #Responsibility
 
 #Restriction
+
 r"\baltitude\s+restrictions?\b"
 r"\bcharted\s+restrictions\b"
 r"\ball\s+charted\s+restrictions\b"
@@ -1785,7 +1963,6 @@ r"\bremain\b"
 r"\bremaining\b"
 
 r"\bgeofence\b"
-r"\brequired\b"
 r"\bclear\s+of\s+clouds\b"
 r"\bhearing\s+interference\b"
 r"\bcompany\s+gate\s+location\b"
@@ -1808,11 +1985,13 @@ r"\ball\s+SID\s+altitude\s+restrictions?\b"
 r"\bLand\s+and\s+hold\s+short\s+operations\b"
 r"\bLAHSO\b"
 r"\b\bVFR\s+conditions*\b"
-r"\b\bIFR\s+release\b\b"
 r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
 #Contact
+r"\battention\b"
+r"\b(?:will\s+)?call\b"
+r"\bpick\s+up\b"
 r"\blistens*\b"
 r"\bmonitor\b"
 r"\breceiving\b"
@@ -1827,25 +2006,36 @@ r"\b\d+\s+west\b"
 r"\b\d+\s*n\b"
 r"\b\d+\s*w\b"
 
+#CORRECTION
+r"\bcorrection\b"
 
 #report
-r"\b((say|report|advise)\s+intentions*)\b"
+r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
-r"\bpilot\s+reports\b"
+r"\bpilot\s+reports*\b"
 r"\breports*\b"
+r"\breport\s+back\b"
 r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"\badvise\b"
+r"\br"\b(?:will\s+)?advise\b"
 
 
 #Request
 r"\brequest\b"
 r"\brequire\b"
+r"\brequesting\b"
+r"\brequested\b"
+
+
+#REQUESTSTOP
+r"\bjust to stop inference\b"
 
 #RequestInstruction
+r"\bwill\s+(follow)\b"
+r"\b(follow)\s+my\b"
 r"\bcopy\s+that\b"
 r"\bpushback\s+and\s+start\b"
 r"\brelease\b"
@@ -1858,7 +2048,6 @@ r"\bbegin\b"
 r"\ballow\b"
 r"\bextend\b"
 r"\bexecute\b"
-r"\battention\b"
 r"#\brequire\b"
 r"\binstructions*\b"
 r"\binstructed\b"
@@ -1875,16 +2064,14 @@ r"\bcatch\b"
 r"\breply\b"
 r"\bcontinue\s+on\s+present\b"
 r"\bcontinue\s+present\b"
-r"\bcall\b"
 r"\bset\b"
 r"\bestablish\s+our\s+localizer\b"
 r"\bgive\s+way\b"
-r"\bneed\b"
+r"\b(?:will\s+)?need\b"
 r"\bhave\s+to\b"
 r"\bkeep\s+an\s+eyes\b"
 r"\bpush\s*back\b"
 r"\bsend\s+delay\s+message\b"
-r"\bback\s*track\b"
 r"\bbreak\b"
 r"\bbreak\s+break\b"
 r"\bincrease\b"
@@ -1896,22 +2083,19 @@ r"\breach\b"
 r"\bstart\b"
 r"\bstartup\b"
 r"\bstop\b"
-r"\breduce\b"
-r"\bsay\s+again\b"
-r"\bsay\s+it\s+again\b"
 r"\bfile\b"
 r"\bcontinue\b"
 r"\bcomply\b"
 r"#\brequest\b"
 r"\bdirect\s+request\b"
 r"\bdeparture\s+information\b"
-r"\brequesting\b"
 
 r"\bWe're\s+going\b"
 r"\bWe\s+are\s+going\b"
 r"\bWe're\s+executing\b"
 r"\bWe\s+are\s+executing\b"
 r"\bopen\b"
+r"\breopening\b"
 r"\bclose\b"
 
 
@@ -1932,7 +2116,6 @@ r"\bwait\b"
 
 r"\bgo\s+ahead\b"
 r"\bpass\s+your\s+message\b"
-r"\bfollow\b"
 r"\bexit\b"
 r"\bturn\s+on\s+in\b"
 r"\bturn\s+around\s+there\b"
@@ -1949,15 +2132,12 @@ r"\bmake\s*an\s*offset\b"
 r"\borbit\b"
 
 r"\bout\s+of\b"
-#REQUESTINSTRUCTIONCORRECTION
-r"\bcorrection\b"
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
 r"\b(?:the\s+)?approach\s+path\b"
 r"\bcorridor\b"
 r"\btrack\b"
-r"\bthe\s+(hold)\b"
 r"\bairway\b"
 r"\bglide\s+slope\b"
 r"\bglide\s+path\b"
@@ -2002,6 +2182,7 @@ r"\bamendment\b"
 
 
 #RUNWAY
+r"\bfull\s+length\b"
 r"\bcenterline\b"
 r"\brunway\b" 
 r"\brunways\b" 
@@ -2137,6 +2318,7 @@ r"\bgidan\d\b"
 r"\bgisti\d\b"
 r"\bgodos\d\b"
 r"\bgratz\d\b"
+r"\b(?:the\s+)?greki\d\b"
 r"\bgolop\d\b"
 r"\bgomup\d\b"
 r"\bgosek\d\b"
@@ -2225,6 +2407,8 @@ r"\brodon\d\b"
 r"\brodux\d\b"
 r"\brotev\d\b"
 r"\brozee\d\b"
+r"\b(?:the\s+)?sabra\d\b"
+r"\b(?:the\s+)?sabey\d\b"
 r"\bsadde\d\b"
 r"\bsakes\d\b"
 r"\bsasal\d\b"
@@ -2247,6 +2431,7 @@ r"\bvenox\d\b"
 r"\bvemut\d\b"
 r"\bverma\d\b"
 r"\bvenom\d\b"
+r"\b(?:the\s+)?vetko\d\b"
 r"\bwesix\d\b"
 r"\bwigle\d\b"
 r"\byorke\d\b"
@@ -2271,7 +2456,7 @@ r"\bsquawking\b"
 
 #standby
 r"\bstand\s*by\b"
-r"\bawait\b"
+
 
 
 #STAR
@@ -2283,40 +2468,33 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
-r"\bclear\s+of\b"
+r"#\bremain\s+(outside)\b"
+r"#\bestablished\s+on\s+the\s+localizer\b"
+r"#\bunable\b"
+r"\bno\s+factor\b"
 r"\bthe\s+go\b"
-r"\bnormal\s+procedures\s+apply\b"
-r"\bapply\b"
-r"\bapplies\b"
 r"\btraffic\s+observed\b"
-r"\btraffic\s+in\s+sight\b"
+r"#\b(?:that\s+)?traffic\s+in\s+sight\b"
 r"\bnegative\s+contact\b"
 r"\bin\s+sight\b"
 r"\brunway\s+in\s+sight\b"
-r"\bairport\s+in\s+sight\b"
+r"\b(?:the\s+)?airport\s+in\s+sight\b"
 r"\baerodrome\s+in\s+sight\b"
 r"\bfield\s+in\s+sight\b"
-r"\badvised\b"
-r"\bfurther\s+advised\b"
-r"\bon\s+the\s+go\b"
-r"\bunable\s+landing\s+clearance\b"
+r"#\bunable\s+landing\s+clearance\b"
 r"\bclear\s+of\s+corridor\b"
-r"\bapproaching\b"
+r"\bclear\s+of\s+weather\b"
 r"\bclear\s+of\s+conflict\b"
 r"\boff\s+course\b"
 r"\bestablished\s+inbound\b"
 r"\bestablished\s+outbound\b"
 r"\bcan\s+accept\b"
 r"\baccepted\b"
-r"\bdifferent\s+procedure\s+required\b"
-r"\bnormal\s+procedures*\b"
 r"\bshortened\b"
 
 r"\bvoid\b"
-r"\bunable\b"
 r"\bunsure\b"
 r"\brecommended\b"
-r"\bas\s+published\b"
 r"\bairborne*\b"
 r"\bclosure\b"
 r"\bthere\s+already\b"
@@ -2329,11 +2507,9 @@ r"\bunreadable\b"
 r"\bsuspended\b"
 r"\bstabilized\b"
 r"\bverified\b"
-r"\breleased\b"
 r"\bblocked\b"
 r"\bpossible\b"
 r"\bexpired\b"
-r"\bable\b"
 r"\bis\s+able\b"
 r"\bcompleted\b"
 r"\bready\b"
@@ -2356,7 +2532,6 @@ r"\bwill\s+be\s+provided\b"
 r"\bprovided\b"
 r"\bservices\s+provided\b"
 r"\bin\s+progress\b"
-r"\brequested\b"
 
 r"\bactivated\b"
 r"\bestablished\b"
@@ -2364,6 +2539,13 @@ r"\bestablish\b"
 r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
+
+#Turns
+r"\bright\s+turns\b"
+r"\bstandard\s+right\s+turns\b"
+r"\bleft\s+turns\b"
+r"\bstandard\s+left\s+turns\b"
+
 
 #Thankyou
 r"\bappreciate\b"
@@ -2374,9 +2556,49 @@ r"\bthanks\b"
 #statusstop
 r"\bto stop status inference\b"
 
+#surface
+r"\bsurface\b"
+r"\bsurface\s+conditions*\b"
+r"\brunway\s+surface\s+conditions*\b"
+
+
+#surfacefeature
+r"\bde[\s+\-]*iced\b"
+r"\btreated\s+with\s+chemicals\b"
+r"\bdepth\b"
+r"\bisolated\s+patches\s+of\s+water\b"
+r"\bwater\b"
+r"\bisolated\s+patches\b"
+r"\bloose\s+sand\b"
+r"\bsnowplow\s+operations*\b"
+r"\brunway\s+condition\s+report\b"
+r"\bcontamination\s+observed\b"
+r"\bRCR\b"
+r"\bRunway\s+condition\s+code\b"
+r"\bcondition\s+code\b"
+r"\bRWYCC\b"
+r"\bbraking\s+action\b"
+r"\bpoor\s+braking\b"
+r"\bmedium\s+braking\b"
+r"\bgood\s+braking\b"
+r"\bslush\b"
+r"\bpatchy\s+contamination\b"
+r"\bsignificant\s+contamination\b"
+r"\bstanding\s+water\s+observed\b"
+r"\bdamp\b"
+r"\bwet\b"
+r"\bsnow\s+removal\b"
+r"\bdry\s+snow\b"
+r"\bthin\s+layer\s+of\s+dry\s+snow\b"
+r"\bcovered\s+with\s+ice\b"
+r"\bpatchy\s+ice\b"
+r"\bwet\s+ice\b"
+r"\bslippery\s+surface\b"
+
 #Taxiway
-r"\bhold\s+short\s+line\b"
-r"\bintersection\b"
+r"\binner\b"
+r"\bouter\b"
+r"\ball\s+taxiways\b"
 r"\bfirst\s+(high\s+speed)\b"
 r"\bsecond\s+(high\s+speed)\b"
 r"\btaxi\s+.*\b(intersection)\b"
@@ -2389,9 +2611,6 @@ r"#\b(short)\s+of\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\
 r"\b\d+\s+on\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 r"\b(?:one|two|three|four|five|six|seven|eight|nine|niner)\s+on\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 r"\btaxiway\b"
-r"\b(holding\s+(point|position)\s+(\w\d))\b"
-r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"\b(holding\s+(point|position)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 
 #TEMPERATURE
 r"\btemperature\b"
@@ -2406,6 +2625,9 @@ r"\bterrain\s+elevation\b"
 r"\bterraing\s+(rising\s+rapidly)\b"
 
 #Time
+r"\bstill\b"
+r"\balready\b"
+r"\bas\s+soon\s+as\s+ready\b"
 r"\binitially\b"
 r"\bshortly\b"
 r"#\bthereafter\b"
@@ -2427,6 +2649,8 @@ r"\bwheels\s+up\s+time\b"
 r"\barrival\s+time\b"
 r"\bthis\s+time\b"
 r"\bnow\b"
+r"\blatest\b"
+r"\blast\b"
 r"\bimmediately\b"
 r"\bimmediate\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty)\s+minutes)\b"
@@ -2463,7 +2687,8 @@ r"\bto\b"
 r"\binto\b"
 r"\btowards\b"
 #Traffic
-r"\btraffic\b"
+r"\b(?:that\s+)?traffic\b"
+r"\b(?:the\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
@@ -2509,7 +2734,7 @@ r"\bfour\s+five\s+degree\s+entry\b"
 r"\bfour\s+five\s+departure\b"
 r"\bfour\s+five\s+degree\s+departure\b"
 r"\bstright\s*-?\s*out\s+departure\b"
-r"\bmidfield\b"
+
 
 #TRafficDirection
 r"\btraffic\s+(inbound)\b"
@@ -2519,11 +2744,6 @@ r"\btraffic\s+(outbound)\b"
 #TRafficPattern
 r"\bgo\s+around\b"
 r"\bpattern\b"
-r"\blegs*\b"
-r"\bright\s+turns\b"
-r"\bstandard\s+right\s+turns\b"
-r"\bleft\s+turns\b"
-r"\bstandard\s+left\s+turns\b"
 r"\bright\s+traffic\b"
 r"\bleft\s+traffic\b"
 r"\bclosed\s+traffic\b"
@@ -2544,6 +2764,7 @@ r"\blight\s+turbulence\b"
 r"\bwake\s+turbulence\b"
 r"\bturbulence\s+heavy\b"
 r"\bmoderate\s+turbulence\b"
+r"\bsevere\s+turbulence\b"
 r"\bmoderate\s+turbulence\s+reports\b"
 r"\bchop\b"
 r"\bride\b"
@@ -2579,8 +2800,12 @@ r"\bconfirm\b"
 
 #VIA
 r"\bvia\b"
+
 #Vehicle
 r"\bvehicle\b"
+r"\bSweeper\s+vehicles*\b"
+r"\bsand\s+trucks*\b"
+
 #VISIBILITY
 r"\breduced\s+visibility\b" 
 r"\bvisibility\s+(\bmissing\b)" 
@@ -2676,6 +2901,7 @@ r"\b(?:the\s+)?gidan\b"
 r"\b(?:the\s+)?gisti\b"
 r"\b(?:the\s+)?godos\b"
 r"\b(?:the\s+)?gratz\b"
+r"\b(?:the\s+)?greki\b"
 r"\b(?:the\s+)?golop\b"
 r"\b(?:the\s+)?gomup\b"
 r"\b(?:the\s+)?gosek\b"
@@ -2764,6 +2990,8 @@ r"\b(?:the\s+)?rodon\b"
 r"\b(?:the\s+)?rodux\b"
 r"\b(?:the\s+)?rotev\b"
 r"\b(?:the\s+)?rozee\b"
+r"\b(?:the\s+)?sabra\b"
+r"\b(?:the\s+)?sabey\b"
 r"\b(?:the\s+)?sadde\b"
 r"\b(?:the\s+)?sakes\b"
 r"\b(?:the\s+)?sasal\b"
@@ -2786,6 +3014,7 @@ r"\b(?:the\s+)?venox\b"
 r"\b(?:the\s+)?vemut\b"
 r"\b(?:the\s+)?verma\b"
 r"\b(?:the\s+)?venom\b"
+r"\b(?:the\s+)?vetko\b"
 r"\b(?:the\s+)?wesix\b"
 r"\b(?:the\s+)?wigle\b"
 r"\b(?:the\s+)?yorke\b"
@@ -2811,16 +3040,20 @@ r"\bweather\s+area\b"
 #Who
 r"\ball\s+aircrafts*\b"
 r"\blanding\s+aircraft\b"
+r"\bprevious\s+landing\s+aircraft\b"
 r"\baircraft\s+on\s+the\s+runway\b"
 r"\bus\b"
 r"\b\b\bI\b\b\b"
-r"\b\b\bI\s+will\b\b\b"
+r"#\b\b\bI\s+will\b\b\b"
 r"\bWe\b"
-r"\bWe\s+will\b"
+r"#\bWe\s+will\b"
+r"#\byou\s+will\b"
 r"\byou\b"
-r"\byou\s+will\b"
-r"\byou\s+will\s+be\b"
+r"\bhim\b"
 
+#whose
+r"\bmy\b"
+r"\byour\b"
 
 #Why
 
@@ -2828,6 +3061,7 @@ r"\byou\s+will\s+be\b"
 r"\bwill\b"
 
 #Wind
+r"\bwindshear\b"
 r"\bwinds*\b"
 r"\bwind\s+(\b\d+\s+@\s+\d+\b)"
 r"\bwind\s+(\b\d+\s+at\s+\d+\b)" 
@@ -2848,5 +3082,3 @@ r"\bwind[s]?\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(ze
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+knots)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+degrees\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+knots)\b"
 
-#your
-r"\byour\b"

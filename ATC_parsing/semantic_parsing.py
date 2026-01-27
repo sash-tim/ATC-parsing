@@ -75,7 +75,8 @@ def make_lexicon(dData):
     """
     prepositions_file = files("ATC_parsing.data").joinpath("prepositions.txt").read_text()
     """
-    The *prepositions.txt* file contains the list of standard prepositions. In the parsing process they play slightly
+    The *prepositions.txt* file contains the list of standard prepositions. In the parsing process 
+    they play slightly
     different role compared to other words if only they are not assigned a special category in
     *regex.txt* as, for example, category *TO* for 'to' and 'into'.
 
@@ -353,7 +354,8 @@ def make_lexicon(dData):
                     good_entry = False
                     for good_category in dData['category_filter']:
                     
-                        if lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0:
+                        if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
+                            lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
                             good_entry = True
                             break
                     if good_entry == True:
@@ -742,6 +744,7 @@ def parsing(command, number_of_steps, dData):
         
         command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
+        command = command.replace("…","")
         command = command.replace("ü","u").replace("Ü","U")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -1393,6 +1396,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         
         command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
+        command = command.replace("…","")
         command = command.replace("ü","u").replace("Ü","U")
         command = command.replace("I'd","i would").replace("it's","it is").replace("what's","what is").replace("that's","that is").replace("'s","").replace("'ve"," have").replace("'ll"," will").replace("'re"," are").replace(" a "," ")
         command = command.replace(r"\s+"," ").replace("+","")
@@ -2105,7 +2109,7 @@ def logicalForm2JSON(LF):
         
         for word in ['have','your',
                     'are','over','be',
-                    'an','just','the',]:
+                    'an','just','the','my','this']:
             for brackets in ['0','1','2','3','4','5']:
                 while True:
                     
