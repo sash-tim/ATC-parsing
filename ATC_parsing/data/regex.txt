@@ -18,6 +18,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bVirgin\s+Atlantic\b"
 r"\bhawaiian\b"
 r"\bjetlink\b"
 r"\brobinson\s+r44\b"
@@ -340,6 +341,8 @@ r"\bthereafter\b"
 r"\baltimeter\s+(\d+[.,]?\d+\b)"
 r"\baltimeter\b"
 #Altitude
+r"\bhigher\b"
+r"\blower\b"
 r"\bprevious\s+altitude\b"
 r"\bassigned\s+altitude\b"
 r"\bMinimum\s+enroute\s+altitude\b"
@@ -647,10 +650,10 @@ r"\b(few(\s+at)*)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hun
 
 
 #Comparison
-r"\blower\b"
+r"\bor\s+lower\b"
 r"\blater\s+than\b"
 r"\bcouple\s+more\b"
-r"\bhigher\b"
+r"\bor\s+higher\b"
 r"\bhigher\s+than\b"
 r"\babove\b"
 r"\bbelow\b"
@@ -1637,6 +1640,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\bMadrid\b"
 r"\bOakland\b"
 r"\briver\b"
 r"\bMUNCHEN\b"
@@ -2532,6 +2536,7 @@ r"\bin\s+effect\b"
 r"\bin\s+use\b"
 r"\bILS\s+approach\s+in\s+use\b"
 r"\bavailable\b"
+r"\bunavailable\b"
 r"#\bcleared\s+to\s+land\b"
 r"\bcan\s+begin\b"
 r"\bwill\s+be\s+provided\b"
