@@ -53,6 +53,7 @@ from
 fix
 legs
 navaid
+navigation
 -measure
 modality
 of

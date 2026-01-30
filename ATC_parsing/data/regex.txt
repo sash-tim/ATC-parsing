@@ -1024,6 +1024,7 @@ r"#\bif\b"
 #IN
 r"\bIn\b"
 r"\binside\b"
+r"\bwithin\b"
 
 #InformationID
 r"\b(information\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu))\b"
@@ -1167,6 +1168,7 @@ r"\bkea\d*(?:\s+intersection)?\b\b"
 r"\bkok\d*(?:\s+intersection)?\b\b"
 r"\blam\d*(?:\s+intersection)?\b\b"
 r"\blbl\d*(?:\s+intersection)?\b\b"
+r"\blch\d*(?:\s+intersection)?\b\b"
 r"\blkt\d*(?:\s+intersection)?\b\b"
 r"\blon\d*(?:\s+intersection)?\b\b"
 r"\bmlf(?:\s+intersection)?\b\b"
@@ -1640,6 +1642,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\bjacksonville\b"
 r"\bMadrid\b"
 r"\bOakland\b"
 r"\briver\b"
