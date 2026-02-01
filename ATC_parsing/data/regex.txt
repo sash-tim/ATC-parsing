@@ -1642,6 +1642,7 @@ r"\bZulu\b"
 r"\b[A-Z]\b"
 
 #Place
+r"\bmiami\b"
 r"\bjacksonville\b"
 r"\bMadrid\b"
 r"\bOakland\b"
