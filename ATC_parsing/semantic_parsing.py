@@ -298,16 +298,26 @@ def make_lexicon(dData):
         dData['category_filter'] = dCategoryFilter
     
 
-    def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter):
+    def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction):
         """
         Arguments:
         - lex_complex_file
         A string that contains all the data from *lexicon_complex.txt* file,
         - dLexComplex
         Output dictionary with a set of rules from *lex_complex_file*.
-        - with_filter
-        May be 'True' or 'False'. If 'False' then all rules from 'lex_complex_file' are extracted.
-        If 'False' then the extraction depends on a filter.
+        
+        - with_filter == False & with_tmpfunction == False
+        All rules from 'lex_complex_file' without 'TMPFUNCTION' are extracted.
+        
+        - with_filter == False & with_tmpfunction == True
+        All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted.
+        
+        - with_filter == True & with_tmpfunction == False
+        All rules from 'lex_complex_file' without 'TMPFUNCTION' that pass the filter are extracted.
+        
+        - with_filter == True & with_tmpfunction == True
+        All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted. Filter is ignored
+        
 
         Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
         If 
@@ -348,19 +358,26 @@ def make_lexicon(dData):
             
                 lexicon_entry = record.strip(' \n').replace('\\\\','\\')
 
-                if not with_filter:
-                    dLexComplex[placeholder].append(lexicon_entry)
-                else:
-                    good_entry = False
-                    for good_category in dData['category_filter']:
+                if with_tmpfunction == True:
                     
-                        if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
-                            lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
-                            good_entry = True
-                            break
-                    if good_entry == True:
+                    if lexicon_entry.lower().find('tmpfunction') >= 0:
                         dLexComplex[placeholder].append(lexicon_entry)
-                    
+                
+                else:
+                    if lexicon_entry.lower().find('tmpfunction') < 0:
+                        if with_filter == False:
+                            dLexComplex[placeholder].append(lexicon_entry)
+                        else:
+                            good_entry = False
+                            for good_category in dData['category_filter']:
+                            
+                                if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
+                                    lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
+                                    good_entry = True
+                                    break
+                            if good_entry == True:
+                                dLexComplex[placeholder].append(lexicon_entry)
+                            
                   
     def make_lex_all_category(category):
         """
@@ -597,15 +614,25 @@ def make_lexicon(dData):
     """
     dLexComplex = {}
     with_filter = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter)
+    with_tmpfunction = False
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
     lex_complex_no_filter = make_lex_complex(dLexComplex)
     
     #with filter
     dLexComplex = {}
     with_filter = True
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter)
+    with_tmpfunction = False
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
     lex_complex_with_filter = make_lex_complex(dLexComplex)
     
+    #with tmpfunction
+    dLexComplex = {}
+    with_filter = False
+    with_tmpfunction = True
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
+    lex_complex_with_tmpfunction = make_lex_complex(dLexComplex)
+    
+
     """
     # lex_prepositions #
     """
@@ -669,6 +696,12 @@ def make_lexicon(dData):
                                 lex_prepositions +
                                 lex_last_part, True)
     
+    lex_with_tmpfunction = lexicon.fromstring(lex_categories + 
+                                lex_common + 
+                                lex_all_category +
+                                lex_complex_with_tmpfunction +
+                                lex_prepositions +
+                                lex_last_part, True)
     
     """
     ## CCG parsers ##
@@ -684,9 +717,11 @@ def make_lexicon(dData):
 
     command_parser = chart.CCGChartParser(lex_no_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
 
     dData['command_parser'] = command_parser
     dData['LF_parser'] = LF_parser
+    dData['final_parser'] = final_parser
 
 
 
@@ -1316,6 +1351,7 @@ def parsing(command, number_of_steps, dData):
     command = command_normalization(command)
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
+    final_parser = dData['final_parser']
 
     LF_old = ''
     for i in range(number_of_steps):
@@ -1334,6 +1370,9 @@ def parsing(command, number_of_steps, dData):
                 LF_old = LF
     
     LF = LF.replace('STOP_(','_(')
+
+    LF = parse_command(final_parser, LF, dData, 1)
+            
 
     return LF
 
@@ -1980,6 +2019,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     command = command_normalization(command)
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
+    final_parser = dData['final_parser']
 
     LF_old = ''
     for i in range(number_of_steps):
@@ -1998,6 +2038,10 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
             else:
                 LF_old = LF
 
+    #LF = LF.replace('STOP_(','_(')
+
+    LF = parse_command(final_parser, LF, dData, 1, dPlaceholders)
+            
     LF = LF.replace('STOP_(','_(')
 
     return LF
@@ -2091,6 +2135,77 @@ def logicalForm2JSON(LF):
             else:
                 sJSON = sJSON_new
 
+        """
+        replace 
+        ```
+        "tmpfunction":{json-string}
+        ```
+        with
+        ```
+        json-string
+        ```
+        """
+        
+        for word in ['tmpfunction']:
+            for brackets in ['0','1','2','3','4','5']:
+                while True:
+                    
+                    pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                    p = re.compile(pattern, re.I)
+                    iterator = p.finditer(sJSON)
+                    for match in iterator:
+                        if match:
+                        
+                            to_replace = str(match.group())
+                            #print('to_replace:::'+to_replace)
+                            replace_by = str(match.group(1))
+                            #print('replace_by:::'+replace_by)
+                            
+                        
+                            n_open = 0
+                            n_close = 0
+                            
+                            OK = True
+
+                            for s in to_replace:
+                                
+                                if s == '{':
+                                    n_open += 1
+                                    #print(str(n_open)+' '+str(n_close))
+
+                                if s == '}':
+                                    n_close += 1
+                                    
+                                    #print(str(n_open)+' '+str(n_close))
+
+
+                                
+
+                                if n_close == n_open :
+                                    break
+                            
+                            if n_open != n_close:
+                                OK = False   
+                            
+                            if OK:
+                                #replace_by = '\"'+word+' '+replace_by[1:]
+                                replace_by = replace_by[1:]
+
+                                print('to_replace:::'+to_replace)
+                                print('replace_by:::'+replace_by)
+                            
+                                
+                                sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
+                                
+
+                        if sJSON_new != sJSON:
+                            sJSON = sJSON_new
+
+                        
+                            
+                    break
+        
+        
 
         """
         replace 

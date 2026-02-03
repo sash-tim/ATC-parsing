@@ -2557,6 +2557,9 @@ r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
 
+#TMPFUNCTION
+r"\bis used to fix a WHEN problem\b"
+
 #Turns
 r"\bright\s+turns\b"
 r"\bstandard\s+right\s+turns\b"
