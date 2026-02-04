@@ -2135,6 +2135,7 @@ def logicalForm2JSON(LF):
             else:
                 sJSON = sJSON_new
 
+
         """
         replace 
         ```
@@ -2147,63 +2148,52 @@ def logicalForm2JSON(LF):
         """
         
         for word in ['tmpfunction']:
-            for brackets in ['0','1','2','3','4','5']:
-                while True:
+
+            if sJSON.find(word.upper()) < 0:
+                continue
+
+            while True:
+                word = '\"'+word.upper()+'\"'+':'
+            
+                ind = sJSON.index(word)
+                to_check = sJSON[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
                     
-                    pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
-                    p = re.compile(pattern, re.I)
-                    iterator = p.finditer(sJSON)
-                    for match in iterator:
-                        if match:
-                        
-                            to_replace = str(match.group())
-                            #print('to_replace:::'+to_replace)
-                            replace_by = str(match.group(1))
-                            #print('replace_by:::'+replace_by)
+                    to_replace = to_replace+s
+                    replace_by = replace_by+s
+                    
+                    if s == '{':
+                        n_open += 1
                             
-                        
-                            n_open = 0
-                            n_close = 0
-                            
-                            OK = True
+                    if s == '}':
+                        n_close += 1
 
-                            for s in to_replace:
-                                
-                                if s == '{':
-                                    n_open += 1
-                                    #print(str(n_open)+' '+str(n_close))
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
 
-                                if s == '}':
-                                    n_close += 1
-                                    
-                                    #print(str(n_open)+' '+str(n_close))
-
-
-                                
-
-                                if n_close == n_open :
-                                    break
-                            
-                            if n_open != n_close:
-                                OK = False   
-                            
-                            if OK:
-                                #replace_by = '\"'+word+' '+replace_by[1:]
-                                replace_by = replace_by[1:]
-
-                                print('to_replace:::'+to_replace)
-                                print('replace_by:::'+replace_by)
-                            
-                                
-                                sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-                                
-
-                        if sJSON_new != sJSON:
-                            sJSON = sJSON_new
-
-                        
-                            
+                if is_found :
+                    replace_by = replace_by[1:-1]
                     break
+
+                break   
+
+            sJSON_new = sJSON.replace(to_replace, replace_by)
+                    
+            if sJSON_new != sJSON:
+                sJSON = sJSON_new
+                
+                        
+                            
+                
         
         
 

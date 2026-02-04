@@ -93,6 +93,7 @@ upto
 via
 waypoint
 when
+whenstop
 while
 will
 with
