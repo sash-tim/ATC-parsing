@@ -1872,6 +1872,7 @@ r"\bGrand\s+Prairie\b"
 r"\bFort\s+Worth\b"
 r"\bBorton\b"
 #Position
+r"\bcenterline\b"
 r"\b(?:the\s+)?rollout\b"
 r"\bdownfield\b"
 r"\brollout\s+end\b"
@@ -2036,7 +2037,7 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"\br"\b(?:will\s+)?advise\b"
+r"r"\b(?:will\s+)?advise\b"
 
 
 #Request
@@ -2199,7 +2200,6 @@ r"\bamendment\b"
 
 #RUNWAY
 r"\bfull\s+length\b"
-r"\bcenterline\b"
 r"\brunway\b" 
 r"\brunways\b" 
 r"\ball\s+runways\b" 
