@@ -3068,6 +3068,8 @@ r"#\b\b\bI\s+will\b\b\b"
 r"\bWe\b"
 r"#\bWe\s+will\b"
 r"#\byou\s+will\b"
+r"\byou\s+have\b"
+r"\byou\s+are\b"
 r"\byou\b"
 r"\bhim\b"
 
