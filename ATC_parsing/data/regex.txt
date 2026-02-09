@@ -1249,9 +1249,6 @@ r"\bflight\s+plan\s+on\s+file\b"
 r"\bplan\b"
 r"\bplanification\b"
 r"\bfiled\b"
-r"\bfiled\s+route\b"
-r"\bplanned\s+route\b"
-r"\bflight\s+plan\s+route\b"
 
 
 #FlightRule
@@ -2158,6 +2155,10 @@ r"\btrack\b"
 r"\bairway\b"
 r"\bglide\s+slope\b"
 r"\bglide\s+path\b"
+r"\bfiled\s+route\b"
+r"\bplanned\s+route\b"
+r"\b(?:airway\s+)?flight\s+plan\s+route\b"
+
 
 r"\barc\b"
 r"\barc\s+south\b"
