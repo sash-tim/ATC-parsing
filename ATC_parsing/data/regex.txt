@@ -1249,9 +1249,6 @@ r"\bflight\s+plan\s+on\s+file\b"
 r"\bplan\b"
 r"\bplanification\b"
 r"\bfiled\b"
-r"\bfiled\s+route\b"
-r"\bplanned\s+route\b"
-r"\bflight\s+plan\s+route\b"
 
 
 #FlightRule
@@ -1872,6 +1869,7 @@ r"\bGrand\s+Prairie\b"
 r"\bFort\s+Worth\b"
 r"\bBorton\b"
 #Position
+r"\bcenterline\b"
 r"\b(?:the\s+)?rollout\b"
 r"\bdownfield\b"
 r"\brollout\s+end\b"
@@ -2036,7 +2034,7 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"\br"\b(?:will\s+)?advise\b"
+r"r"\b(?:will\s+)?advise\b"
 
 
 #Request
@@ -2157,6 +2155,10 @@ r"\btrack\b"
 r"\bairway\b"
 r"\bglide\s+slope\b"
 r"\bglide\s+path\b"
+r"\bfiled\s+route\b"
+r"\bplanned\s+route\b"
+r"\b(?:airway\s+)?flight\s+plan\s+route\b"
+
 
 r"\barc\b"
 r"\barc\s+south\b"
@@ -2199,7 +2201,6 @@ r"\bamendment\b"
 
 #RUNWAY
 r"\bfull\s+length\b"
-r"\bcenterline\b"
 r"\brunway\b" 
 r"\brunways\b" 
 r"\ball\s+runways\b" 
@@ -2557,6 +2558,9 @@ r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
 
+#TMPFUNCTION
+r"\bis used to fix a WHEN problem\b"
+
 #Turns
 r"\bright\s+turns\b"
 r"\bstandard\s+right\s+turns\b"
@@ -2816,7 +2820,7 @@ r"\bconfirm\b"
 
 
 #VIA
-r"\bvia\b"
+r"\bvia(?:\s+the)?\b"
 
 #Vehicle
 r"\bvehicle\b"
@@ -3065,6 +3069,8 @@ r"#\b\b\bI\s+will\b\b\b"
 r"\bWe\b"
 r"#\bWe\s+will\b"
 r"#\byou\s+will\b"
+r"\byou\s+have\b"
+r"\byou\s+are\b"
 r"\byou\b"
 r"\bhim\b"
 
