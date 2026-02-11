@@ -5,4 +5,4 @@ You can use this library to parse Air Traffic Control commands using CCG semanti
 Content
 - [Getting Started](getting_started.md)
 - [GPT-5 and ATC command understanding](gpt_atc_understanding.md)
-- [meaning of a command](meaning_of_a_command.md)
+- [Meaning of a command](meaning_of_a_command.md)
