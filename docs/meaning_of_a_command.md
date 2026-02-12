@@ -3,6 +3,7 @@
 ## Contents
 - [What is the meaning?](#what-is-the-meaning)
 - [Traffic in sight](#traffic-in-sight)
+- [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
 
 ## What is the meaning?
 
@@ -191,3 +192,185 @@ We see here new variants of the TRAFFICINFO function:
 
 >- TRAFFICINFO ( TRAFFICINFO, ONGOINGACTION )
 >- TRAFFICINFO ( TRAFFICINFO, AIRCRAFT )
+
+
+## Scope of the HOLD instruction
+
+Let's consider this ATC command:
+
+```
+COMMAND: Air France 9 hold at DOVER VOR standard right turns maintain flight level 270 Expect further clearance at 1530Z Contact London Control 132.
+```
+
+This means that the pilot should wait for new instructions (*further clearance*) over *DOVER VOR* fix executing *standard right turns* at *flight level 270*. If he didn't get new instructions on or before 15:30 Zulu then he should execute holding exit logic procedure. 
+
+The question is when the pilot should contact *London Control* - just after he gets new instructions or before? Really, this means who is responsible for new instructions issue - current controller or the *London Control*?
+
+I discussed this question with chatGPT and got this explanation:
+
+```
+You should contact London Control immediately.
+
+1530Z is when you expect further clearance, not when you switch frequency.
+```
+But contact instruction doesn't belong to the HOLD scope:
+
+```
+HOLD is a flight procedure, CONTACT is a control relationship
+
+They live in different semantic layers:
+
+HOLD → aircraft trajectory behavior
+
+CONTACT → air traffic control authority
+
+They should not share scope.
+```
+Interesting. 
+
+```
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "Air France",
+    "INTNUMBER": "9"
+  },
+  "HOLD": {
+    "HOLD": {
+      "HOLD": {
+        "HOLD": {
+          "HOLD": {
+            "HOLD": {
+              "HOLD": {
+                "HOLD": "hold",
+                "AT": "at",
+                "FIX": {
+                  "WAYPOINT": "DOVER",
+                  "NAVAID": "VOR"
+                }
+              }
+            },
+            "TURNS": "standard right turns"
+          }
+        },
+        "MAINTAIN": {
+          "MAINTAIN": {
+            "MAINTAIN": "maintain",
+            "FLEVEL": {
+              "FLEVEL": "flight level",
+              "FLEVELVALUE": "270"
+            }
+          }
+        }
+      }
+    },
+    "EXPECT": {
+      "EXPECT": {
+        "EXPECT": "Expect",
+        "CLEARANCE": {
+          "CLEARANCE": "further clearance",
+          "AT": "at",
+          "TIMEINFO": "1530Z"
+        }
+      }
+    }
+  },
+  "CONTACT": {
+    "CONTACT": "Contact",
+    "CONTROLLER": {
+      "PLACE": "London",
+      "CONTROLLER": {
+        "CONTROLLER": "Control",
+        "FREQUENCY": {
+          "REALNUMBER": "132.7"
+        }
+      }
+    }
+  }
+}
+```
+
+Functions used for HOLD parsing for this command:
+
+>- HOLD ( HOLD, AT, FIX)
+>- HOLD ( HOLD, TURNS)
+>- HOLD ( HOLD, MAINTAIN)
+>- HOLD ( HOLD, EXPECT)
+
+And this is one another example related to the HOLD instruction.
+
+```
+COMMAND: American 105 heavy due traffic proceed direct DIXIE hold north on the Victor zero eight zero radial right turns expect further clearance one seven one zero Zulu Maintain flight level two four zero After holding proceed Victor 16 to Robbinsville then Tango 212 to Yardley then as filed
+
+PARSE (simplified and condensed JSON):
+
+{
+  "CALLSIGN": {...},
+  "REASON": {...},
+  "NAVIGATION": {...},
+  "HOLD": {
+    "HOLD": {
+      "HOLD": {
+        "HOLD": {
+          "HOLD": {
+            "HOLD": {
+              "HOLD": {
+                "HOLD": {
+                  "HOLD": "hold",
+                  "POSITION": {
+                    "DIRECTIONMAGNETIC": "north",
+                    "ON": "on",
+                    "the RADIAL": {
+                      "ROUTE": "Victor zero eight zero",
+                      "RADIAL": "radial"
+                    }
+                  }
+                }
+              },
+              "TURNS": "right turns"
+            }
+          },
+          "EXPECT": {
+            "EXPECT": {
+              "EXPECT": "expect",
+              "CLEARANCE": "further clearance",
+              "TIME": {
+                "WORDNUMPHONEALPHABET": {
+                  "WORDNUMBER": "one seven one zero",
+                  "PHONETICALPHABET": "Zulu"
+                }
+              }
+            }
+          }
+        }
+      },
+      "MAINTAIN": {
+        "MAINTAIN": {
+          "MAINTAIN": "Maintain",
+          "FLEVEL": {
+            "FLEVEL": "flight level",
+            "FLEVELVALUE": "two four zero"
+          }
+        }
+      }
+    }
+  },
+  "NAVIGATION": {
+    "AFTER": {
+      "AFTER": "After",
+      "HOLD": "holding"
+    },
+    "NAVIGATION": {...}
+  },
+  "THEN": {...},
+  "THEN_3": {...}
+}
+```
+
+Here for the HOLD parsing, these variants of the HOLD function are used to form a representation of its scope:
+
+>- HOLD ( HOLD, POSITION )
+>- HOLD ( HOLD, TURNS )
+>- HOLD ( HOLD, EXPECT )
+>- HOLD ( HOLD, MAINTAIN )
