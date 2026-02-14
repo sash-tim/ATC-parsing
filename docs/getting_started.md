@@ -44,7 +44,7 @@ a_commands = [
 for command in a_commands:
     print('\ncommand:\t'+command)
 
-    number_of_steps = 3
+    number_of_steps = 5
 
     # native presentation
     logicalForm = atc.parsing(command, number_of_steps, dData)

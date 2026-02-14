@@ -34,6 +34,7 @@ distance
 due
 emergency
 except
+expect
 fix
 flevel
 frequency
@@ -55,6 +56,7 @@ legs
 navaid
 navigation
 -measure
+maintainstop
 modality
 of
 off
