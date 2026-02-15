@@ -4,7 +4,7 @@
 - [What is the meaning?](#what-is-the-meaning)
 - [Traffic in sight](#traffic-in-sight)
 - [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
-- [WHEN & AFTER](#and-&-after)
+- [WHEN & AFTER](#when-&-after)
 
 
 ## What is the meaning?
