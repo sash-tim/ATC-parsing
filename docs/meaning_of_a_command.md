@@ -4,7 +4,7 @@
 - [What is the meaning?](#what-is-the-meaning)
 - [Traffic in sight](#traffic-in-sight)
 - [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
-- [WHEN & AFTER](#when-&-after)
+- [WHEN and AFTER](#when-and-after)
 
 
 ## What is the meaning?
@@ -377,7 +377,7 @@ Here for the HOLD parsing, these variants of the HOLD function are used to form 
 >- HOLD ( HOLD, EXPECT )
 >- HOLD ( HOLD, MAINTAIN )
 
-## WHEN & AFTER
+## WHEN and AFTER
 Let's analyze this command:
 
 ```
