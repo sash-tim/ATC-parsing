@@ -434,15 +434,15 @@ PARSE (simplified JSON):
 
 Here we see these functions:
 
->1) REASON ( DUE, TRAFFIC ) - this function explains why we should change heading (flight course)
->2) HEADING ( HEADING, INTNUMBER) - new course of flight
->3) HEADING ( NAVIGATION, HEADING )
->4) HEADING ( REASON, HEADING) - change course of flight with explanation
->5) WHEN ( WHEN, MODALITY ) - WHEN condition
->5) DIRECTION ( DIRECTION, FIX) - direction to a fix
->6) NAVIGATION ( NAVIGATION, DIRECTION ) - fly to the fix
->7) NAVIGATION ( WHEN, NAVIGATION ) - fly to the fix when able
->8) NAVIGATION ( NAVIGATION, ROUTE ) - use route from flight plan to continue flight from the *fix MLF*
+>- REASON ( DUE, TRAFFIC ) - this function explains why we should change heading (flight course)
+>- HEADING ( HEADING, INTNUMBER) - new course of flight
+>- HEADING ( NAVIGATION, HEADING )
+>- HEADING ( REASON, HEADING) - change course of flight with explanation
+>- WHEN ( WHEN, MODALITY ) - WHEN condition
+>- DIRECTION ( DIRECTION, FIX) - direction to a fix
+>- NAVIGATION ( NAVIGATION, DIRECTION ) - fly to the fix
+>- NAVIGATION ( WHEN, NAVIGATION ) - fly to the fix when able
+>- NAVIGATION ( NAVIGATION, ROUTE ) - use route from flight plan to continue flight from the *fix MLF*
 
 The parser made a decision - the scope of the WHEN condition includes flight to the *fix MLF*, but not course change.
 
@@ -500,11 +500,11 @@ PARSE ( simplified JSON ):
 
 Relevant functions:
 
->1) CLEARED ( CLEARED, FOR, DEPARTURE) - a runway is cleared for departure
->2) AFTER ( AFTER, DEPARTURE ) - AFTER condition - *after departure*
->3) HEADING ( HEADING, INTNUMBER) - new course of flight
->4) HEADING ( NAVIGATION, HEADING )
->5) HEADING ( AFTER, NAVIGATION ) - *turn right* to the new course after departure.
+>- CLEARED ( CLEARED, FOR, DEPARTURE) - a runway is cleared for departure
+>- AFTER ( AFTER, DEPARTURE ) - AFTER condition - *after departure*
+>- HEADING ( HEADING, INTNUMBER) - new course of flight
+>- HEADING ( NAVIGATION, HEADING )
+>- HEADING ( AFTER, NAVIGATION ) - *turn right* to the new course after departure.
 
 Here we see that condition AFTER is included in HEADING instruction.
 
