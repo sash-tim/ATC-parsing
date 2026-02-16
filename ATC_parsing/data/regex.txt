@@ -1277,6 +1277,7 @@ r"\bradio\s+check\b"
 r"\bfrom\b"
 
 #APPROACHNOTCOMPLETED
+r"\bgo\s+around\b"
 r"\bgoing\s+around\b"
 r"#\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
@@ -2763,7 +2764,6 @@ r"\btraffic\s+(outbound)\b"
 
 
 #TRafficPattern
-r"\bgo\s+around\b"
 r"\bpattern\b"
 r"\bright\s+traffic\b"
 r"\bleft\s+traffic\b"
