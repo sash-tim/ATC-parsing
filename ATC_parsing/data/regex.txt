@@ -18,6 +18,9 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bbaw\b"
+r"\bsas\b"
+r"\bqfa\b"
 r"\bita\b"
 r"\bVirgin\s+Atlantic\b"
 r"\bhawaiian\b"
@@ -532,6 +535,9 @@ r"\bbut\b"
 r"\bby\b"
 
 #CALLSIGN
+r"\bbaw\d+\w*\b"
+r"\bsas\d+\b"
+r"\bqfa\d+\b"
 r"\bpilot\b"
 r"\bsurvey\s+\d+\b"
 r"\bqtr\d+\w*\b"
@@ -922,6 +928,7 @@ r"\bawait\b"
 
 
 #Safety
+r"\bunstable\s+approach\b"
 r"\bsay\s+again\b"
 r"\bsay\s+it\s+again\b"
 r"\bnote\b"
@@ -1375,6 +1382,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
 r"\bentry\b"
