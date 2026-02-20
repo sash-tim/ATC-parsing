@@ -5,6 +5,7 @@
 - [Traffic in sight](#traffic-in-sight)
 - [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
 - [WHEN and AFTER](#when-and-after)
+- [Go around](#go-around)
 
 
 ## What is the meaning?
@@ -511,3 +512,120 @@ Here we see that condition AFTER is included in HEADING instruction.
  Previously it was said that WHEN condition can't be included in HEADING instruction because this instruction should be executed immediately. 
 
  But here we have a precise description of the event after which the course should be changed - just *after departure*. 
+
+
+## Go around
+
+Sometimes a pilot or a controller should abort landing because, for example bad weather or other traffic. In such cases, a special procedure is initiated, such as *go around*. The controller may update its parameter setting heading, climb parameters and some others.
+
+The question is what is the scope of the *go around* instruction? Talking with chatGPT I got these recommendations:
+
+```
+Inside GO_AROUND scope:
+
+>-heading
+>-track
+>-climb/descent
+>-altitude
+>-navigation fixes
+>-sequencing like “then”, “after”
+
+Outside GO_AROUND scope:
+
+>-contact
+>-monitor
+>-report
+>-squawk
+>-ident
+```
+
+It seems that the reason of the landing abort (weather, traffic) may also be included in the scope.
+
+Please see a few examples below:
+
+1) Bad weather, standard procedure
+
+```
+COMMAND: WZZ124 go around weather below minima
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": "WZZ124",
+  "APPROACHNOTCOMPLETED": {
+    "APPROACHNOTCOMPLETED": "go around",
+    "WEATHER": {
+      "WEATHER": "weather",
+      "COMPARISON": "below",
+      "FEATURE": "minima"
+    }
+  }
+}
+```
+
+2) Heading and altitude are specified
+
+```
+COMMAND: RYR84X go around fly runway heading climb and maintain two thousand feet
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": "RYR84X",
+  "APPROACHNOTCOMPLETED": {
+    "APPROACHNOTCOMPLETED": "go around",
+    "HEADING": {
+      "NAVIGATION": "fly",
+      "HEADING": "runway heading"
+    },
+    "ALTITUDECHANGE": {
+      "ALTITUDECHANGE": {
+        "ALTITUDECHANGE": "climb and maintain",
+        "ALTITUDE": {
+          "WORDNUMBER": {
+            "WORDNUMBER": "two",
+            "WORDNUMBER": "thousand feet"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+3) Heading instruction inside, contact instruction outside of the *go around* scope
+
+```
+COMMAND: THY5KT go around turn left heading two one zero contact approach one one eight decimal six.
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": "THY5KT",
+  "APPROACHNOTCOMPLETED": {
+    "APPROACHNOTCOMPLETED": "go around",
+    "HEADING": {
+      "HEADING": {
+        "NAVIGATION": "turn left",
+        "HEADING": {
+          "HEADING": "heading",
+          "WORDNUMBER": "two one zero"
+        }
+      }
+    }
+  },
+  "CONTACT": {
+    "CONTACT": "contact",
+    "CONTROLLER": {
+      "CONTROLLER": "approach",
+      "FREQUENCY": {
+        "REALWORDNUM": {
+          "WORDNUMBER": "one one eight",
+          "REALWORDNUM": "decimal six"
+        }
+      }
+    }
+  }
+}
+
+```
