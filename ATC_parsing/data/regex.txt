@@ -18,6 +18,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bwzz\b"
 r"\blot\b"
 r"\bthy\b"
 r"\bswr\b"
@@ -542,6 +543,7 @@ r"\bbut\b"
 r"\bby\b"
 
 #CALLSIGN
+r"\bwzz\d+\w*\b"
 r"\blot\d+\w*\b"
 r"\bthy\d+\w*\b"
 r"\bswr\d+\w*\b"
@@ -1140,6 +1142,7 @@ r"\blight\b"
 r"\bwake\b"
 r"\bmaximum\b"
 r"\bminimum\b"
+r"\bminima\b"
 r"\bmaximum\s+possible\b"
 r"\bmoderate\b"
 r"\bnormal\b"
