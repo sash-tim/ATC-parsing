@@ -574,7 +574,11 @@ r"\bJBU\d+\b"
 r"\bcallsign\b"
 r"\bn\d+[a-z]*\b"
 r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
-r"\b[a-z]\-[a-z]+\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+
+r"#\b[a-z]\-[a-z]+\b"
 r"\b(?!\d{1,2}[lr])\d+[a-z]{2,3}\b"
 r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 
@@ -1400,6 +1404,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\borbits*\b"
 r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
@@ -2172,7 +2177,7 @@ r"\bactivate\b"
 r"\bRead\s*back\b"
 #REQUESTINSTRUCTIONFLY
 r"\bmake\s*an\s*offset\b"
-r"\borbit\b"
+
 
 r"\bout\s+of\b"
 #REQUESTINSTRUCTIONIDENT
