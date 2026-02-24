@@ -6,6 +6,7 @@
 - [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
 - [WHEN and AFTER](#when-and-after)
 - [Go around](#go-around)
+- [Orbit](#orbit)
 
 
 ## What is the meaning?
@@ -629,3 +630,9 @@ PARSE (simplified JSON):
 }
 
 ```
+
+## Orbit
+
+Orbit procedure is similar to *go around* procedure while if *go around* relates to low altitude and speed the *orbit* relates to orbiting on higher altitude and speed, for example near *downwind traffic circuit. 
+
+The of this orbiting is a traffic separation and sequencing.

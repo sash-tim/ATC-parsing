@@ -1372,7 +1372,68 @@ def parsing(command, number_of_steps, dData):
     
     LF = LF.replace('STOP_(','_(')
 
-    LF = parse_command(final_parser, LF, dData, 1)
+    #LF = parse_command(final_parser, LF, dData, 1)
+
+    # final parse
+
+
+
+    for i in range(1,number_of_steps):
+        LF = parse_command(final_parser, LF, dData, i, dPlaceholders)
+
+        # remove _TMPFUNCTION_ but not its arguments
+
+        
+
+        for word in ['_tmpfunction_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+    
             
 
     return LF
@@ -2040,12 +2101,70 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
             else:
                 LF_old = LF
 
-    #LF = LF.replace('STOP_(','_(')
-
-    LF = parse_command(final_parser, LF, dData, 1, dPlaceholders)
-            
     LF = LF.replace('STOP_(','_(')
 
+
+    # final parse
+
+    for i in range(1,number_of_steps):
+        LF = parse_command(final_parser, LF, dData, i, dPlaceholders)
+
+        # remove _TMPFUNCTION_ but not its arguments
+
+        
+
+        for word in ['_tmpfunction_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        
+        
+        
+    
     return LF
 
 
@@ -2147,7 +2266,7 @@ def logicalForm2JSON(LF):
         ```
         json-string
         ```
-        """
+        
         
         for word in ['tmpfunction']:
 
@@ -2194,7 +2313,7 @@ def logicalForm2JSON(LF):
                 sJSON = sJSON_new
                 
                         
-                            
+        """                    
                 
         
         

@@ -1404,7 +1404,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
-r"\borbits*\b"
+
 r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
@@ -1606,6 +1606,9 @@ r"\b(void)\s+if\b"
 
 #OR
 r"\bor\b"
+
+#Orbit
+r"\borbits*\b"
 
 #orientation
 r"\bfacing\b"
