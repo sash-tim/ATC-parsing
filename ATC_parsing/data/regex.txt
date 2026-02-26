@@ -1610,6 +1610,13 @@ r"\bor\b"
 #Orbit
 r"\borbits*\b"
 
+#OrbitDirection
+r"\borbits*\s+(right)\b"
+r"\borbits*\s+(left)\b"
+r"\borbits*\s+(to\s+the\s+right)\b"
+r"\borbits*\s+(to\s+the\s+left)\b"
+
+
 #orientation
 r"\bfacing\b"
 

@@ -37,6 +37,7 @@ except
 expect
 fix
 flevel
+for
 frequency
 from
 goaround
@@ -64,6 +65,7 @@ on
 ongoingaction
 operation
 or
+orbit
 out
 question
 phoneticalphabet

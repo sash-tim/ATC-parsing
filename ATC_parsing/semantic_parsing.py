@@ -1376,10 +1376,10 @@ def parsing(command, number_of_steps, dData):
 
     # final parse
 
-
+    LF_old = LF
 
     for i in range(1,number_of_steps):
-        LF = parse_command(final_parser, LF, dData, i, dPlaceholders)
+        LF = parse_command(final_parser, LF, dData, i)
 
         # remove _TMPFUNCTION_ but not its arguments
 
@@ -1433,7 +1433,10 @@ def parsing(command, number_of_steps, dData):
             if LF_new != LF:
                 LF = LF_new
                 
-    
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
             
 
     return LF
@@ -2106,12 +2109,12 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
     # final parse
 
+    LF_old = LF
+
     for i in range(1,number_of_steps):
         LF = parse_command(final_parser, LF, dData, i, dPlaceholders)
 
         # remove _TMPFUNCTION_ but not its arguments
-
-        
 
         for word in ['_tmpfunction_']:
 
@@ -2161,7 +2164,10 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
             if LF_new != LF:
                 LF = LF_new
                 
-        
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
         
         
     
