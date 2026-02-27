@@ -1478,6 +1478,7 @@ r"\bdo\s+not\b"
 r"\bdidn\s+t\b"
 r"\bno[tn]?\b"
 r"\bnegative\b"
+r"\bnot\s+yet\b"
 
 #noise
 r"\bnoise\b"
@@ -1611,8 +1612,10 @@ r"\bor\b"
 r"\borbits*\b"
 
 #OrbitDirection
-r"\borbits*\s+(right)\b"
-r"\borbits*\s+(left)\b"
+r"\borbits*\s+(right)\b\b"
+r"\borbits*\s+(left)\b\b"
+r"\b(right)\s+orbits*\b"
+r"\b(left)\s+orbits*\b"
 r"\borbits*\s+(to\s+the\s+right)\b"
 r"\borbits*\s+(to\s+the\s+left)\b"
 
@@ -2528,6 +2531,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bnot\s+yet\s+clear\b"
 r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
