@@ -18,6 +18,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bdiamond\b"
 r"\bwzz\b"
 r"\blot\b"
 r"\bthy\b"
@@ -1642,6 +1643,8 @@ r"\btraffic\s+sequencing\b"
 r"\bsequencing\b"
 r"\bresequencing\b"
 r"\bsequence\b"
+r"\bresequence\b"
+
 
 #spacing
 r"\bspacing\b"

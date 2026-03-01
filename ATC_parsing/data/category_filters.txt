@@ -99,6 +99,7 @@ waypoint
 when
 whenstop
 while
+who
 will
 with
 wordnumphonealphabet
