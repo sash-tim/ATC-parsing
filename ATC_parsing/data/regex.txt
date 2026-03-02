@@ -805,6 +805,7 @@ r"\b(\d+\s+feet)\s+lda\b"
 
 
 #Departure
+r"\bdeparture\s+rolling\b"
 r"\bdepart\b"
 r"\bIFR\s+departure\b"
 r"\bRNAV\s+departure\b"
@@ -950,6 +951,7 @@ r"\bawait\b"
 
 
 #Safety
+r"\btraffic\s+conflict\b"
 r"\bunstable\s+approach\b"
 r"\bsay\s+again\b"
 r"\bsay\s+it\s+again\b"
@@ -1592,6 +1594,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bexecuting\b"
 r"\b(landing)\s+behind\b"
 r"\bbehind\s+the\s+(landing)\b"
 r"\bis\s+(landing)\b"
@@ -1611,10 +1614,13 @@ r"\bor\b"
 
 #Orbit
 r"\borbits*\b"
+r"\borbiting*\b"
 
 #OrbitDirection
 r"\borbits*\s+(right)\b\b"
 r"\borbits*\s+(left)\b\b"
+r"\borbiting\s+(right)\b\b"
+r"\borbiting\s+(left)\b\b"
 r"\b(right)\s+orbits*\b"
 r"\b(left)\s+orbits*\b"
 r"\borbits*\s+(to\s+the\s+right)\b"
@@ -2534,6 +2540,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+
 r"\bnot\s+yet\s+clear\b"
 r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
@@ -2579,6 +2586,8 @@ r"\bpossible\b"
 r"\bexpired\b"
 r"\bis\s+able\b"
 r"\bcompleted\b"
+r"\breport\s+(complete)\b"
+r"\borbit\s+(complete)\b"
 r"\bready\b"
 r"\bon\s+test\b"
 r"\bvacated\b"
@@ -2763,6 +2772,7 @@ r"\b(?:the\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
+r"\bdeparting\s+traffic\b"
 
 
 #TrafficInfo
@@ -2790,6 +2800,7 @@ r"\bcircuit[s]*\b"
 r"\bcircling\b"
 r"\babeam\b"
 r"\bdownwind\b"
+r"\blate\s+downwind\b"
 r"\bbase\b"
 r"\bbase\s+entry\b"
 r"\bfinal\b"

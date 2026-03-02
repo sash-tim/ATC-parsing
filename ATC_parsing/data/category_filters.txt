@@ -7,6 +7,7 @@ altitude
 -altitudechange
 altitudechangeongoing
 approach
+approachnotcompleted
 approved
 around
 arrivingdeparting
