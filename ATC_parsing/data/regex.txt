@@ -3,6 +3,7 @@ r"\broger\b"
 r"\bWilco\b"
 
 #advisory
+r"\b(?:will\s+)?advise\b"
 r"\badvised\b"
 r"\bfurther\s+advised\b"
 r"\bsuggest\b"
@@ -2090,7 +2091,7 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"r"\b(?:will\s+)?advise\b"
+
 
 
 #Request
