@@ -6,6 +6,7 @@
 - [Scope of the HOLD instruction](#scope-of-the-hold-instruction)
 - [WHEN and AFTER](#when-and-after)
 - [Go around](#go-around)
+- [Orbit](#orbit)
 
 
 ## What is the meaning?
@@ -629,3 +630,129 @@ PARSE (simplified JSON):
 }
 
 ```
+
+## Orbit
+
+Orbit procedure is somehow similar to *go around* or *hold* procedures but relates to orbiting around *traffic circuits*, for example, near *downwind traffic circuit*. 
+
+The goal of this orbiting may be traffic separation, sequencing.
+
+Let's consider three examples.
+
+1)
+
+```
+COMMAND: Cessna Four Five Two Three orbit left on base traffic not yet clear
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "Cessna",
+    "WORDNUMBER": "Four Five Two Three"
+  },
+  "ORBIT": {
+    "ORBIT": "orbit",
+    "ORBITDIRECTION": "left",
+    "POSITION": {
+      "ON": "on",
+      "TRAFFICCIRCUIT": "base"
+    }
+  },
+  "TRAFFICINFO": {
+    "TRAFFIC": "traffic",
+    "STATUS": "not yet clear"
+  }
+}
+```
+
+Here we see that Cessna 4523 got an instruction to orbit near the *base traffic circuit*, making 360-degree turn to the *left*.
+
+TRAFFICINFO section explains the context of the instruction - another traffic may be in a conflict with Cessna 4523, but this is *not yet clear*. 
+
+The pilot should get a new command (before the end of the orbit?), what to do next.
+
+2)
+
+```
+COMMAND: Echo Zulu Mike continue left orbits until further advised
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "PHONETICALPHABET": {
+      "PHONETICALPHABET": {
+        "PHONETICALPHABET": "Echo",
+        "PHONETICALPHABET": {
+          "PHONETICALPHABET": "Zulu",
+          "PHONETICALPHABET": "Mike"
+        }
+      }
+    }
+  },
+  "REQUESTINSTRUCTION": {
+    "REQUESTINSTRUCTION": "continue",
+    "ORBIT": {
+      "ORBIT": {
+        "ORBITDIRECTION": "left",
+        "ORBIT": "orbits",
+        "UNTIL": {
+          "UNTIL": "until",
+          "ADVISORY": "further advised"
+        }
+      }
+    }
+  }
+}
+
+```
+
+Here number of orbits is not specified (implicitly, as in the previous example, or explicitly, as in "make two orbits"). Instead, the scope of the *orbit* contains the condition UNTIL. 
+
+3) And finally, the scope of the orbit instruction may contain other parameters, for example, altitude restriction.
+
+```
+COMMAND: Echo India Romeo make left orbits not above one thousand feet.
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "PHONETICALPHABET": {
+      "PHONETICALPHABET": {
+        "PHONETICALPHABET": "Echo",
+        "PHONETICALPHABET": {
+          "PHONETICALPHABET": "India",
+          "PHONETICALPHABET": "Romeo"
+        }
+      }
+    }
+  },
+  "REQUESTINSTRUCTION": {
+    "REQUESTINSTRUCTION": "make",
+    "ORBIT": {
+      "ORBIT": {
+        "ORBITDIRECTION": "left",
+        "ORBIT": "orbits",
+        "ALTITUDE": {
+          "COMPARISON": {
+            "COMPARISON": {
+              "NEGATION": "not",
+              "COMPARISON": {
+                "COMPARISON": "above",
+                "WORDNUMBER": {
+                  "WORDNUMBER": "one",
+                  "WORDNUMBER": "thousand feet"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+

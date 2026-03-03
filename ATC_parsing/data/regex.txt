@@ -3,6 +3,7 @@ r"\broger\b"
 r"\bWilco\b"
 
 #advisory
+r"\b(?:will\s+)?advise\b"
 r"\badvised\b"
 r"\bfurther\s+advised\b"
 r"\bsuggest\b"
@@ -18,6 +19,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bdiamond\b"
 r"\bwzz\b"
 r"\blot\b"
 r"\bthy\b"
@@ -574,7 +576,11 @@ r"\bJBU\d+\b"
 r"\bcallsign\b"
 r"\bn\d+[a-z]*\b"
 r"\b(november)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)
-r"\b[a-z]\-[a-z]+\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\b((november)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+
+r"#\b[a-z]\-[a-z]+\b"
 r"\b(?!\d{1,2}[lr])\d+[a-z]{2,3}\b"
 r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 
@@ -800,6 +806,7 @@ r"\b(\d+\s+feet)\s+lda\b"
 
 
 #Departure
+r"\bdeparture\s+rolling\b"
 r"\bdepart\b"
 r"\bIFR\s+departure\b"
 r"\bRNAV\s+departure\b"
@@ -945,6 +952,7 @@ r"\bawait\b"
 
 
 #Safety
+r"\btraffic\s+conflict\b"
 r"\bunstable\s+approach\b"
 r"\bsay\s+again\b"
 r"\bsay\s+it\s+again\b"
@@ -1400,6 +1408,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+
 r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
@@ -1473,6 +1482,7 @@ r"\bdo\s+not\b"
 r"\bdidn\s+t\b"
 r"\bno[tn]?\b"
 r"\bnegative\b"
+r"\bnot\s+yet\b"
 
 #noise
 r"\bnoise\b"
@@ -1585,6 +1595,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bexecuting\b"
 r"\b(landing)\s+behind\b"
 r"\bbehind\s+the\s+(landing)\b"
 r"\bis\s+(landing)\b"
@@ -1601,6 +1612,21 @@ r"\b(void)\s+if\b"
 
 #OR
 r"\bor\b"
+
+#Orbit
+r"\borbits*\b"
+r"\borbiting*\b"
+
+#OrbitDirection
+r"\borbits*\s+(right)\b\b"
+r"\borbits*\s+(left)\b\b"
+r"\borbiting\s+(right)\b\b"
+r"\borbiting\s+(left)\b\b"
+r"\b(right)\s+orbits*\b"
+r"\b(left)\s+orbits*\b"
+r"\borbits*\s+(to\s+the\s+right)\b"
+r"\borbits*\s+(to\s+the\s+left)\b"
+
 
 #orientation
 r"\bfacing\b"
@@ -1624,6 +1650,8 @@ r"\btraffic\s+sequencing\b"
 r"\bsequencing\b"
 r"\bresequencing\b"
 r"\bsequence\b"
+r"\bresequence\b"
+
 
 #spacing
 r"\bspacing\b"
@@ -2063,7 +2091,7 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
-r"r"\b(?:will\s+)?advise\b"
+
 
 
 #Request
@@ -2172,7 +2200,7 @@ r"\bactivate\b"
 r"\bRead\s*back\b"
 #REQUESTINSTRUCTIONFLY
 r"\bmake\s*an\s*offset\b"
-r"\borbit\b"
+
 
 r"\bout\s+of\b"
 #REQUESTINSTRUCTIONIDENT
@@ -2513,6 +2541,8 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+
+r"\bnot\s+yet\s+clear\b"
 r"#\bremain\s+(outside)\b"
 r"#\bestablished\s+on\s+the\s+localizer\b"
 r"#\bunable\b"
@@ -2557,6 +2587,8 @@ r"\bpossible\b"
 r"\bexpired\b"
 r"\bis\s+able\b"
 r"\bcompleted\b"
+r"\breport\s+(complete)\b"
+r"\borbit\s+(complete)\b"
 r"\bready\b"
 r"\bon\s+test\b"
 r"\bvacated\b"
@@ -2741,6 +2773,7 @@ r"\b(?:the\s+)?traffic\b"
 r"\btraffic\s+alert\b"
 r"\bmanned\s+traffic\b"
 r"\btraffic\s+volume\b"
+r"\bdeparting\s+traffic\b"
 
 
 #TrafficInfo
@@ -2768,6 +2801,7 @@ r"\bcircuit[s]*\b"
 r"\bcircling\b"
 r"\babeam\b"
 r"\bdownwind\b"
+r"\blate\s+downwind\b"
 r"\bbase\b"
 r"\bbase\s+entry\b"
 r"\bfinal\b"

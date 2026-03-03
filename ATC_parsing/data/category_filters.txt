@@ -7,6 +7,7 @@ altitude
 -altitudechange
 altitudechangeongoing
 approach
+approachnotcompleted
 approved
 around
 arrivingdeparting
@@ -37,6 +38,7 @@ except
 expect
 fix
 flevel
+for
 frequency
 from
 goaround
@@ -64,6 +66,7 @@ on
 ongoingaction
 operation
 or
+orbit
 out
 question
 phoneticalphabet
@@ -97,6 +100,7 @@ waypoint
 when
 whenstop
 while
+who
 will
 with
 wordnumphonealphabet
