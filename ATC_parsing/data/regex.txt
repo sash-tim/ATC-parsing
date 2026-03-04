@@ -2059,6 +2059,10 @@ r"\b\bVFR\s+conditions*\b"
 r"\bpersonnel\s+near\b"
 r"\bconstruction\b"
 
+#resume
+r"\bresume\b"
+r"\bresuming\b"
+
 #Contact
 r"\battention\b"
 r"\b(?:will\s+)?call\b"
@@ -2180,7 +2184,6 @@ r"\bkeep\b"
 r"\bstay\b"
 r"\badvise\s+on\b"
 
-r"\bresume\b"
 r"\b(make|do)\b"
 r"\bline\s+up\b"
 r"\bwait\b"
@@ -2403,6 +2406,7 @@ r"\bjacki\d\b
 r"\bJAKSN\d\b
 r"\bjanes\d\b"
 r"\bjhawk\d\b"
+r"\b(?:the\s+)?lamso\d\b"
 r"\bkbely\d\b"
 r"\bkelly\d\b"
 r"\bkemad\d\b"
@@ -2995,6 +2999,7 @@ r"\b(?:the\s+)?jacki\b
 r"\b(?:the\s+)?JAKSN\b
 r"\b(?:the\s+)?janes\b"
 r"\b(?:the\s+)?jhawk\b"
+r"\b(?:the\s+)?lamso\b"
 r"\b(?:the\s+)?kbely\b"
 r"\b(?:the\s+)?kelly\b"
 r"\b(?:the\s+)?kemad\b"
