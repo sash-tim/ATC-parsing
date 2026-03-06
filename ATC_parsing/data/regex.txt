@@ -952,6 +952,8 @@ r"\bawait\b"
 
 
 #Safety
+r"\bseparation\b"
+r"\bvisual\s+separation\b"
 r"\btraffic\s+conflict\b"
 r"\bunstable\s+approach\b"
 r"\bsay\s+again\b"
@@ -2039,8 +2041,6 @@ r"\bhearing\s+interference\b"
 r"\bcompany\s+gate\s+location\b"
 r"\bperformance\b"
 r"\bclosed\b"
-r"\bseparation\b"
-r"\bvisual\s+separation\b"
 r"\brestricted\b"
 
 r"\bonly\b"
@@ -2062,6 +2062,9 @@ r"\bconstruction\b"
 #resume
 r"\bresume\b"
 r"\bresuming\b"
+
+#resumeSTOP
+r"\bto stop inference of RESUME\b"
 
 #Contact
 r"\battention\b"

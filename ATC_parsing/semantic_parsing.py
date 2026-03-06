@@ -1437,7 +1437,9 @@ def parsing(command, number_of_steps, dData):
             break
         else:
             LF_old = LF
-            
+
+    LF = LF.replace('STOP_(','_(')
+        
 
     return LF
 
@@ -2169,7 +2171,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         else:
             LF_old = LF
         
-        
+    LF = LF.replace('STOP_(','_(')
+
     
     return LF
 
