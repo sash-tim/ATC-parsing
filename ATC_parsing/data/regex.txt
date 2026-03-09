@@ -681,7 +681,6 @@ r"\b(few(\s+at)*)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hun
 
 #Comparison
 r"\bor\s+lower\b"
-r"\blater\s+than\b"
 r"\bcouple\s+more\b"
 r"\bor\s+higher\b"
 r"\bhigher\s+than\b"
@@ -1612,6 +1611,7 @@ r"\breturning\b"
 #operation
 r"\bflight\s+plan\s+(closure)\b"
 r"\b(void)\s+if\b"
+r"\b(clearance\s+void)\s+if\b"
 
 #OR
 r"\bor\b"
@@ -2715,6 +2715,7 @@ r"\bterrain\s+elevation\b"
 r"\bterraing\s+(rising\s+rapidly)\b"
 
 #Time
+r"\blater\s+than\b"
 r"\bstill\b"
 r"\balready\b"
 r"\bas\s+soon\s+as\s+ready\b"
