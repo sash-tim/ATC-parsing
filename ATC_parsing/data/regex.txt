@@ -1635,6 +1635,7 @@ r"\bfacing\b"
 
 #out
 r"\bout\b"
+r"\bclears\b"
 r"\boutside\b"
 r"\bremain\s+(clear)\b"
 r"\bremaining\s+(clear)\b"
