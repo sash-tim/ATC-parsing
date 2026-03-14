@@ -1655,6 +1655,9 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                     
                     for match in iterator:
                         if match:
+
+
+                            
                             count += 1
                             category = dData['regex_category'][pattern]
                             
