@@ -7,6 +7,9 @@
 - [WHEN and AFTER](#when-and-after)
 - [Go around](#go-around)
 - [Orbit](#orbit)
+- [IF condition](#if-condition)
+- [Resume](#resume)
+
 
 
 ## What is the meaning?
@@ -756,3 +759,150 @@ PARSE (simplified JSON):
 
 ```
 
+## IF condition
+
+An ATC instruction may be conditional. The condition *IF* may stay both before and after the instruction body. This is important that the condition and instruction body be paired by the instruction scope.
+
+Let's consider two examples of ATC commands with *IF* condition.
+
+1) This command just instructs the pilot what to do if *GPS* doesn't work. He/she should proceed to *JKL* beacon and then *hold* awaiting further instructions. 
+
+The problem here is EXPECT (*await*) instruction. 
+
+From one hand side, this instruction should be in the scope of the *IF* condition. 
+
+But it also should be in the scope of *hold* instruction because the pilot should wait for new instructions being in the *hold* loop. 
+
+So it seems this is OK to place the EXPECT instruction in the scope of HOLD instruction.
+
+```
+COMMAND: If unable GPS proceed to JKL NDB and hold await further instructions
+
+PARSE (simplified JSON):
+
+{
+  "CONDITION": {
+    "CONDITION": {
+      "CONDITION": {
+        "CONDITION": "If",
+        "STATUS": {
+          "MODALITY": "unable",
+          "NAVAID": "GPS"
+        }
+      },
+      "NAVIGATION": {
+        "NAVIGATION": {
+          "NAVIGATION": "proceed",
+          "TO": "to",
+          "FIX": {
+            "FIX": "JKL",
+            "NAVAID": "NDB"
+          }
+        }
+      },
+      "CONJ": "and",
+      "HOLD": {
+        "HOLD": {
+          "HOLD": "hold",
+          "EXPECT": {
+            "EXPECT": "await",
+            "REQUESTINSTRUCTION": "further instructions"
+          }
+        }
+      }
+    }
+  }
+}
+
+```
+
+2) Here N456CD is released - the pilot is granted a permission to take off at any time until a specified time moment. 
+
+This permission is denied if the pilot didn't manage to take off before 15:25 Zulu time.
+
+```
+COMMAND: N456CD is released Void if not off by 1525 Zulu
+
+
+PARSE (simplified JSON):
+
+{
+  "CLEARANCE": {
+    "CALLSIGN": "N456CD",
+    "IS": "is",
+    "CLEARANCE": "released"
+  },
+  "OPERATION": {
+    "OPERATION": "Void",
+    "CONDITION": {
+      "CONDITION": "if",
+      "NEGATION": {
+        "NEGATION": "not",
+        "DEPARTURE": {
+          "OFF": "off",
+          "BY": "by",
+          "TIMEINFO": {
+            "TIMEINFO": "1525",
+            "PHONETICALPHABET": "Zulu"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+## Resume
+
+Let's consider this example:
+
+```
+COMMAND: United 112 fly heading 270 vector to rejoin Q42 airway Resume own navigation once established
+```
+
+What can we say about this command? It seems that in an early time moment *United 112* had a problem - for example with turbulence, or with another traffic separation or with something else. 
+
+Because of this problem, the pilot was required to change his route by a controller. 
+
+Now the problem is fixed and the pilot may *resume own navigation* (return to a route as it was filled in his flight plan?).
+
+But initially the pilot should *fly heading 270* to *rejoin Q42 airway* (route from flight plan?). 
+
+Once this rejoining is *established*, the pilot is responsible for continuing to fly by the route as it was filed in his flight plan.
+
+```
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "United",
+    "INTNUMBER": "112"
+  },
+  "HEADING": {
+    "NAVIGATION": "fly",
+    "HEADING": {
+      "HEADING": "heading",
+      "INTNUMBER": "270"
+    }
+  },
+  "RADAR": {
+    "RADAR": "vector",
+    "TO": "to",
+    "NAVIGATION": {
+      "NAVIGATION": "rejoin",
+      "ROUTING": {
+        "ROUTE": "Q42",
+        "ROUTE": "airway"
+      }
+    }
+  },
+  "RESUME": {
+    "RESUME": "Resume",
+    "DISCRETION": "own navigation",
+    "CONDITION": {
+      "CONDITION": "once",
+      "STATUS": "established"
+    }
+  }
+}
+```
