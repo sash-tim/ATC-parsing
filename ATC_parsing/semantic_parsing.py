@@ -1437,7 +1437,9 @@ def parsing(command, number_of_steps, dData):
             break
         else:
             LF_old = LF
-            
+
+    LF = LF.replace('STOP_(','_(')
+        
 
     return LF
 
@@ -1653,6 +1655,9 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                     
                     for match in iterator:
                         if match:
+
+
+                            
                             count += 1
                             category = dData['regex_category'][pattern]
                             
@@ -2169,7 +2174,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         else:
             LF_old = LF
         
-        
+    LF = LF.replace('STOP_(','_(')
+
     
     return LF
 
