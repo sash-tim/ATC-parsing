@@ -20,6 +20,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\b(heavy)\s+on\b"
 r"\bdiamond\b"
 r"\bwzz\b"
 r"\blot\b"
