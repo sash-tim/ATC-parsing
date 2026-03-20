@@ -353,8 +353,8 @@ r"\bcontrol\s+area\b"
 r"\bafter\b"
 r"\bthereafter\b"
 
-
-
+#AFTERSTOP
+r"\bto stop AFTER inference\b"
 
 #ALTIMETER 
 r"\baltimeter\s+(\d+[.,]?\d+\b)"
