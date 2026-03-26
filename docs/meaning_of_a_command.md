@@ -9,6 +9,7 @@
 - [Orbit](#orbit)
 - [IF condition](#if-condition)
 - [Resume](#resume)
+- [Once again about AFTER condition](#once-again-about-after-condition)
 
 
 
@@ -906,3 +907,7 @@ PARSE (simplified JSON):
   }
 }
 ```
+
+## Once again about AFTER condition
+
+In the most cases the AFTER condition should be placed just before the conditional instruction. This is the most safe case because te pilot get condition before instruction itself. In other case if after condition is placed after the instruction then it is possible that pilot get instruction but may miss condition if the radio connection will broke.
