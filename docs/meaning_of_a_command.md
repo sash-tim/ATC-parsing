@@ -910,4 +910,79 @@ PARSE (simplified JSON):
 
 ## Once again about AFTER condition
 
-In the most cases the AFTER condition should be placed just before the conditional instruction. This is the most safe case because te pilot get condition before instruction itself. In other case if after condition is placed after the instruction then it is possible that pilot get instruction but may miss condition if the radio connection will broke.
+Controllers prefer to place AFTER condition before conditional instruction because in the other case (instruction before condition), if transmission problem occurs the pilot may get instruction but miss condition. This is a very dangerous situation.
+
+However, while not recommended, the AFTER condition may be placed after instruction or even interrupt the instruction.
+
+```
+COMMAND: Taxi after the Airbus A320 via Alpha to holding point runway 27
+
+PARSE (simplified JSON):
+
+{
+  "GROUNDMOVEMENT": {
+    "GROUNDMOVEMENT": "Taxi",
+    "AFTER": {
+      "AFTER": {
+        "AFTER": "after",
+        "the AIRCRAFT": "Airbus A320"
+      }
+    },
+    "ROUTE": {
+      "ROUTE": {
+        "VIA": "via",
+        "ROUTE": {
+          "PHONETICALPHABET": "Alpha",
+          "ROUTE": {
+            "TO": "to",
+            "HOLDINGPOINT": {
+              "HOLDINGPOINT": "holding point",
+              "RUNWAY": {
+                "RUNWAY": "runway",
+                "INTNUMBER": "27"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+While usually only one instruction follows the AFTER condition it is possible that more than one instruction follows the condition:
+
+```
+COMMAND: After the landing Airbus cross runway 18 and taxi via Bravo.
+
+PARSE (simplified JSON):
+
+{
+  "NAVIGATION": {
+    "AFTER": {
+      "AFTER": {
+        "AFTER": "After",
+        "the ONGOINGACTION": {
+          "ONGOINGACTION": "landing",
+          "AIRCRAFT": "Airbus"
+        }
+      }
+    },
+    "NAVIGATION": {
+      "NAVIGATION": {
+        "NAVIGATION": "cross",
+        "RUNWAY": {
+          "RUNWAY": "runway",
+          "INTNUMBER": "18"
+        }
+      }
+    },
+    "CONJ": "and",
+    "GROUNDMOVEMENT": {
+      "GROUNDMOVEMENT": "taxi",
+      "VIA": "via",
+      "PHONETICALPHABET": "Bravo"
+    }
+  }
+}
+```
