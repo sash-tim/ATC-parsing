@@ -9,6 +9,7 @@
 - [Orbit](#orbit)
 - [IF condition](#if-condition)
 - [Resume](#resume)
+- [Once again about AFTER condition](#once-again-about-after-condition)
 
 
 
@@ -902,6 +903,85 @@ PARSE (simplified JSON):
     "CONDITION": {
       "CONDITION": "once",
       "STATUS": "established"
+    }
+  }
+}
+```
+
+## Once again about AFTER condition
+
+Controllers prefer to place AFTER condition before conditional instruction because in the other case (instruction before condition), if transmission problem occurs the pilot may get instruction but miss condition. This is a very dangerous situation.
+
+However, while not recommended, the AFTER condition may be placed after instruction or even interrupt the instruction.
+
+```
+COMMAND: Taxi after the Airbus A320 via Alpha to holding point runway 27
+
+PARSE (simplified JSON):
+
+{
+  "GROUNDMOVEMENT": {
+    "GROUNDMOVEMENT": "Taxi",
+    "AFTER": {
+      "AFTER": {
+        "AFTER": "after",
+        "the AIRCRAFT": "Airbus A320"
+      }
+    },
+    "ROUTE": {
+      "ROUTE": {
+        "VIA": "via",
+        "ROUTE": {
+          "PHONETICALPHABET": "Alpha",
+          "ROUTE": {
+            "TO": "to",
+            "HOLDINGPOINT": {
+              "HOLDINGPOINT": "holding point",
+              "RUNWAY": {
+                "RUNWAY": "runway",
+                "INTNUMBER": "27"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+While usually only one instruction follows the AFTER condition it is possible that more than one instruction follows the condition:
+
+```
+COMMAND: After the landing Airbus cross runway 18 and taxi via Bravo.
+
+PARSE (simplified JSON):
+
+{
+  "NAVIGATION": {
+    "AFTER": {
+      "AFTER": {
+        "AFTER": "After",
+        "the ONGOINGACTION": {
+          "ONGOINGACTION": "landing",
+          "AIRCRAFT": "Airbus"
+        }
+      }
+    },
+    "NAVIGATION": {
+      "NAVIGATION": {
+        "NAVIGATION": "cross",
+        "RUNWAY": {
+          "RUNWAY": "runway",
+          "INTNUMBER": "18"
+        }
+      }
+    },
+    "CONJ": "and",
+    "GROUNDMOVEMENT": {
+      "GROUNDMOVEMENT": "taxi",
+      "VIA": "via",
+      "PHONETICALPHABET": "Bravo"
     }
   }
 }
