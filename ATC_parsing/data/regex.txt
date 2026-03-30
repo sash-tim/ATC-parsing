@@ -1395,6 +1395,8 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 r"\brequired\b"
 r"\bunable\b"
 r"\bable\b"
+r"\bcan\b"
+
 
 
 #Movement
@@ -2090,6 +2092,7 @@ r"\bcontact\b"
 r"\bover\s+to\b"
 r"\b(continue\s+to)\s+ground\b"
 r"\bswitching\s+to\b"
+r"\bswitch\s+to\b"
 
 #coordinate
 r"\b\d+\s+north\b"
@@ -2459,6 +2462,7 @@ r"\bnapsa\d\b"
 r"\bnateb\d\b"
 r"\bnavti\d\b"
 r"\bnelpa\d\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?nikol\d\b"
 r"\bnirsi\d\b"
 r"\bnorku\d\b"
 r"\bnovem\d\b"
@@ -3056,6 +3060,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?nateb\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?navti\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nelpa\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nirsi\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?nikol\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?norku\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?novem\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nubar\b"
