@@ -1128,6 +1128,7 @@ r"\bslowly\b"
 #speedreduce
 r"\breduce\b"
 r"\breducing\b"
+r"\bslow\b"
 
 
 #Feature
@@ -2093,6 +2094,8 @@ r"\bover\s+to\b"
 r"\b(continue\s+to)\s+ground\b"
 r"\bswitching\s+to\b"
 r"\bswitch\s+to\b"
+r"\bswitch\b"
+
 
 #coordinate
 r"\b\d+\s+north\b"
@@ -2104,6 +2107,7 @@ r"\b\d+\s*w\b"
 r"\bcorrection\b"
 
 #report
+r"\blet\s+me\s+know\b"
 r"\b(advise)\s+intentions\b"
 r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
@@ -2452,6 +2456,7 @@ r"\bliege\d\b"
 r"\bliksa\d\b"
 r"\blogan\d\b"
 r"\blomki\d\b"
+r"\blomsi\d\b"
 r"\blonam\d\b"
 r"\blurag\d\b"
 r"\bmates\d\b"
@@ -2567,7 +2572,11 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bis\s+(clear)\b"
+r"\bare\s+(clear)\b"
 r"\bpasses\b"
+r"\byou\s+pass\b"
+r"\byou\s+see\b"
 r"\bcrosses\b"
 r"\bvacates\b"
 r"\bnot\s+yet\s+clear\b"
@@ -3049,6 +3058,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?liege\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?liksa\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?logan\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lomki\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?lomsi\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lonam\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lurag\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?mates\b"
