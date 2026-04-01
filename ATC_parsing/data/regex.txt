@@ -1079,6 +1079,7 @@ r"\bbetween\b"
 
 #intention
 r"\bintentions*\b"
+r"\bwhat\s+you\s+want\s+to\s+do\b"
 
 #IS
 r"\bis\b"
@@ -2133,6 +2134,8 @@ r"\brequested\b"
 r"\bjust to stop inference\b"
 
 #RequestInstruction
+r"\bgive\b"
+r"\bcopy\s+clearance\b"
 r"\bwill\s+(follow)\b"
 r"\b(follow)\s+my\b"
 r"\bcopy\s+that\b"
@@ -3157,6 +3160,7 @@ r"\b(?:waypoint|fix|direct)\s+((Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf
 #Weather
 r"\bweather\b"
 r"\bweather\s+briefing\b"
+r"\bweather\s+conditions\b"
 r"\bweather\s+area\b"
 
 
