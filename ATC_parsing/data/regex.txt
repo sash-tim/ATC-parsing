@@ -668,6 +668,8 @@ r"\bokay\b"
 r"\bif\b"
 r"\bonce\b"
 
+#conditionalinstructions
+r"\blist of conditional instructions\b"
 
 #Confirmed
 r"\bconfirmed\b"
@@ -2575,6 +2577,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bback\s+on\s+course\b"
 r"\bis\s+(clear)\b"
 r"\bare\s+(clear)\b"
 r"\bpasses\b"

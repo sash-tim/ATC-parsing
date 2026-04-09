@@ -298,7 +298,7 @@ def make_lexicon(dData):
         dData['category_filter'] = dCategoryFilter
     
 
-    def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction):
+    def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction):
         """
         Arguments:
         - lex_complex_file
@@ -306,17 +306,19 @@ def make_lexicon(dData):
         - dLexComplex
         Output dictionary with a set of rules from *lex_complex_file*.
         
-        - with_filter == False & with_tmpfunction == False
-        All rules from 'lex_complex_file' without 'TMPFUNCTION' are extracted.
+        - with_filter == False & with_tmpfunction == False & with_tmpfinalfunction == False
+        All rules from 'lex_complex_file' without 'TMPFUNCTION'/'TMPFINALFUNCTION' are extracted.
         
-        - with_filter == False & with_tmpfunction == True
+        - with_tmpfunction == True 
         All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted.
         
-        - with_filter == True & with_tmpfunction == False
-        All rules from 'lex_complex_file' without 'TMPFUNCTION' that pass the filter are extracted.
+        - with_tmpfunction_final == True 
+        All rules from 'lex_complex_file' with 'TMPFINALFUNCTION' are extracted.
         
-        - with_filter == True & with_tmpfunction == True
-        All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted. Filter is ignored
+
+        - with_filter == True 
+        All rules from 'lex_complex_file' without 'TMPFUNCTION'/'TMPFINALFUNCTION' that pass the filter are extracted.
+        
         
 
         Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
@@ -324,7 +326,7 @@ def make_lexicon(dData):
         ```
         with_filter == True
         ```
-        then all rules from *lex_complex_file* will be stored in  *dLexXomplex*. In another case
+        then all rules from *lex_complex_file* will be stored in  *dLexComplex*. In another case
         we store only rules that contain string '/X' where 'X' is a category from the category filter.
 
         """
@@ -358,13 +360,17 @@ def make_lexicon(dData):
             
                 lexicon_entry = record.strip(' \n').replace('\\\\','\\')
 
-                if with_tmpfunction == True:
+                if with_tmpfunction == True or with_tmpfinalfunction == True:
                     
                     if lexicon_entry.lower().find('tmpfunction') >= 0:
                         dLexComplex[placeholder].append(lexicon_entry)
+                    if lexicon_entry.lower().find('tmpfinalfunction') >= 0:
+                        dLexComplex[placeholder].append(lexicon_entry)
                 
                 else:
-                    if lexicon_entry.lower().find('tmpfunction') < 0:
+                    if (lexicon_entry.lower().find('tmpfunction') < 0 and
+                        lexicon_entry.lower().find('tmpfinalfunction') < 0
+                    ):
                         if with_filter == False:
                             dLexComplex[placeholder].append(lexicon_entry)
                         else:
@@ -615,22 +621,32 @@ def make_lexicon(dData):
     dLexComplex = {}
     with_filter = False
     with_tmpfunction = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
+    with_tmpfinalfunction = False
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_no_filter = make_lex_complex(dLexComplex)
     
     #with filter
     dLexComplex = {}
     with_filter = True
     with_tmpfunction = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
+    with_tmpfinalfunction = False
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_filter = make_lex_complex(dLexComplex)
     
     #with tmpfunction
     dLexComplex = {}
     with_filter = False
     with_tmpfunction = True
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
+    with_tmpfinalfunction = True
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_tmpfunction = make_lex_complex(dLexComplex)
+    
+    #with tmpfinalfunction
+    dLexComplex = {}
+    with_filter = False
+    with_tmpfunction = True
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction)
+    lex_complex_with_tmpfinalfunction = make_lex_complex(dLexComplex)
     
 
     """
@@ -703,6 +719,13 @@ def make_lexicon(dData):
                                 lex_prepositions +
                                 lex_last_part, True)
     
+    lex_with_tmpfinalfunction = lexicon.fromstring(lex_categories + 
+                                lex_common + 
+                                lex_all_category +
+                                lex_complex_with_tmpfinalfunction +
+                                lex_prepositions +
+                                lex_last_part, True)
+    
     """
     ## CCG parsers ##
 
@@ -718,10 +741,12 @@ def make_lexicon(dData):
     command_parser = chart.CCGChartParser(lex_no_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
 
     dData['command_parser'] = command_parser
     dData['LF_parser'] = LF_parser
     dData['final_parser'] = final_parser
+    dData['final_2_parser'] = final_2_parser
 
 
 
@@ -1441,6 +1466,72 @@ def parsing(command, number_of_steps, dData):
     LF = LF.replace('STOP_(','_(')
         
 
+    # final_2 parse
+
+    LF_old = LF
+
+    for i in range(1,number_of_steps):
+        LF = parse_command(final_2_parser, LF, dData, i)
+
+        # remove _TMPFINALFUNCTION_ but not its arguments
+
+        
+
+        for word in ['_tmpfinalfunction_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+
+    LF = LF.replace('STOP_(','_(')
+    
     return LF
 
 
@@ -2174,9 +2265,120 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         else:
             LF_old = LF
         
+    
+        # remove _TMPFUNCTION_ but not its arguments
+
+        for word in ['_tmpfunction_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+        
+        # remove _TMPFINALFUNCTION_ but not its arguments
+
+        for word in ['_tmpfinalfunction_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+        
+
     LF = LF.replace('STOP_(','_(')
 
-    
     return LF
 
 
@@ -2281,6 +2483,50 @@ def logicalForm2JSON(LF):
         
         
         for word in ['tmpfunction']:
+
+            if sJSON.find(word.upper()) < 0:
+                continue
+
+            while True:
+                word = '\"'+word.upper()+'\"'+':'
+            
+                ind = sJSON.index(word)
+                to_check = sJSON[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+                    replace_by = replace_by+s
+                    
+                    if s == '{':
+                        n_open += 1
+                            
+                    if s == '}':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            sJSON_new = sJSON.replace(to_replace, replace_by)
+                    
+            if sJSON_new != sJSON:
+                sJSON = sJSON_new
+                
+        for word in ['tmpfinalfunction']:
 
             if sJSON.find(word.upper()) < 0:
                 continue
