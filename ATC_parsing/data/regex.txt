@@ -2661,8 +2661,13 @@ r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
 
+
 #TMPFUNCTION
-r"\bis used to fix a WHEN problem\b"
+r"\bis used for 2rd step of parsing\b"
+
+#TMPFINALFUNCTION
+r"\bis used for 3rd step of parsing\b"
+
 
 #Turns
 r"\bright\s+turns\b"
