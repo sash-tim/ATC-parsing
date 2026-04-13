@@ -1620,8 +1620,7 @@ r"\breturning\b"
 
 #operation
 r"\bflight\s+plan\s+(closure)\b"
-r"\b(void)\s+if\b"
-r"\b(clearance\s+void)\s+if\b"
+r"#\b(void)\s+if\b"
 
 #OR
 r"\bor\b"
@@ -2041,7 +2040,7 @@ r"\bpoint\b"
 #Responsibility
 
 #Restriction
-
+r"#\bClearance\s+void\b"
 r"\baltitude\s+restrictions?\b"
 r"\bcharted\s+restrictions\b"
 r"\ball\s+charted\s+restrictions\b"
