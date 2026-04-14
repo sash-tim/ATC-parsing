@@ -618,7 +618,6 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
-r"\breleased\b"
 r"\b\bIFR\s+release\b\b"
 r"\bterrain\s+clearance\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
@@ -667,6 +666,7 @@ r"\bokay\b"
 #condition
 r"\bif\b"
 r"\bonce\b"
+r"\bif\s+not\b"
 
 #conditionalinstructions
 r"\blist of conditional instructions\b"
@@ -1620,7 +1620,7 @@ r"\breturning\b"
 
 #operation
 r"\bflight\s+plan\s+(closure)\b"
-r"#\b(void)\s+if\b"
+
 
 #OR
 r"\bor\b"
@@ -2576,6 +2576,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\breleased\b"
 r"\bback\s+on\s+course\b"
 r"\bis\s+(clear)\b"
 r"\bare\s+(clear)\b"
