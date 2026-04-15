@@ -364,27 +364,40 @@ def make_lexicon(dData):
                     
                     if lexicon_entry.lower().find('tmpfunction') >= 0:
                         dLexComplex[placeholder].append(lexicon_entry)
-                
+                        
                 if with_tmpfinalfunction == True:
                     
                     if lexicon_entry.lower().find('tmpfinalfunction') >= 0:
                         dLexComplex[placeholder].append(lexicon_entry)
                 
-                if (lexicon_entry.lower().find('tmpfunction') < 0 and
+                if with_filter == True:
+                    
+                    if lexicon_entry.lower().find('tmpfunction') >= 0:
+                        continue
+                
+                    if lexicon_entry.lower().find('tmpfinalfunction') >= 0:
+                        continue
+                
+                    good_entry = False
+                    for good_category in dData['category_filter']:
+                    
+                        if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
+                            lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
+                            good_entry = True
+                            break
+                    if good_entry == True:
+                        dLexComplex[placeholder].append(lexicon_entry)
+                    
+                  
+                
+                if (with_tmpfinalfunction == False and
+                    with_tmpfunction == False and
+                    with_filter == False and
+                    lexicon_entry.lower().find('tmpfunction') < 0 and
                     lexicon_entry.lower().find('tmpfinalfunction') < 0
                 ):
-                    if with_filter == False:
-                        dLexComplex[placeholder].append(lexicon_entry)
-                    else:
-                        good_entry = False
-                        for good_category in dData['category_filter']:
-                        
-                            if (lexicon_entry.lower().find('/'+good_category.lower()+' ') >= 0 or
-                                lexicon_entry.lower().find('/'+good_category.lower()+')') >= 0):
-                                good_entry = True
-                                break
-                        if good_entry == True:
-                            dLexComplex[placeholder].append(lexicon_entry)
+                    
+                    dLexComplex[placeholder].append(lexicon_entry)
                         
                   
     def make_lex_all_category(category):
@@ -635,6 +648,7 @@ def make_lexicon(dData):
     read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_filter = make_lex_complex(dLexComplex)
     
+
     #with tmpfunction
     dLexComplex = {}
     with_filter = False
@@ -642,6 +656,9 @@ def make_lexicon(dData):
     with_tmpfinalfunction = False
     read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_tmpfunction = make_lex_complex(dLexComplex)
+    
+
+    
     
     #with tmpfinalfunction
     dLexComplex = {}
@@ -651,6 +668,7 @@ def make_lexicon(dData):
     read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_tmpfinalfunction = make_lex_complex(dLexComplex)
     
+
 
     """
     # lex_prepositions #
@@ -2115,7 +2133,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                     command_new = re.sub(match.group(1),"X", command_new, count=1)
         else:
             command_new = LF2placeholders(command, dReplacement_1)
-        
+            
         id = epoch+step
         dPlaceholders[id] = command_new
             
@@ -2226,6 +2244,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     for i in range(1,number_of_steps):
         LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders)
 
+        
         # remove _TMPFUNCTION_ but not its arguments
 
         for word in ['_tmpfunction_']:

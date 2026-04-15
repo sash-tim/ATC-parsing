@@ -643,7 +643,6 @@ r"\bstop clearence inference\b"
 r"\boclock\b"
 
 #Confirmation
-r"\bmaintaining\b"
 r"\bcopy\s+it\b"
 r"\bcopy\b"
 r"\bCopy\s+GPS\s+NOTAM\b"
@@ -668,8 +667,13 @@ r"\bif\b"
 r"\bonce\b"
 r"\bif\s+not\b"
 
+#CONDITIONSTOP
+r""\bto stop the category inference\b
+
 #conditionalinstructions
 r"\blist of conditional instructions\b"
+
+
 
 #Confirmed
 r"\bconfirmed\b"
@@ -1602,6 +1606,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bmaintaining\b"
 r"\bleaving\b"
 r"\breaching\b"
 r"\brolling\b"
@@ -2122,7 +2127,8 @@ r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
 
-
+#reportstop
+r"\bto stop inference of the REPORT category\b"
 
 #Request
 r"\brequest\b"
