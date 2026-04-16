@@ -668,11 +668,11 @@ r"\bonce\b"
 r"\bif\s+not\b"
 
 #CONDITIONSTOP
-r""\bto stop the category inference\b
+r"\b to stop the category inference\b"
+
 
 #conditionalinstructions
 r"\blist of conditional instructions\b"
-
 
 
 #Confirmed
@@ -1622,6 +1622,9 @@ r"\boperating\b"
 r"\bfollowing\b"
 r"\bturning\b"
 r"\breturning\b"
+
+#ONGOINGACTIONSTOP
+r"\bto stop the category inference\b"
 
 #operation
 r"\bflight\s+plan\s+(closure)\b"
@@ -2582,6 +2585,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\breceived\b"
 r"\breleased\b"
 r"\bback\s+on\s+course\b"
 r"\bis\s+(clear)\b"
