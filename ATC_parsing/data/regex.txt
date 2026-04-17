@@ -665,7 +665,7 @@ r"\bokay\b"
 #condition
 r"\bif\b"
 r"\bonce\b"
-r"\bif\s+not\b"
+r"\bif\s+not*\b"
 
 #CONDITIONSTOP
 r"\b to stop the category inference\b"
@@ -2093,6 +2093,7 @@ r"\bresuming\b"
 r"\bto stop inference of RESUME\b"
 
 #Contact
+r"\breturn\s+to\s+this\s+frequency\b"
 r"\battention\b"
 r"\b(?:will\s+)?call\b"
 r"\bpick\s+up\b"
@@ -2117,13 +2118,13 @@ r"\b\d+\s*w\b"
 r"\bcorrection\b"
 
 #report
+r"\bpilot\s+reports*\b"
+r"\breports*\b"
 r"\blet\s+me\s+know\b"
 r"\b(advise)\s+intentions\b"
 r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
-r"\bpilot\s+reports*\b"
-r"\breports*\b"
 r"\breport\s+back\b"
 r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
