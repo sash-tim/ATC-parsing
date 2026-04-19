@@ -618,7 +618,6 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 r"\bcleared\b"
 
 #clearance
-r"\breleased\b"
 r"\b\bIFR\s+release\b\b"
 r"\bterrain\s+clearance\b"
 r"\bcleared\s+to\s+(VFR\s+on\s+top)\b"
@@ -644,7 +643,6 @@ r"\bstop clearence inference\b"
 r"\boclock\b"
 
 #Confirmation
-r"\bmaintaining\b"
 r"\bcopy\s+it\b"
 r"\bcopy\b"
 r"\bCopy\s+GPS\s+NOTAM\b"
@@ -667,6 +665,14 @@ r"\bokay\b"
 #condition
 r"\bif\b"
 r"\bonce\b"
+r"\bif\s+not*\b"
+
+#CONDITIONSTOP
+r"\b to stop the category inference\b"
+
+
+#conditionalinstructions
+r"\blist of conditional instructions\b"
 
 
 #Confirmed
@@ -1079,6 +1085,7 @@ r"\bbetween\b"
 
 #intention
 r"\bintentions*\b"
+r"\bwhat\s+you\s+want\s+to\s+do\b"
 
 #IS
 r"\bis\b"
@@ -1128,6 +1135,7 @@ r"\bslowly\b"
 #speedreduce
 r"\breduce\b"
 r"\breducing\b"
+r"\bslow\b"
 
 
 #Feature
@@ -1395,6 +1403,8 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 r"\brequired\b"
 r"\bunable\b"
 r"\bable\b"
+r"\bcan\b"
+
 
 
 #Movement
@@ -1440,7 +1450,6 @@ r"\binbound\s+to\b"
 r"\bentering\b"
 r"\bflying\b"
 r"\bdiverting\b"
-r"\bleaving\b"
 r"\bcruising\b"
 r"\bmaneuvering\b"
 r"\bfly\b"
@@ -1517,7 +1526,6 @@ r"\bcontinuing\b"
 
 r"\bstanding\b"
 r"\baccelarating\b"
-r"\breaching\b"
 r"\barrived\b"
 r"\bdeparted\b"
 r"\boverhead\b"
@@ -1598,6 +1606,9 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bmaintaining\b"
+r"\bleaving\b"
+r"\breaching\b"
 r"\brolling\b"
 r"\blanding\b"
 r"\bpassing\b"
@@ -1612,10 +1623,12 @@ r"\bfollowing\b"
 r"\bturning\b"
 r"\breturning\b"
 
+#ONGOINGACTIONSTOP
+r"\bto stop the category inference\b"
+
 #operation
 r"\bflight\s+plan\s+(closure)\b"
-r"\b(void)\s+if\b"
-r"\b(clearance\s+void)\s+if\b"
+
 
 #OR
 r"\bor\b"
@@ -2035,7 +2048,7 @@ r"\bpoint\b"
 #Responsibility
 
 #Restriction
-
+r"#\bClearance\s+void\b"
 r"\baltitude\s+restrictions?\b"
 r"\bcharted\s+restrictions\b"
 r"\ball\s+charted\s+restrictions\b"
@@ -2080,6 +2093,7 @@ r"\bresuming\b"
 r"\bto stop inference of RESUME\b"
 
 #Contact
+r"\breturn\s+to\s+this\s+frequency\b"
 r"\battention\b"
 r"\b(?:will\s+)?call\b"
 r"\bpick\s+up\b"
@@ -2090,6 +2104,9 @@ r"\bcontact\b"
 r"\bover\s+to\b"
 r"\b(continue\s+to)\s+ground\b"
 r"\bswitching\s+to\b"
+r"\bswitch\s+to\b"
+r"\bswitch\b"
+
 
 #coordinate
 r"\b\d+\s+north\b"
@@ -2101,18 +2118,23 @@ r"\b\d+\s*w\b"
 r"\bcorrection\b"
 
 #report
+r"\blet\s+me\s+know\b"
 r"\b(advise)\s+intentions\b"
 r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
-r"\bpilot\s+reports*\b"
-r"\breports*\b"
 r"\breport\s+back\b"
 r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 r"\breported\b"
 
+#reportstop
+r"\bto stop inference of the REPORT category\b"
+
+#REPORTS
+r"\bpilot\s+reports*\b"
+r"\breports*\b"
 
 
 #Request
@@ -2126,6 +2148,8 @@ r"\brequested\b"
 r"\bjust to stop inference\b"
 
 #RequestInstruction
+r"\bgive\b"
+r"\bcopy\s+clearance\b"
 r"\bwill\s+(follow)\b"
 r"\b(follow)\s+my\b"
 r"\bcopy\s+that\b"
@@ -2449,6 +2473,7 @@ r"\bliege\d\b"
 r"\bliksa\d\b"
 r"\blogan\d\b"
 r"\blomki\d\b"
+r"\blomsi\d\b"
 r"\blonam\d\b"
 r"\blurag\d\b"
 r"\bmates\d\b"
@@ -2459,6 +2484,7 @@ r"\bnapsa\d\b"
 r"\bnateb\d\b"
 r"\bnavti\d\b"
 r"\bnelpa\d\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?nikol\d\b"
 r"\bnirsi\d\b"
 r"\bnorku\d\b"
 r"\bnovem\d\b"
@@ -2563,7 +2589,14 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\breceived\b"
+r"\breleased\b"
+r"\bback\s+on\s+course\b"
+r"\bis\s+(clear)\b"
+r"\bare\s+(clear)\b"
 r"\bpasses\b"
+r"\byou\s+pass\b"
+r"\byou\s+see\b"
 r"\bcrosses\b"
 r"\bvacates\b"
 r"\bnot\s+yet\s+clear\b"
@@ -2642,8 +2675,13 @@ r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
 
+
 #TMPFUNCTION
-r"\bis used to fix a WHEN problem\b"
+r"\bis used for 2rd step of parsing\b"
+
+#TMPFINALFUNCTION
+r"\bis used for 3rd step of parsing\b"
+
 
 #Turns
 r"\bright\s+turns\b"
@@ -3045,6 +3083,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?liege\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?liksa\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?logan\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lomki\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?lomsi\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lonam\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lurag\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?mates\b"
@@ -3056,6 +3095,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?nateb\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?navti\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nelpa\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nirsi\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?nikol\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?norku\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?novem\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nubar\b"
@@ -3142,6 +3182,7 @@ r"\b(?:waypoint|fix|direct)\s+((Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf
 #Weather
 r"\bweather\b"
 r"\bweather\s+briefing\b"
+r"\bweather\s+conditions\b"
 r"\bweather\s+area\b"
 
 
