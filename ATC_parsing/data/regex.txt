@@ -2120,6 +2120,7 @@ r"\b\d+\s*w\b"
 r"\bcorrection\b"
 
 #report
+r"\breport\b"
 r"\blet\s+me\s+know\b"
 r"\b(advise)\s+intentions\b"
 r"#\b((say|report|advise)\s+intentions*)\b"
@@ -2135,8 +2136,8 @@ r"\breported\b"
 r"\bto stop inference of the REPORT category\b"
 
 #REPORTS
-r"\bpilot\s+reports*\b"
-r"\breports*\b"
+r"\bpilot\s+reports\b"
+r"\breports\b"
 
 
 #Request
