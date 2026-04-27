@@ -467,6 +467,7 @@ r"\bapplies\b"
 
 
 #Approach
+r"\bvisual\s+approach\b"
 r"\b(?:the\s+)?approach\b"
 r"\bRNAV\s+Y\b"
 r"\bRNAV\s+Z\b"
@@ -1175,7 +1176,7 @@ r"\bstandard\b"
 r"\bloud\s+background\s+whistle\b"
 r"\breadability\b"
 r"\bsimultaneous\b"
-r"\bvisual\b"
+r"#\bvisual\b"
 r"\binstrument\b"
 r"\blow\b"
 r"\bshear\b"
@@ -1523,7 +1524,6 @@ r"\bi\s+call\s+you\s+establish\b"
 r"\bcall\s+you\s+establish\b"
 
 
-r"\bcontinuing\b"
 
 r"\bstanding\b"
 r"\baccelarating\b"
@@ -1607,6 +1607,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bcontinuing\b"
 r"\bgiving\s+way\b"
 r"\bmaintaining\b"
 r"\bleaving\b"
@@ -2592,6 +2593,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bvisual\b"
 r"\breceived\b"
 r"\breleased\b"
 r"\bback\s+on\s+course\b"
