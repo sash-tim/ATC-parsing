@@ -591,6 +591,9 @@ r"\b[a-z]\-[a-z]+\b"
 r"\b(?!\d{1,2}[lr])\d+[a-z]{2,3}\b"
 r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 
+#CALLSIGNSTOP
+r"\b to stop inference\b"
+
 #cancellation
 r"\bcanceling\b"
 r"\bcancel\b"
@@ -1367,6 +1370,10 @@ r"\btaxiing\b"
 r"\b(?:the\s+)?marshaller\b"
 r"\bmarshals\b"
 
+#GW
+r"#\bgive\s+way\b"
+
+
 #maintain
 r"\bmaintain\b"
 
@@ -1607,6 +1614,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bbacktracking\b"
 r"\bcontinuing\b"
 r"\bgiving\s+way\b"
 r"\bmaintaining\b"
@@ -2152,6 +2160,8 @@ r"\brequested\b"
 r"\bjust to stop inference\b"
 
 #RequestInstruction
+r"\bgive\s+way\b"
+
 r"\bgive\b"
 r"\bcopy\s+clearance\b"
 r"\bwill\s+(follow)\b"
@@ -2186,7 +2196,6 @@ r"\bcontinue\s+on\s+present\b"
 r"\bcontinue\s+present\b"
 r"\bset\b"
 r"\bestablish\s+our\s+localizer\b"
-r"\bgive\s+way\b"
 r"\b(?:will\s+)?need\b"
 r"\bhave\s+to\b"
 r"\bkeep\s+an\s+eyes\b"
@@ -2593,6 +2602,8 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bwhen\s+(clear)\b"
+r"\breport\s+(clear)\b"
 r"\bvisual\b"
 r"\breceived\b"
 r"\breleased\b"
@@ -2953,6 +2964,7 @@ r"\bvia(?:\s+the)?\b"
 
 #Vehicle
 r"\bvehicle\b"
+r"\bground\s+vehicle\b"
 r"\bSweeper\s+vehicles*\b"
 r"\bsand\s+trucks*\b"
 

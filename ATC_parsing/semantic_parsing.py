@@ -2227,6 +2227,10 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
                 LF_old = LF
         else:
             LF = parse_command(LF_parser, LF, dData, epoch,i, dPlaceholders)
+
+            #???
+            #print(str(epoch)+' '+str(i)+' : '+LF)
+
             if LF == LF_old:
                 break
             else:
