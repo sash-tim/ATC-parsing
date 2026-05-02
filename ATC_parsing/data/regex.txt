@@ -2586,8 +2586,12 @@ r"\b\b[0-9][a-z]\b\b"
 #Side
 r"\b((north|east|south|west)\s+side)\b"
 r"\brunway[s]?\s+\d+\s+(left|right|center)\b(?!\s+hand)"
-r"\b\d+\s+(left|right|center)\b(?!\s+hand)"
-r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
+r"#\b\d+\s+(left|right|center)\b(?!\s+hand)"
+r"#\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
+r"\b\d+\s+(left|right)\b(?!\s+hand)"
+r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right)\b(?!\s+hand)"
+
+
 #squawk
 r"\bsquawk\s+code\b"
 r"\bsquawk\b"
