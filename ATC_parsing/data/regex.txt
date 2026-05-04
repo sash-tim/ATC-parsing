@@ -626,6 +626,10 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 #Cleared
 r"\bcleared\b"
 
+#ClearedSTOP
+r"\b stop inference\b"
+
+
 #clearance
 r"\b\bIFR\s+release\b\b"
 r"\bterrain\s+clearance\b"
@@ -2502,6 +2506,7 @@ r"\bmerce\d\b"
 r"\bmerit\d\b"
 r"\bnakid\d\b"
 r"\bnapsa\d\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?narak\d\b"
 r"\bnateb\d\b"
 r"\bnavti\d\b"
 r"\bnelpa\d\b"
@@ -2589,7 +2594,9 @@ r"\brunway[s]?\s+\d+\s+(left|right|center)\b(?!\s+hand)"
 r"#\b\d+\s+(left|right|center)\b(?!\s+hand)"
 r"#\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
 r"\b\d+\s+(left|right)\b(?!\s+hand)"
+r"\brunway\s+\d+\s+(left|right|center)\b(?!\s+hand)"
 r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right)\b(?!\s+hand)"
+r"\b(?:runway\s+)(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
 
 
 #squawk
@@ -3122,6 +3129,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?merce\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?merit\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nakid\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?napsa\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?narak\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nateb\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?navti\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?nelpa\b"
