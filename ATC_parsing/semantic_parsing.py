@@ -298,7 +298,7 @@ def make_lexicon(dData):
         dData['category_filter'] = dCategoryFilter
     
 
-    def read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction):
+    def read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction):
         """
         Arguments:
         - lex_complex_file
@@ -306,8 +306,14 @@ def make_lexicon(dData):
         - dLexComplex
         Output dictionary with a set of rules from *lex_complex_file*.
         
-        - with_filter == False & with_tmpfunction == False & with_tmpfinalfunction == False
-        All rules from 'lex_complex_file' without 'TMPFUNCTION'/'TMPFINALFUNCTION' are extracted.
+        - with_tmppreprocessing == True 
+        All rules from 'lex_complex_file' with 'TMPPREPROCESSING' are extracted.
+        
+
+        - with_tmppreprocessing == False & with_filter == False & with_tmpfunction == False & 
+        with_tmpfinalfunction == False
+        All rules from 'lex_complex_file' without 
+        'TMPPREPROCESSING'/'TMPFUNCTION'/'TMPFINALFUNCTION' are extracted.
         
         - with_tmpfunction == True 
         All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted.
@@ -317,7 +323,8 @@ def make_lexicon(dData):
         
 
         - with_filter == True 
-        All rules from 'lex_complex_file' without 'TMPFUNCTION'/'TMPFINALFUNCTION' that pass the filter are extracted.
+        All rules from 'lex_complex_file' without 
+        'TMPPREPROCESSING'/'TMPFUNCTION'/'TMPFINALFUNCTION' that pass the filter are extracted.
         
         
 
@@ -360,6 +367,12 @@ def make_lexicon(dData):
             
                 lexicon_entry = record.strip(' \n').replace('\\\\','\\')
 
+                if with_tmppreprocessing == True:
+                    
+                    if lexicon_entry.lower().find('tmppreprocessing') >= 0:
+                        dLexComplex[placeholder].append(lexicon_entry)
+                
+                
                 if with_tmpfunction == True:
                     
                     if lexicon_entry.lower().find('tmpfunction') >= 0:
@@ -372,6 +385,9 @@ def make_lexicon(dData):
                 
                 if with_filter == True:
                     
+                    if lexicon_entry.lower().find('tmppreprocessing') >= 0:
+                        continue
+                
                     if lexicon_entry.lower().find('tmpfunction') >= 0:
                         continue
                 
@@ -390,9 +406,12 @@ def make_lexicon(dData):
                     
                   
                 
-                if (with_tmpfinalfunction == False and
+                if (
+                    with_tmppreprocessing == False and
+                    with_tmpfinalfunction == False and
                     with_tmpfunction == False and
                     with_filter == False and
+                    lexicon_entry.lower().find('tmppreprocessing') < 0 and
                     lexicon_entry.lower().find('tmpfunction') < 0 and
                     lexicon_entry.lower().find('tmpfinalfunction') < 0
                 ):
@@ -628,33 +647,46 @@ def make_lexicon(dData):
     """
     # lex_complex #
 
-    Read lexicon complex file with and witout filters, tmpfunction and .tmpfinalfunction
+    Read lexicon complex file with and witout filters, tmppreprocessing , tmpfunction and .tmpfinalfunction
     
-    # no filter, tmpfunction, tmpfinalfunction #
+    # no tmppreprocessing, no filter, tmpfunction, tmpfinalfunction #
     
     """
     dLexComplex = {}
+    with_tmppreprocessing = False
     with_filter = False
     with_tmpfunction = False
     with_tmpfinalfunction = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
-    lex_complex_no_filter_tmpfunction_tmpfinalfunction = make_lex_complex(dLexComplex)
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction)
+    lex_complex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction = make_lex_complex(dLexComplex)
     
+    #with tmppreprocessing
+    dLexComplex = {}
+    with_tmppreprocessing = True
+    with_filter = False
+    with_tmpfunction = False
+    with_tmpfinalfunction = False
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction)
+    lex_complex_with_tmppreprocessing = make_lex_complex(dLexComplex)
+    
+
     #with filter
     dLexComplex = {}
+    with_tmppreprocessing = False
     with_filter = True
     with_tmpfunction = False
     with_tmpfinalfunction = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_filter = make_lex_complex(dLexComplex)
     
 
     #with tmpfunction
     dLexComplex = {}
+    with_tmppreprocessing = False
     with_filter = False
     with_tmpfunction = True
     with_tmpfinalfunction = False
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_tmpfunction = make_lex_complex(dLexComplex)
     
 
@@ -662,10 +694,11 @@ def make_lexicon(dData):
     
     #with tmpfinalfunction
     dLexComplex = {}
+    with_tmppreprocessing = False
     with_filter = False
     with_tmpfunction = False
     with_tmpfinalfunction = True
-    read_lexicon_complex(lex_complex_file, dLexComplex, with_filter, with_tmpfunction, with_tmpfinalfunction)
+    read_lexicon_complex(lex_complex_file, dLexComplex, with_tmppreprocessing, with_filter, with_tmpfunction, with_tmpfinalfunction)
     lex_complex_with_tmpfinalfunction = make_lex_complex(dLexComplex)
     
 
@@ -717,14 +750,22 @@ def make_lexicon(dData):
     used only for lexicon with filter.
     """
 
-    lex_no_filter_tmpfunction_tmpfinalfunction = lexicon.fromstring(lex_categories + 
+    lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction = lexicon.fromstring(lex_categories + 
                                 lex_common + 
                                 lex_all_category +
-                                lex_complex_no_filter_tmpfunction_tmpfinalfunction +
+                                lex_complex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction +
                                 lex_prepositions +
                                 lex_last_part, True)
     
-    lex_words(lex_no_filter_tmpfunction_tmpfinalfunction, dData)
+    lex_words(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, dData)
+
+    lex_with_tmppreprocessing = lexicon.fromstring(lex_categories + 
+                                lex_common + 
+                                lex_all_category +
+                                lex_complex_with_tmppreprocessing +
+                                lex_prepositions +
+                                lex_last_part, True)
+    
 
     lex_with_filter = lexicon.fromstring(lex_categories + 
                                 lex_common + 
@@ -750,20 +791,17 @@ def make_lexicon(dData):
     """
     ## CCG parsers ##
 
-    Now we can generate two NLTK CCG parsers for lexicon without or with filters.
+    Now we can generate 5 NLTK CCG parsers.
 
-    The parser where we use lexicon without filter - *command_parser*, may be used for commands
-    represented in normal textual form. 
-
-    The parser with lexicon with filter - *LF_parser*, will be used during 2nd, 3rd,... steps
-    of the parsing process. Here input is a logical form returned by the previous step.
     """
 
-    command_parser = chart.CCGChartParser(lex_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
     final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
 
+    dData['preprocessing_parser'] = preprocessing_parser
     dData['command_parser'] = command_parser
     dData['LF_parser'] = LF_parser
     dData['final_parser'] = final_parser
@@ -1396,32 +1434,107 @@ def parsing(command, number_of_steps, dData):
         return LF_final
 
     command = command_normalization(command)
+
+    preprocessing_parser = dData['preprocessing_parser']
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
     final_parser = dData['final_parser']
     final_2_parser = dData['final_2_parser']
 
+    #preprocessing parse ------------------------------
+
     LF_old = ''
     for i in range(number_of_steps):
         if i == 0:
-            LF = parse_command(command_parser, command, dData, i)
+            LF = parse_command(preprocessing_parser, command, dData, i)
             
             if LF == LF_old:
                 break
             else:
                 LF_old = LF
         else:
-            LF = parse_command(LF_parser, LF, dData, i)
+            LF = parse_command(preprocessing_parser, LF, dData, i)
             if LF == LF_old:
                 break
             else:
                 LF_old = LF
+
+        # remove _TMPPREPROCESSING_ but not its arguments
+
+        for word in ['_tmppreprocessing_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+        
     
     LF = LF.replace('STOP_(','_(')
 
-    #LF = parse_command(final_parser, LF, dData, 1)
 
-    # final parse
+    #command parse -----------------------------
+
+    LF_old = LF
+
+    for i in range(1,number_of_steps):
+        LF = parse_command(command_parser, LF, dData, i)
+
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+
+        
+    LF = LF.replace('STOP_(','_(')
+    
+
+    # final parse  ---------------------------------
 
     LF_old = LF
 
@@ -1488,7 +1601,7 @@ def parsing(command, number_of_steps, dData):
     LF = LF.replace('STOP_(','_(')
         
 
-    # final_2 parse
+    # final_2 parse  -------------------------------------------
 
     LF_old = LF
 
@@ -2206,44 +2319,122 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         return LF_final
 
     command = command_normalization(command)
+    
+    preprocessing_parser = dData['preprocessing_parser']
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
     final_parser = dData['final_parser']
     final_2_parser = dData['final_2_parser']
 
-    LF_old = ''
+    
+    #preprocessing parse ------------------------------
 
+    
+    LF_old = ''
     epoch = 0
 
     for i in range(number_of_steps):
         if i == 0:
-
-            LF = parse_command(command_parser, command, dData, epoch, i, dPlaceholders)
-
+            LF = parse_command(preprocessing_parser, command, dData, epoch, i, dPlaceholders)
             
             if LF == LF_old:
                 break
             else:
                 LF_old = LF
         else:
-            LF = parse_command(LF_parser, LF, dData, epoch,i, dPlaceholders)
-
-            #???
-            #print(str(epoch)+' '+str(i)+' : '+LF)
-
+            LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
+            
+            
             if LF == LF_old:
                 break
             else:
                 LF_old = LF
 
+        # remove _TMPPREPROCESSING_ but not its arguments
+
+        for word in ['_tmppreprocessing_']:
+
+            word = word.upper()
+
+            if LF.find(word) < 0:
+                continue
+
+            while True:
+            
+                ind = LF.index(word)
+                to_check = LF[ind+len(word):]
+
+                is_found = False
+                to_replace = word
+                replace_by = ''
+                n_open = 0
+                n_close = 0
+                
+                for s in to_check:
+                    
+                    to_replace = to_replace+s
+
+                    if s == ',' and n_close > 0 and n_open == n_close + 1:
+                        s = ';'
+                    replace_by = replace_by+s
+                    
+                    if s == '(':
+                        n_open += 1
+                            
+                    if s == ')':
+                        n_close += 1
+
+                    
+                    if n_open == n_close:
+                        is_found = True
+                        break
+
+                if is_found :
+                    replace_by = replace_by[1:-1]
+                    break
+
+                break   
+
+            LF_new = LF.replace(to_replace, replace_by)
+                    
+            if LF_new != LF:
+                LF = LF_new
+                
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+        
+    
     LF = LF.replace('STOP_(','_(')
 
 
-    # final parse
+
+    
+    #command parse -----------------------------
+
+    LF_old = LF
+    epoch = 10
+
+    for i in range(1,number_of_steps):
+        
+        LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
+            
+        if LF == LF_old:
+            break
+        else:
+            LF_old = LF
+
+        
+    LF = LF.replace('STOP_(','_(')
+    
+
+
+    # final parse -----------------------
 
     LF_old = LF
 
-    epoch = 10
+    epoch = 20
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders)
@@ -2310,11 +2501,11 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
 
 
-    # final_2 parse
+    # final_2 parse ---------------------
 
     LF_old = LF
 
-    epoch = 20
+    epoch = 30
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_2_parser, LF, dData, epoch, i, dPlaceholders)

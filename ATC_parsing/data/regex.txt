@@ -20,6 +20,7 @@ r"\bEnroute\s+Flight\s+Advisory\s+Service\b"
 
 
 #AIRCRAFT
+r"\bMontenegro\b"
 r"\bCroatia\b"
 r"\bair\s+serbia\b"
 r"\bmontenegrin\b"
@@ -679,6 +680,7 @@ r"\bokay\b"
 r"\bif\b"
 r"\bonce\b"
 r"\bif\s+not*\b"
+r"\bsubject\s+to\b"
 
 #CONDITIONSTOP
 r"\b to stop the category inference\b"
@@ -2710,6 +2712,8 @@ r"\bfully\s+established\b"
 r"\bfully\s+establish\b"
 r"\bequipped\b"
 
+#TMPPREPROCESSING
+r"\bis used in preprocessing step\b"
 
 #TMPFUNCTION
 r"\bis used for 2rd step of parsing\b"
