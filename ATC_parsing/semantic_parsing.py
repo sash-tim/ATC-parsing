@@ -1517,6 +1517,7 @@ def parsing(command, number_of_steps, dData):
     
     LF = LF.replace('STOP_(','_(')
 
+    #print('\nparsing preprocessing: ========================\n'+LF)
 
     #command parse -----------------------------
 
@@ -1533,6 +1534,8 @@ def parsing(command, number_of_steps, dData):
         
     LF = LF.replace('STOP_(','_(')
     
+    #print('\nparsing command: ========================\n'+LF)
+
 
     # final parse  ---------------------------------
 
@@ -2409,6 +2412,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     LF = LF.replace('STOP_(','_(')
 
 
+    #print('\nparsing DEBUG preprocessing: ========================\n'+LF)
 
     
     #command parse -----------------------------
@@ -2418,7 +2422,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
     for i in range(1,number_of_steps):
         
-        LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
+        LF = parse_command(command_parser, LF, dData, epoch, i, dPlaceholders)
             
         if LF == LF_old:
             break
@@ -2428,6 +2432,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         
     LF = LF.replace('STOP_(','_(')
     
+    #print('\nparsing DEBUG command: ==================== \n'+LF)
 
 
     # final parse -----------------------
