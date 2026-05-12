@@ -939,6 +939,7 @@ r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|
 
 
 r"\b\d+\s+dme\b"
+r"\bdme\b"
 r"\ball\s+the\s+way\b"
 r"\ball\s+the\s+way\s+back\b"
 r"\bdistance\b"
@@ -1434,7 +1435,6 @@ r"\btaking\s+off\b"
 #NAVAID
 r"\bgps\b"
 r"\bmarker\b"
-r"\bdme\b"
 r"\bdme\s+capability\b"
 r"\bNDB\b"
 r"\bVOR\b"
@@ -2475,6 +2475,7 @@ r"\bjacki\d\b
 r"\bJAKSN\d\b
 r"\bjanes\d\b"
 r"\bjhawk\d\b"
+r"\b(?:the\s+)?lamsi\d\b"
 r"\b(?:the\s+)?lamso\d\b"
 r"\bkbely\d\b"
 r"\bkelly\d\b"
@@ -3100,6 +3101,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?jacki\b
 r"\b(?:the\s+)?(?:waypoint\s+)?JAKSN\b
 r"\b(?:the\s+)?(?:waypoint\s+)?janes\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?jhawk\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?lamsi\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lamso\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?kbely\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?kelly\b"
