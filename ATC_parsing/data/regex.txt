@@ -1596,6 +1596,7 @@ r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
 
 #reason
+r"\b(vector)\s+to\b"
 r"\bto\s+(save\s+time)\b"
 r"\bfor\s+(fuel\s+efficiency)\b"
 r"\bonboard\s+issue\b"
@@ -2055,10 +2056,8 @@ r"\bradar\s+contact\b"
 r"\bdelay\s+vectors*\b"
 r"\bweather\s+returns\b"
 r"\bvectored\b"
-r"\bradar\s+vectors*\b"
-r"\bradar\s+vectoring\b"
 r"\bvectoring\b"
-r"\bvector[s]?\b"
+r"#\bvector[s]?\b"
 
 #radial
 r"\b\d+\s+radial\b"
@@ -2357,6 +2356,7 @@ r"\b\dL\b"
 
 #Service
 r"\b\bflight\s+following\b\b"
+r"\b\bVFR\s+flight\s+following\b\b"
 r"\btraffic\s+advisories\b"
 r"\bradar\s+services*\b"
 r"\bsurface\s+movement\s+guidance\b"
@@ -2592,6 +2592,11 @@ r"\bwigle\d\b"
 r"\byorke\d\b"
 r"\bzeday\d\b"
 r"\bzippy\d\b"
+
+#VECTORS
+r"\bradar\s+vectors*\b"
+r"\bradar\s+vectoring\b"
+
 
 #VERSION
 r"\b\b[0-9][a-z]\b\b"

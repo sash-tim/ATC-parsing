@@ -480,6 +480,7 @@ CLEARED/NAVIGATION {\\x ._CLEARED_(_CLEARED_(cleared1),x)}
 CLEARED/PLACE {\\x._CLEARED_(_CLEARED_(cleared1),x)}
 (CLEARED/PLACE)/TO {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
 (CLEARED/RADAR)/VIA {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
+(CLEARED/VECTORS)/VIA {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
 CLEARED/STAR {\\x._CLEARED_(_CLEARED_(cleared1),x)}
 (CLEARED/STAR)/ON {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
 (CLEARED/STAR)/VIA {\\x y._CLEARED_(_CLEARED_(cleared1),x,y)}
@@ -860,6 +861,7 @@ ESTIMATE/WAYPOINT {\\x._ESTIMATE_(_ESTIMATE_(estimate1), x)}
 
 #except
 EXCEPT/MAINTAIN {\\x._EXCEPT_(_EXCEPT_(except1), x)}
+(EXCEPT/WORDNUMBER)/MAINTAIN {\\x y._EXCEPT_(_EXCEPT_(except1), x,y)}
 EXCEPT/CLEARANCESTOP {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 EXCEPT/NAVIGATION {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 (EXCEPT/FLEVEL)/AT {\\x y._EXCEPT_(_EXCEPT_(except1), x,y)}
@@ -885,7 +887,7 @@ EXPECT/CLEARANCE {\\x._EXPECT_(_EXPECT_(expect1), x)}
 (EXPECT/TRAFFICINFO)/DUE {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 EXPECT/RESTRICTION {\\x._EXPECT_(_EXPECT_(expect1), x)}
 (EXPECT/DEPARTURE)/FOR {\\x y._EXPECT_(_EXPECT_(expect1), x, y)}
-EXPECT/DEPARTURE {\\x._EXPECT_(_EXPECT_(expect1), x)}
+-EXPECT/DEPARTURE {\\x._EXPECT_(_EXPECT_(expect1), x)}
 EXPECT/RUNWAY {\\x._EXPECT_(_EXPECT_(expect1), x)}
 (EXPECT/RUNWAY)/FOR {\\x y._EXPECT_(_EXPECT_(expect1), x, y)}
 EXPECT/TIME {\\x._EXPECT_(_EXPECT_(expect1), x)}
@@ -936,6 +938,9 @@ SAFETY/WIND {\\x._SAFETY_(_SAFETY_(safety1), x)}
 
 
 #Heading
+TMPFUNCTION/REASON {\\x ._TMPFUNCTION_(_HEADING_(_HEADING_(heading1),x))}
+
+
 (HEADING/TRAFFIC)/FOR {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
 (HEADING/HEADING)/FOR {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
 (HEADING/SAFETY)/TO {\\x y._HEADING_(_HEADING_(heading1), x,y)} 
@@ -1775,6 +1780,7 @@ MEASURE/MEASURE {\\x._MEASURE_(_REALMUMBER_(realnumber1),x)}
 #reason
 HEADING/HEADING {\\x._HEADING_(_REASON_(reason1),x)}
 (REASON/RUNWAY)/ON {\\x y._REASON_(_REASON_(reason1),x,y)}
+(REASON/NAVIGATION)/TO {\\x y._REASON_(_REASON_(reason1),x,y)}
 
 #resume
 TMPFUNCTION/DISCRETION {\\x ._TMPFUNCTION_(_RESUMESTOP_(_RESUME_(resume1),x))}
@@ -1996,6 +2002,9 @@ CONTROLLER/APPROACH {\\x._CONTROLLER_(_PLACE_(place1),x)}
 ALTIMETER/ALTIMETER {\\x._ALTIMETER_(_PLACE_(place1),x)}  
  
 #Position
+
+(TMPFUNCTION\CALLSIGN)/NAVIGATION {\\x y._TMPFUNCTION_(y,_NAVIGATION_(_POSITION_(position1),x))}
+
 
 (POSITION/RUNWAY)/OF {\\x y._POSITION_(_POSITION_(position1),x,y)}
 (POSITION/ROUTING)/AT {\\x y._POSITION_(_POSITION_(position1),x,y)}
@@ -2815,8 +2824,15 @@ SPACING/SPACING {\\x._TIMEMINSEC_(_TIMEMINSEC_(timeminsec1),x)}
 
 
 #Then
+TMPFUNCTION/DIRECTION {\\x ._TMPFUNCTION_(_THENSTOP_(_THEN_(then1),x))}
+TMPFUNCTION/ROUTE {\\x ._TMPFUNCTION_(_THENSTOP_(_THEN_(then1),x))}
+TMPFUNCTION/ALTITUDECHANGE {\\x ._TMPFUNCTION_(_THENSTOP_(_THEN_(then1),x))}
 TMPFUNCTION/APPROVED {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
 TMPFUNCTION/REQUESTINSTRUCTION {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
+TMPFUNCTION/RESUME {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
+
+
+(TMPFUNCTION/SPEED)/RESUME {\\x y._TMPFUNCTION_(_THEN_(_THEN_(then1),x,y))}
 
 
 
@@ -2825,7 +2841,7 @@ TMPFUNCTION/REQUESTINSTRUCTION {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
 THEN/GROUNDMOVEMENT {\\x._THEN_(_THEN_(then1),x)}
 THEN/EXPECT {\\x._THEN_(_THEN_(then1),x)}
 THEN/TRANSITION {\\x._THEN_(_THEN_(then1),x)}
-THEN/ALTITUDECHANGE {\\x._THEN_(_THEN_(then1),x)}
+-THEN/ALTITUDECHANGE {\\x._THEN_(_THEN_(then1),x)}
 THEN/HEADING {\\x._THEN_(_THEN_(then1),x)}
 (THEN/INTNUMBER)/AT {\\x y._THEN_(_THEN_(then1),x,y)}
 THEN/TIME {\\x._THEN_(_THEN_(then1),x)}
@@ -2835,9 +2851,9 @@ THEN/TO {\\x._THEN_(_THEN_(then1),x)}
 (THENSTOP/FLIGHTPLAN)/AS {\\x y._THEN_(_THEN_(then1),x,y)}
 THENSTOP/STAR {\\x._THEN_(_THEN_(then1),x)}
 ---THENSTOP/REQUESTINSTRUCTION {\\x._THEN_(_THEN_(then1),x)}
-THENSTOP/ROUTE {\\x._THEN_(_THEN_(then1),x)}
-(THENSTOP/ROUTE)/TO {\\x y._THEN_(_THEN_(then1),x,y)}
-THEN/DIRECTION {\\x._THEN_(_THEN_(then1),x)}
+-THENSTOP/ROUTE {\\x._THEN_(_THEN_(then1),x)}
+-(THENSTOP/ROUTE)/TO {\\x y._THEN_(_THEN_(then1),x,y)}
+-THEN/DIRECTION {\\x._THEN_(_THEN_(then1),x)}
 THEN/NAVIGATION {\\x._THEN_(_THEN_(then1),x)}
 THEN/FIX {\\x._THEN_(_THEN_(then1),x)}
 THEN/CLEARANCE {\\x._THEN_(_THEN_(then1),x)}
