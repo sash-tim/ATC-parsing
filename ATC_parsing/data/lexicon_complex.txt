@@ -2833,6 +2833,7 @@ TMPFUNCTION/RESUME {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
 
 
 (TMPFUNCTION/SPEED)/RESUME {\\x y._TMPFUNCTION_(_THEN_(_THEN_(then1),x,y))}
+(TMPFUNCTION/FLIGHTPLAN)/AS {\\x y._TMPFUNCTION_(_THENSTOP_(_THEN_(then1),x,y))}
 
 
 
@@ -2848,7 +2849,7 @@ THEN/TIME {\\x._THEN_(_THEN_(then1),x)}
 (THEN/NAVIGATION)/TO {\\x y._THEN_(_THEN_(then1),x,y)}
 THEN/TO {\\x._THEN_(_THEN_(then1),x)}
 (THEN/PHONETICALPHABET)/VIA {\\x y._THEN_(_THEN_(then1),x,y)}
-(THENSTOP/FLIGHTPLAN)/AS {\\x y._THEN_(_THEN_(then1),x,y)}
+-(THENSTOP/FLIGHTPLAN)/AS {\\x y._THEN_(_THEN_(then1),x,y)}
 THENSTOP/STAR {\\x._THEN_(_THEN_(then1),x)}
 ---THENSTOP/REQUESTINSTRUCTION {\\x._THEN_(_THEN_(then1),x)}
 -THENSTOP/ROUTE {\\x._THEN_(_THEN_(then1),x)}
@@ -3006,6 +3007,14 @@ UNTIL/WAYPOINT {\\x._UNTIL_(_UNTIL_(until1), x)}
 
 #untilstop
 UNTILSTOP/ALTITUDE {\\x._UNTILSTOP_(_UNTIL_(untilstop1), x)}
+
+#VECTORS
+(TMPFUNCTION\HEADING)/APPROACH {\\x y._TMPFUNCTION_(_HEADING_(y, _REASON_(_VECTORS_(vectors1),x)))}
+
+VECTORS/WAYPOINT {\\x._VECTORS_(_VECTORS_(vectors1), x)}
+
+(REASON/NAVIGATION)/TO {\\x y._REASON_(_VECTORS_(vectors1),x,y)}
+(REASON/SEQUENCE)/FOR {\\x y._REASON_(_VECTORS_(vectors1),x,y)}
 
 
 #Verify

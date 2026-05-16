@@ -1596,7 +1596,6 @@ r"\bpoint\s+\d+\b"
 r"\d+\bpoint\s+\d+\b"
 
 #reason
-r"\b(vector)\s+to\b"
 r"\bto\s+(save\s+time)\b"
 r"\bfor\s+(fuel\s+efficiency)\b"
 r"\bonboard\s+issue\b"
@@ -2596,6 +2595,7 @@ r"\bzippy\d\b"
 #VECTORS
 r"\bradar\s+vectors*\b"
 r"\bradar\s+vectoring\b"
+r"\bvectors*\b"
 
 
 #VERSION
