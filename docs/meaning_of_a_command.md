@@ -10,6 +10,7 @@
 - [IF condition](#if-condition)
 - [Resume](#resume)
 - [Once again about AFTER condition](#once-again-about-after-condition)
+- [Heading and Vectors](#heading-and-vectors)
 
 
 
@@ -985,4 +986,52 @@ PARSE (simplified JSON):
     }
   }
 }
+```
+
+
+## Heading and Vectors
+
+Usually, the instruction VECTORS is placed just after the instruction HEADING to explain why the pilot should change course. However, sometimes other instructions, such as the ALTITUDE CHANGE instruction, may be placed between them. In this case, the instructions HEADING and VECTORS can be considered as brackets that encompass the scope of the main instruction - HEADING.
+
+```
+COMMAND: American 301 turn right heading 180 descend and maintain 3000 vectors for ILS runway 22 approach
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "American",
+    "INTNUMBER": "301"
+  },
+  "HEADING": {
+    "HEADING": {
+      "HEADING": {
+        "NAVIGATION": "turn right",
+        "HEADING": {
+          "HEADING": "heading",
+          "INTNUMBER": "180"
+        }
+      }
+    },
+    "ALTITUDECHANGE": {
+      "ALTITUDECHANGE": "descend and maintain",
+      "INTNUMBER": "3000"
+    },
+    "VECTORS": {
+      "VECTORS": {
+        "VECTORS": "vectors",
+        "FOR": "for",
+        "APPROACH": {
+          "APPROACHNAVAID": "ILS",
+          "RUNWAY": {
+            "RUNWAY": "runway",
+            "INTNUMBER": "22"
+          },
+          "APPROACH": "approach"
+        }
+      }
+    }
+  }
+}
+
 ```
