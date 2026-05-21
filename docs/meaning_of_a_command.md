@@ -1035,3 +1035,62 @@ PARSE (simplified JSON):
 }
 
 ```
+
+It seems that another option is when VECTORS is placed just before HEADING and ALTITUDE CHANGE instruction may be placed after both of them.
+
+```
+COMMAND: Cessna 45X radar contact 18 miles northwest of Charlotte You are being vectored to the nearest suitable airport Turn right heading 140 descend and maintain 3000 feet
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "Cessna",
+    "CALLSIGN": "45X"
+  },
+  "RADAR": {
+    "RADAR": "radar contact",
+    "DISTANCE": {
+      "DISTANCE": "18",
+      "DISTANCE": {
+        "DISTANCE": "miles",
+        "DIRECTIONMAGNETIC": {
+          "DIRECTIONMAGNETIC": "northwest",
+          "OF": "of",
+          "PLACE": "Charlotte"
+        }
+      }
+    }
+  },
+  "HEADING": {
+    "VECTORS": {
+      "VECTORS": {
+        "WHO": "You are",
+        "VECTORS": {
+          "being VECTORS": "vectored",
+          "TO": "to",
+          "the PLACE": "nearest suitable airport"
+        }
+      }
+    },
+    "HEADING": {
+      "HEADING": {
+        "NAVIGATION": "Turn right",
+        "HEADING": {
+          "HEADING": "heading",
+          "INTNUMBER": "140"
+        }
+      }
+    },
+    "ALTITUDECHANGE": {
+      "ALTITUDECHANGE": {
+        "ALTITUDECHANGE": "descend and maintain",
+        "ALTITUDE": {
+          "ALTITUDE": "3000",
+          "MEASURE": "feet"
+        }
+      }
+    }
+  }
+}
+```

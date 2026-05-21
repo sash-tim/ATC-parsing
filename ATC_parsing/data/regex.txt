@@ -2052,10 +2052,7 @@ r"\bdo\s+you\s+want\b"
 r"\bany\s+chance\b"
 #Radar
 r"\bradar\s+contact\b"
-r"\bdelay\s+vectors*\b"
 r"\bweather\s+returns\b"
-r"\bvectored\b"
-r"\bvectoring\b"
 r"#\bvector[s]?\b"
 
 #radial
@@ -2593,9 +2590,13 @@ r"\bzeday\d\b"
 r"\bzippy\d\b"
 
 #VECTORS
+r"\bdelay\s+vectors*\b"
 r"\bradar\s+vectors*\b"
 r"\bradar\s+vectoring\b"
 r"\bvectors*\b"
+r"\bvectored\b"
+r"\bvectoring\b"
+
 
 
 #VERSION
