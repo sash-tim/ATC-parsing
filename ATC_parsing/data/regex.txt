@@ -2166,12 +2166,16 @@ r"\brequire\b"
 r"\brequesting\b"
 r"\brequested\b"
 
-
 #REQUESTSTOP
 r"\bjust to stop inference\b"
 
+
 #RequestInstruction
 r"\bgive\s+way\b"
+
+#REQUESTINSTRUCTIONSTOP
+r"\b just to stop inference\b"
+
 
 r"\bgive\b"
 r"\bcopy\s+clearance\b"
