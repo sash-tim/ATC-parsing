@@ -2313,7 +2313,7 @@ r"\b(U*(T|Q|L|Y)[\s\-]*\d+)\b"
 r"\b(airway\s+((T|Q|L|Y)[\s\-]*\d+))\b"
 r"\b((Alfa|Alpha|Bravo|Golf|Lima|Mike|Papa|Romeo)\s+\d+)\b"
 r"\b(Uniform\s+(Alfa|Alpha|Bravo|Golf|Lima|Mike|November|Papa|Romeo)\s+\d+)\b"
-r"\bNorth\s+Atlantic\s+track\b"
+r"\bNorth\s+Atlantic\s+track\b"u
 
 #routing
 r"combination of waypoints, route, airways,..."

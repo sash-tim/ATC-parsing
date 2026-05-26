@@ -1461,7 +1461,7 @@ def parsing(command, number_of_steps, dData):
 
         # remove _TMPPREPROCESSING_ but not its arguments
 
-        for word in ['_tmppreprocessing_']:
+        for word in ['_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_']:
 
             word = word.upper()
 
@@ -2355,7 +2355,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
         # remove _TMPPREPROCESSING_ but not its arguments
 
-        for word in ['_tmppreprocessing_']:
+        for word in ['_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_',]:
 
             word = word.upper()
 
