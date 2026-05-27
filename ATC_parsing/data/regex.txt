@@ -3248,21 +3248,21 @@ r"\bweather\s+conditions\b"
 r"\bweather\s+area\b"
 
 
-#Who
+#WhoObj
+r"\byou\s+have\b"
+r"\byou\s+are\b"
+r"\byou\b"
 r"\ball\s+aircrafts*\b"
 r"\blanding\s+aircraft\b"
 r"\bprevious\s+landing\s+aircraft\b"
 r"\baircraft\s+on\s+the\s+runway\b"
-r"\bus\b"
-r"\b\b\bI\b\b\b"
-r"#\b\b\bI\s+will\b\b\b"
-r"\bWe\b"
-r"#\bWe\s+will\b"
-r"#\byou\s+will\b"
-r"\byou\s+have\b"
-r"\byou\s+are\b"
-r"\byou\b"
 r"\bhim\b"
+r"\bus\b"
+
+#WhoSubj
+r"\b\b\bI\b\b\b"
+r"\bWe\b"
+
 
 #whose
 r"\bmy\b"
