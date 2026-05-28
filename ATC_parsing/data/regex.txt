@@ -487,6 +487,8 @@ r"\bapproaches\b"
 #ApproachNAVAID
 r"\bILS\b"
 r"\b(?:the\s+)?localizer\b"
+r"\bglide\s+slope\b"
+
 
 #approved
 r"\bapproved\b"
@@ -2283,7 +2285,6 @@ r"\bcorridor\b"
 r"\btrack\b"
 r"\brunway\s+track\b"
 r"\bairway\b"
-r"\bglide\s+slope\b"
 r"\bglide\s+path\b"
 r"\bfiled\s+route\b"
 r"\bplanned\s+route\b"
