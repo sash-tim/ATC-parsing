@@ -5,6 +5,7 @@ Semantic parsing for pilot/controller commands
 
 from nltk.ccg import chart, lexicon
 import re
+import string
 from importlib.resources import files
 
 
@@ -535,7 +536,7 @@ def make_lexicon(dData):
             res = res + preposition + " => NP/NP {\\x._"+preposition+r"_(x)}"+"\n"
 
             
-            
+        #print('lex_prepositions:::'+res)    
         return(res)
     
     def lex_words(lexicon, dData):
@@ -2323,6 +2324,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
     command = command_normalization(command)
     
+    
     preprocessing_parser = dData['preprocessing_parser']
     command_parser = dData['command_parser']
     LF_parser = dData['LF_parser']
@@ -2340,13 +2342,14 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
         if i == 0:
             LF = parse_command(preprocessing_parser, command, dData, epoch, i, dPlaceholders)
             
+
             if LF == LF_old:
                 break
             else:
                 LF_old = LF
         else:
             LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
-            
+
             
             if LF == LF_old:
                 break
@@ -2423,7 +2426,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     for i in range(1,number_of_steps):
         
         LF = parse_command(command_parser, LF, dData, epoch, i, dPlaceholders)
-            
+   
         if LF == LF_old:
             break
         else:
@@ -2443,7 +2446,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders)
-
+   
         
         # remove _TMPFUNCTION_ but not its arguments
 
@@ -2514,7 +2517,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_2_parser, LF, dData, epoch, i, dPlaceholders)
-
+   
         # remove _TMPFINALFUNCTION_ but not its arguments
 
         for word in ['_tmpfinalfunction_']:
@@ -2785,6 +2788,7 @@ def logicalForm2JSON(LF):
         ```
         """
         
+        """
         for word in [
                      'have','your',
                     'are','over','be','being',
@@ -2792,6 +2796,7 @@ def logicalForm2JSON(LF):
             for brackets in ['0','1','2','3','4','5']:
                 while True:
                     
+                    #pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
                     pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
                     p = re.compile(pattern, re.I)
                     iterator = p.finditer(sJSON)
@@ -2825,11 +2830,70 @@ def logicalForm2JSON(LF):
 
                         if sJSON_new != sJSON:
                             sJSON = sJSON_new
+                            print("sJSON_new:::"+sJSON)
 
                         
                             
                     break
+        """
         
+        AZ = set(string.ascii_uppercase)
+        
+        
+        while True:
+            
+            good_word = False
+            for word in [
+                        'have','your',
+                        'are','over','be','being',
+                        'an','just','the','my','this',]:
+                for brackets in ['0','1','2','3','4','5']:
+                    while True:
+                        
+                        pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                        p = re.compile(pattern, re.I)
+                        iterator = p.finditer(sJSON)
+                        for match in iterator:
+                            if match:
+                            
+                                to_replace = str(match.group())
+                                replace_by = str(match.group(1))
+
+                            
+                                n_open = 0
+                                n_close = 0
+                                
+                                OK = True
+
+                                for s in replace_by:
+                                    
+                                    if s in AZ and n_open > 0:
+                                        OK = False
+                                        break
+                                    if s == '{':
+                                        n_open += 1
+                                    if s == '}':
+                                        n_close += 1
+                                    if n_close > n_open:
+                                        OK = False
+                                        break
+                                if n_open != n_close:
+                                    OK = False   
+                                
+                                if OK:
+                                    replace_by = '\"'+word+' '+replace_by[1:]
+                                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
+                                    good_word = True
+
+                            if sJSON_new != sJSON:
+                                sJSON = sJSON_new
+                                print("sJSON_new:::"+sJSON)
+
+                            
+                                
+                        break
+            if good_word == False:
+                break            
         
 
         return sJSON
@@ -2865,6 +2929,8 @@ def logicalForm2JSON(LF):
 
 
     sJSON = '{'+LF.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
+    print("bad_JSON:::"+sJSON)
+    
     sJSON = clean_JSON(sJSON)
     sJSON = make_unique_keys(sJSON)
 
