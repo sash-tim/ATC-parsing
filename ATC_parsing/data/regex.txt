@@ -1447,7 +1447,6 @@ r"\bVORTAC\b"
 
 
 #Navigation
-
 r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
@@ -2640,6 +2639,8 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bwhen\s+(get\s+to)\b"
+r"\byou\s+(get\s+to)\b"
 r"\bwhen\s+(clear)\b"
 r"\breport\s+(clear)\b"
 r"\bvisual\b"
@@ -3250,8 +3251,8 @@ r"\bweather\s+area\b"
 
 
 #WhoObj
-r"\byou\s+have\b"
-r"\byou\s+are\b"
+r"#\byou\s+have\b"
+r"#\byou\s+are\b"
 r"\byou\b"
 r"\ball\s+aircrafts*\b"
 r"\blanding\s+aircraft\b"
