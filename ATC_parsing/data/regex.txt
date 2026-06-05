@@ -546,6 +546,8 @@ r"\bprior\b"
 r"\bbehind\b"
 r"\btrail\s+behind\b"
 
+
+
 #block
 r"\bblock\b"
 
@@ -979,7 +981,7 @@ r"\bexcept\b"
 r"\bexpect\b"
 r"\bexpecting\b"
 r"\bawait\b"
-
+r"\bEFC\b"
 
 
 #Safety
@@ -1447,6 +1449,7 @@ r"\bVORTAC\b"
 
 
 #Navigation
+r"\bestablish\b"
 r"\breenter\b"
 r"\bfollow\b"
 r"\boverfly\b"
@@ -1580,7 +1583,8 @@ r"\bwith\b"
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+feet)\b"
+r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+feet)\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b"
 
 
 #RealNumber
@@ -2491,6 +2495,7 @@ r"\bkolad\d\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?kopar\d\b"
 r"\bkuvix\d\b"
 r"\blagar\d\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?lagen\d\b"
 r"\blaluk\d\b"
 r"\blanda\d\b"
 r"\blanux\d\b"
@@ -2640,6 +2645,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bcopied\b"
 r"\bwhen\s+(get\s+to)\b"
 r"\byou\s+(get\s+to)\b"
 r"\bwhen\s+(clear)\b"
@@ -2726,9 +2732,9 @@ r"\bin\s+progress\b"
 
 r"\bactivated\b"
 r"\bestablished\b"
-r"\bestablish\b"
+r"#\bestablish\b"
 r"\bfully\s+established\b"
-r"\bfully\s+establish\b"
+r"#\bfully\s+establish\b"
 r"\bequipped\b"
 
 #TMPPREPROCESSING
@@ -2925,6 +2931,7 @@ r"\bdownwind\b"
 r"\blate\s+downwind\b"
 r"\bbase\b"
 r"\bbase\s+entry\b"
+r"\bbase\s+leg\b"
 r"\bfinal\b"
 r"\bshort\s+final\b"
 r"\bupwind\b"
@@ -2971,6 +2978,8 @@ r"\bsevere\s+turbulence\b"
 r"\bmoderate\s+turbulence\s+reports\b"
 r"\bchop\b"
 r"\bride\b"
+r"\bride\s+conditions\b"
+
 
 #QNH
 r"\bqnh\b"
@@ -3132,6 +3141,7 @@ r"\b(?:the\s+)?(?:waypoint\s+)?kolad\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?kopar\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?kuvix\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lagar\b"
+r"\b(?:the\s+)?(?:waypoint\s+)?lagen\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?laluk\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?landa\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?lanux\b"
