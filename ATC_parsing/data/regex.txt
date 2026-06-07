@@ -62,6 +62,7 @@ r"\bairbus\s+321\b"
 r"\bairbus\s+330\b"
 r"\bAirbus\s+A[\s\-]+three\s+twenty\b"
 r"\bAirbus\s+A[\s\-]*320\b"
+r"\bAirbus\s+A[\s\-]*321\b"
 r"\bA[\s\-]*380\b"
 r"\baegean\b"
 r"\brepublic\b"
@@ -1631,6 +1632,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bstopping\b"
 r"\bvacating\b"
 r"\bbacktracking\b"
 r"\bcontinuing\b"
@@ -2155,7 +2157,6 @@ r"\breport\s+back\b"
 r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
-r"\breported\b"
 
 #reportstop
 r"\bto stop inference of the REPORT category\b"
@@ -2163,6 +2164,8 @@ r"\bto stop inference of the REPORT category\b"
 #REPORTS
 r"\bpilot\s+reports\b"
 r"\breports\b"
+r"\breported\b"
+
 
 
 #Request
