@@ -2599,6 +2599,14 @@ def logicalForm2JSON(LF):
             word_set = set(word_string.split())
             return word_set
 
+
+        def extract_list_of_words(sJSON):
+            word_string = sJSON.lower().replace('{','').replace('}','').replace('"','')
+            word_string = word_string.replace(':',' ').replace(',',' ')
+            word_list = word_string.split()
+            return word_list
+
+
         """
         Clean JSON string.
         """
@@ -2848,73 +2856,74 @@ def logicalForm2JSON(LF):
         AZ = set(string.ascii_uppercase)
         
         JSON_word_set = extract_set_of_words(sJSON)
+        JSON_word_list = extract_list_of_words(sJSON)
         prepositions = ['have','your',
                         'are','over','be','being',
                         'an','just','the','my','this',]
         check_word_set = JSON_word_set.intersection(prepositions)
 
-        while True:
-            
-            good_word = False
-            
-            
-            for word in check_word_set:
+        for JSON_word in reversed(JSON_word_list):
 
-                stop_brackets = False
-                for brackets in ['0','1','2','3','4','5']:
-                    if stop_brackets == True:
-                        break
-                    while True:
+            
+            if JSON_word not in check_word_set:
+                continue
+                
+            print('JSON_word:::'+JSON_word)
+
+            stop_brackets = False
+            for brackets in ['0','1','2','3','4','5']:
+                if stop_brackets == True:
+                    break
+                while True:
+                    
+                    pattern = r"\""+rf"{re.escape(JSON_word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
+                    p = re.compile(pattern, re.I)
+                    iterator = p.finditer(sJSON)
+                    for match in iterator:
+                        if match:
                         
-                        pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
-                        p = re.compile(pattern, re.I)
-                        iterator = p.finditer(sJSON)
-                        for match in iterator:
-                            if match:
+                            to_replace = str(match.group())
+                            replace_by = str(match.group(1))
+                            print('to_replace:::'+to_replace)
+                            print('replace_by:::'+replace_by)
+                        
+                            n_open = 0
+                            n_close = 0
                             
-                                to_replace = str(match.group())
-                                replace_by = str(match.group(1))
-                                
+                            brackets_match = True
+                            first_AZ_before_bracket = False
+
+                            for s in replace_by:
+                                if s in AZ and n_open == 0:
+                                    first_AZ_before_bracket = True
+                                    
+                                if s == '{':
+                                    n_open += 1
+                                if s == '}':
+                                    n_close += 1
+                                if n_close > n_open:
+                                    brackets_match = False
+                                    break
+                                    
+                            if n_open != n_close:
+                                brackets_match = False  
+
                             
-                                n_open = 0
-                                n_close = 0
-                                
-                                brackets_OK = True
-                                first_AZ_before_bracket = False
-
-                                for s in replace_by:
-                                    if s in AZ and n_open == 0:
-                                        first_AZ_before_bracket = True
-                                        
-                                    if s == '{':
-                                        n_open += 1
-                                    if s == '}':
-                                        n_close += 1
-                                    if n_close > n_open:
-                                        brackets_OK = False
-                                        break
-                                        
-                                if n_open != n_close:
-                                    brackets_OK = False  
-
-                                 
-                                
-                                if brackets_OK and first_AZ_before_bracket:
-                                    replace_by = '\"'+word+' '+replace_by[1:]
-                                    sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
-                                    good_word = True
-                                    stop_brackets = True
-
-                            if sJSON_new != sJSON:
-                                sJSON = sJSON_new
+                            
+                            if brackets_match and first_AZ_before_bracket:
+                                replace_by = '\"'+JSON_word+' '+replace_by[1:]
+                                sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
                                 stop_brackets = True
 
+                        if sJSON_new != sJSON:
+                            sJSON = sJSON_new
+                            print('sJSON_new:::'+sJSON_new)
+                            stop_brackets = True
+
                             
-                                
-                        break
-            if good_word == False:
-                break            
-        
+                            
+                    break
+            
 
         return sJSON
     
