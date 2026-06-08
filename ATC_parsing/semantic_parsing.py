@@ -2590,7 +2590,15 @@ def logicalForm2JSON(LF):
     Returns JSON string.
     """
     
+
     def clean_JSON(sJSON):
+
+        def extract_set_of_words(sJSON):
+            word_string = sJSON.lower().replace('{','').replace('}','').replace('"','')
+            word_string = word_string.replace(':',' ').replace(',',' ')
+            word_set = set(word_string.split())
+            return word_set
+
         """
         Clean JSON string.
         """
@@ -2839,15 +2847,23 @@ def logicalForm2JSON(LF):
         
         AZ = set(string.ascii_uppercase)
         
-        
+        JSON_word_set = extract_set_of_words(sJSON)
+        prepositions = ['have','your',
+                        'are','over','be','being',
+                        'an','just','the','my','this',]
+        check_word_set = JSON_word_set.intersection(prepositions)
+
         while True:
             
             good_word = False
-            for word in [
-                        'have','your',
-                        'are','over','be','being',
-                        'an','just','the','my','this',]:
+            
+            
+            for word in check_word_set:
+
+                stop_brackets = False
                 for brackets in ['0','1','2','3','4','5']:
+                    if stop_brackets == True:
+                        break
                     while True:
                         
                         pattern = r"\""+rf"{re.escape(word)}"+r"\"\:\{([\"\w\d\s\_\:\,\.\'\{\}]+?\}{"+rf"{re.escape(brackets)}"+"})\}"
@@ -2858,36 +2874,40 @@ def logicalForm2JSON(LF):
                             
                                 to_replace = str(match.group())
                                 replace_by = str(match.group(1))
-
+                                
                             
                                 n_open = 0
                                 n_close = 0
                                 
-                                OK = True
+                                brackets_OK = True
+                                first_AZ_before_bracket = False
 
                                 for s in replace_by:
-                                    
-                                    if s in AZ and n_open > 0:
-                                        OK = False
-                                        break
+                                    if s in AZ and n_open == 0:
+                                        first_AZ_before_bracket = True
+                                        
                                     if s == '{':
                                         n_open += 1
                                     if s == '}':
                                         n_close += 1
                                     if n_close > n_open:
-                                        OK = False
+                                        brackets_OK = False
                                         break
+                                        
                                 if n_open != n_close:
-                                    OK = False   
+                                    brackets_OK = False  
+
+                                 
                                 
-                                if OK:
+                                if brackets_OK and first_AZ_before_bracket:
                                     replace_by = '\"'+word+' '+replace_by[1:]
                                     sJSON_new = re.sub(to_replace,replace_by, sJSON, count=0)
                                     good_word = True
+                                    stop_brackets = True
 
                             if sJSON_new != sJSON:
                                 sJSON = sJSON_new
-                                print("sJSON_new:::"+sJSON)
+                                stop_brackets = True
 
                             
                                 
@@ -2929,7 +2949,7 @@ def logicalForm2JSON(LF):
 
 
     sJSON = '{'+LF.strip('\s\t\n').replace(';',',').replace('_(','\":{').replace('_','\"').replace(')','}').replace('*','\"')+'}'
-    print("bad_JSON:::"+sJSON)
+    
     
     sJSON = clean_JSON(sJSON)
     sJSON = make_unique_keys(sJSON)
