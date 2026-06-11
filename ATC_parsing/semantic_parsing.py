@@ -14,7 +14,7 @@ def make_lexicon(dData):
     """
     Argument:
     - dData
-    Output dictionary that shores all the data we need to parse ATC command.
+    Output dictionary that stores all the data we need to parse ATC command.
 
     This fuction takes some predefined text files from DATA subfolder and generates lexicon, 
     parsers and some other data that are used in the parsing of ATC commands. Output is 
@@ -27,7 +27,7 @@ def make_lexicon(dData):
     """
     ## Regex ##
     
-    In the *regex.txt* files we store regular expressions that are used to extract phrases from ATC 
+    In the *regex.txt* file we store regular expressions that are used to extract phrases from ATC 
     commands that correspond to semantic categories related to ATC phraseology, places, waypoints,
     fixes, airlines and some other ATC concepts. You are free to update this file in your
     local copy of the library to 'localize' it to your needs.
@@ -191,13 +191,13 @@ def make_lexicon(dData):
         reduce size of the lexicon and hence latency of the parsing process.
 
         We don't know how many placeholders we need to have for any new command 
-        but we need to fix the maximum number of such placeholders
+        so we need to fix the maximum number of such placeholders
         in advance separately for each category. 
         
         We can do this using *dPlaceholderNumber* dictionary -- here we store max number of 
         placeholders for
         some categories and a small default value for all other categories. You may update these 
-        settings. 
+        settings. This will result in the lexicon size and in the parsing latency
 
         """
         
@@ -319,7 +319,7 @@ def make_lexicon(dData):
         - with_tmpfunction == True 
         All rules from 'lex_complex_file' with 'TMPFUNCTION' are extracted.
         
-        - with_tmpfunction_final == True 
+        - with_tmpfinalfunction == True 
         All rules from 'lex_complex_file' with 'TMPFINALFUNCTION' are extracted.
         
 
@@ -330,13 +330,7 @@ def make_lexicon(dData):
         
 
         Read rules from *lex_complex_file*. These rules will be stored in *dLexComplex* dictionary.
-        If 
-        ```
-        with_filter == True
-        ```
-        then all rules from *lex_complex_file* will be stored in  *dLexComplex*. In another case
-        we store only rules that contain string '/X' where 'X' is a category from the category filter.
-
+        
         """
 
 
@@ -509,7 +503,7 @@ def make_lexicon(dData):
         Also if
         a word/phrase is unknown (doesn't belong to any category in *regex.txt* or the list of 
         prepositions) then we assign it automatically to the lexical 
-        category *NP*. So for example, word 'abracadabra' belongs to NP. We want the same 
+        category *NP*. So, for example, word 'abracadabra' belongs to NP. We want the same 
         to be true for phrase
         'the abaracadabra'.
 
@@ -534,9 +528,7 @@ def make_lexicon(dData):
                 res = res + preposition + " => "+category+"/"+category+" {\\x._"+preposition+r"_(x)}"+"\n"
         for preposition in dData['prepositions']:
             res = res + preposition + " => NP/NP {\\x._"+preposition+r"_(x)}"+"\n"
-
-            
-        #print('lex_prepositions:::'+res)    
+   
         return(res)
     
     def lex_words(lexicon, dData):
@@ -545,9 +537,10 @@ def make_lexicon(dData):
         - lexicon
         The lexicon for the ATC commands parsing.
         - dData
-        We update dData with information about all words that occur in the lexicon.
+        We update dData with information about all words(placeholders and prepositions) that 
+        occur in the lexicon.
 
-        This function is used when the lexicon' is generated. It extract all words from it. 
+        This function is used when the lexicon is generated. It extract all words from it. 
         Results are stored in *dData*. We need this information to extract unknow phrases from a 
         command we want to parse.
         '''
@@ -648,11 +641,15 @@ def make_lexicon(dData):
     """
     # lex_complex #
 
-    Read lexicon complex file with and witout filters, tmppreprocessing , tmpfunction and .tmpfinalfunction
+    Read lexicon complex file with and witout filters, tmppreprocessing , tmpfunction and tmpfinalfunction
     
+    Here we generate few different lexicons that will be used to generate different parsers. The idea
+    is that we may use different parsers at different stages of parsing of the same ATC command. Parse 
+    result produced at one stage is used as input for next stage parsing.
+    """
     # no tmppreprocessing, no filter, tmpfunction, tmpfinalfunction #
     
-    """
+
     dLexComplex = {}
     with_tmppreprocessing = False
     with_filter = False
@@ -747,8 +744,7 @@ def make_lexicon(dData):
     function where the its single
     argument (lexicon string) is the concatenation of strings of rules generated above.
 
-    Here we generate two lexicons - without filter and with filter. Function *lex_words()* is
-    used only for lexicon with filter.
+    Here we generate few different lexicons.
     """
 
     lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction = lexicon.fromstring(lex_categories + 
@@ -792,7 +788,7 @@ def make_lexicon(dData):
     """
     ## CCG parsers ##
 
-    Now we can generate 5 NLTK CCG parsers.
+    Now we can generate 5 NLTK CCG parsers for all 5 lexicons.
 
     """
 
@@ -808,18 +804,11 @@ def make_lexicon(dData):
     dData['final_parser'] = final_parser
     dData['final_2_parser'] = final_2_parser
 
-def parsing_debug(command, number_of_steps, dData, dPlaceholders):
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
-    return LF
-
-def parsing(command, number_of_steps, dData):
-    dPlaceholders = {}
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
-    return LF
 
 def parsing_base(command, number_of_steps, dData, dPlaceholders):
     """
-    
+    This base internal function that is calling by parsing and parsing_debug functions.
+
     Arguments:
     - *command*
     Original ATC command in textual form. Please note that we ignore punctuation.
@@ -829,14 +818,16 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     it may be possible to make one or more additional steps where logical form returned by 
     previous step is parsed to get new compressed logical form if this is possible. 
     The value of the parameter is the maximum number of steps that will be produced. 
-    The real number may be smaller if logical forms that are produced 
+    The real number of steps executed may be smaller if logical forms that are produced 
     in two sequential steps are identical.
     - dData
     The dictionary generated by *make_lexicon()* function. It contains all data that we need to
     parse the command in any number of steps. 
-    - debug 
-    If true then output contains data that may help to fix problems with parsing -
-    placeholdes for each parsing epoch  and step. 
+    - dPlaceholders
+    The dictionary that may helpful to fix problems with parsing. It contains parsing results in
+    the form of list of placeholders for each parsing epoch (parser used)  and step (steps 
+    when same parser is used). 
+
     Returns logical form (string) that represents semantics of the command
     """
 
@@ -878,7 +869,6 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         command = command.replace(r"\s+"," ").replace("+","")
         command = command.strip('.,?!\n”"')
 
-        print('???'+command)
 
         return command
     
@@ -887,20 +877,19 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         Main function to parse a command.
         Arguments:
         - parser
-        May be the parser with lexicon without filter to use for textual command or 
-        the parser with lexicon with filter to use for logical forms, or parser for one of two
-        final steps
+        May be one of previously defind parsers. If the command is given in original testual
+        form then only preprocessing_parser is applicable
         - command
         Textual command or logical form,
         - dData 
         Dictionary produced by *make_lexicon()* function,
         - epoch
-        0 for command and LF parser, 10 for final_parser and 20 for final_2_parser
+        0 for preprocessing_parser, 10 command_paser, 20 for final_parser and 30 for final_2_parser
         - step
-        Index of the step (0 for first step for textual command)
+        Index of the step for specific parser
         - dPlaceholders
         Additional output data that may help to fix problems with parsing. Store
-        placeholdes for each parsing step
+        placeholdes for each parsing epoch and step
         
         Returns a string - logical form
         """
@@ -1285,7 +1274,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             - segment
             Part of the command that may be parsed successfully,
             - maxExpansions
-            Maximum number of expansion of the segment with special term '_context_' -
+            Maximum number of expansions of the segment with special term '_context_' -
             a trick to increase the probability that the segment will be parsed successfully,
             - dReplacement_1
             Dictionary of placeholder replacements to replace placeholders  with the correct
@@ -1465,7 +1454,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     
     preprocessing_parser = dData['preprocessing_parser']
     command_parser = dData['command_parser']
-    LF_parser = dData['LF_parser']
+    LF_parser = dData['LF_parser'] # we will ignore LF parser in this version
     final_parser = dData['final_parser']
     final_2_parser = dData['final_2_parser']
 
@@ -1553,8 +1542,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     LF = LF.replace('STOP_(','_(')
 
 
-    #print('\nparsing DEBUG preprocessing: ========================\n'+LF)
-
+    
     
     #command parse -----------------------------
 
@@ -1573,8 +1561,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         
     LF = LF.replace('STOP_(','_(')
     
-    #print('\nparsing DEBUG command: ==================== \n'+LF)
-
+    
 
     # final parse -----------------------
 
@@ -1716,11 +1703,35 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         
     return LF
 
+def parsing(command, number_of_steps, dData):
+    '''
+    Arguments have same meaning as in parsing_base command.
 
+    Logical form of the parsing result is returned. 
+    '''
+
+    dPlaceholders = {}
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
+    return LF
+
+def parsing_debug(command, number_of_steps, dData, dPlaceholders):
+
+    '''
+    Arguments have same meaning as in parsing_base command.
+
+    Logical form of the parsing result is returned. 
+
+    dPLaceholers contains data useful for debug of the pasing process including update of
+    the lexicon related files - regex.txt and lexicon_complex.txt
+    '''
+
+
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
+    return LF
 
 def logicalForm2JSON(LF):
     """
-    If you prefer read semantics of a command using JSON format, them you can use this function.
+    If you prefer read semantics of a command using JSON format, then you can use this function.
 
     Arguments:
     - LF
