@@ -10,6 +10,7 @@
 - [IF condition](#if-condition)
 - [Resume](#resume)
 - [Once again about AFTER condition](#once-again-about-after-condition)
+- [Heading and Vectors](#heading-and-vectors)
 
 
 
@@ -982,6 +983,113 @@ PARSE (simplified JSON):
       "GROUNDMOVEMENT": "taxi",
       "VIA": "via",
       "PHONETICALPHABET": "Bravo"
+    }
+  }
+}
+```
+
+
+## Heading and Vectors
+
+Usually, the instruction VECTORS is placed just after the instruction HEADING to explain why the pilot should change course. However, sometimes other instructions, such as the ALTITUDE CHANGE instruction, may be placed between them. In this case, the instructions HEADING and VECTORS can be considered as brackets that encompass the scope of the main instruction - HEADING.
+
+```
+COMMAND: American 301 turn right heading 180 descend and maintain 3000 vectors for ILS runway 22 approach
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "American",
+    "INTNUMBER": "301"
+  },
+  "HEADING": {
+    "HEADING": {
+      "HEADING": {
+        "NAVIGATION": "turn right",
+        "HEADING": {
+          "HEADING": "heading",
+          "INTNUMBER": "180"
+        }
+      }
+    },
+    "ALTITUDECHANGE": {
+      "ALTITUDECHANGE": "descend and maintain",
+      "INTNUMBER": "3000"
+    },
+    "VECTORS": {
+      "VECTORS": {
+        "VECTORS": "vectors",
+        "FOR": "for",
+        "APPROACH": {
+          "APPROACHNAVAID": "ILS",
+          "RUNWAY": {
+            "RUNWAY": "runway",
+            "INTNUMBER": "22"
+          },
+          "APPROACH": "approach"
+        }
+      }
+    }
+  }
+}
+
+```
+
+It seems that another option is when VECTORS is placed just before HEADING and ALTITUDE CHANGE instruction may be placed after both of them.
+
+```
+COMMAND: Cessna 45X radar contact 18 miles northwest of Charlotte You are being vectored to the nearest suitable airport Turn right heading 140 descend and maintain 3000 feet
+
+PARSE (simplified JSON):
+
+{
+  "CALLSIGN": {
+    "AIRCRAFT": "Cessna",
+    "CALLSIGN": "45X"
+  },
+  "RADAR": {
+    "RADAR": "radar contact",
+    "DISTANCE": {
+      "DISTANCE": "18",
+      "DISTANCE": {
+        "DISTANCE": "miles",
+        "DIRECTIONMAGNETIC": {
+          "DIRECTIONMAGNETIC": "northwest",
+          "OF": "of",
+          "PLACE": "Charlotte"
+        }
+      }
+    }
+  },
+  "HEADING": {
+    "VECTORS": {
+      "VECTORS": {
+        "WHO": "You are",
+        "VECTORS": {
+          "being VECTORS": "vectored",
+          "TO": "to",
+          "the PLACE": "nearest suitable airport"
+        }
+      }
+    },
+    "HEADING": {
+      "HEADING": {
+        "NAVIGATION": "Turn right",
+        "HEADING": {
+          "HEADING": "heading",
+          "INTNUMBER": "140"
+        }
+      }
+    },
+    "ALTITUDECHANGE": {
+      "ALTITUDECHANGE": {
+        "ALTITUDECHANGE": "descend and maintain",
+        "ALTITUDE": {
+          "ALTITUDE": "3000",
+          "MEASURE": "feet"
+        }
+      }
     }
   }
 }
