@@ -3015,7 +3015,8 @@ r"\bconfirm\b"
 
 
 #VIA
-r"\bvia(?:\s+the)?\b"
+r"#\bvia(?:\s+the)?\b"
+r"\bvia\b"
 
 #Vehicle
 r"\bvehicle\b"
