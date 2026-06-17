@@ -712,6 +712,7 @@ r"\b(few(\s+at)*)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hun
 
 
 #Comparison
+r"\bnot\s+above\b"
 r"\bor\s+lower\b"
 r"\bcouple\s+more\b"
 r"\bor\s+higher\b"
