@@ -2927,7 +2927,8 @@ r"\blanding\s+traffic\b"
 r"\btraffic\s+landing\b"
 r"\bunidentified\s+traffic\b"
 
-
+#TRAFFICINFOSTOP
+r"\bstop\s+inference\b"
 
 #TrafficCircuit
 r"\bcircuit[s]*\b"
