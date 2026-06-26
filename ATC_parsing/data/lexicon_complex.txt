@@ -95,6 +95,7 @@ APRON/CODE {\\x._APRON_(_APRON_(apron1), x)}
 APRON/INTNUMBER {\\x._APRON_(_APRON_(apron1), x)}
 
 #Airspace
+SERVICE/SERVICE {\\x._SERVICE_(_AIRSPACE_(airspace1), x)}
 NAVIGATION/NAVIGATION {\\x._NAVIGATION_(_AIRSPACE_(airspace1), x)}
 BOUNDARY/BOUNDARY {\\x._BOUNDARY_(_AIRSPACE_(airspace1), x)}
 AIRSPACE/STATUS {\\x._AIRSPACE_(_AIRSPACE_(airspace1), x)}
@@ -1882,6 +1883,8 @@ MEASURE/MEASURE {\\x._MEASURE_(_REALMUMBER_(realnumber1),x)}
 
 #reason
 TMPFUNCTION/MAINTAIN {\\x ._TMPFUNCTION_(_MAINTAIN_(_REASON_(reason1),x))}
+TMPFUNCTION/NAVIGATION {\\x ._TMPFUNCTION_(_NAVIGATION_(_REASON_(reason1),x))}
+
 
 
 HEADING/HEADING {\\x._HEADING_(_REASON_(reason1),x)}
@@ -2067,7 +2070,7 @@ WORDNUMPHONEALPHABET\\WORDNUMBER {\\x._WORDNUMPHONEALPHABET_(x,_PHONETICALPHABET
 
 #Place
 
-(PLACE/ROUTING)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
+-(PLACE/ROUTING)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 -(PLACE/PLACE)/THEN {\\x y._PLACE_(_PLACE_(place1),x,y)}
 PLACE/PLACE {\\x._PLACE_(_PLACE_(place1),x)}
 TRANSITION/TRANSITION {\\x._TRANSITION_(_PLACE_(place1),x)}
@@ -2077,7 +2080,7 @@ TRAFFIC/TRAFFIC {\\x._TRAFFIC_(_PLACE_(place1),x)}
 (PLACE/FIX)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 FIX/FIX {\\x ._FIX_(_PLACE_(place1),x)}
 FIX/NAVAID {\\x ._FIX_(_PLACE_(place1),x)}
-(PLACE/WAYPOINT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
+-(PLACE/WAYPOINT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/ROUTE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/PROCEDURE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/SID)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
