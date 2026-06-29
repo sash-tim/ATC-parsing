@@ -2087,7 +2087,7 @@ FIX/NAVAID {\\x ._FIX_(_PLACE_(place1),x)}
 -(PLACE/WAYPOINT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/ROUTE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/PROCEDURE)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
-(PLACE/SID)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
+-(PLACE/SID)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
 (PLACE/CONTEXT)/VIA {\\x y._PLACE_(_PLACE_(place1),x, _context_(y))}
 FIX/FIX {\\x._FIX_(_PLACE_(place1),x)}
 (PLACE/FIX)/VIA {\\x y._PLACE_(_PLACE_(place1),x, y)}
@@ -2660,6 +2660,9 @@ ROUTING/ROUTING {\\x._ROUTING_(_ROUTING_(routing1),x)}
 
 
 #Changes
+(TMPFINALFUNCTION/THEN)/NAVIGATION {\\x y._TMPFINALFUNCTION_(_CHANGES_(_CHANGES_(changes1),x,y))}
+
+
 (CHANGES/DISTANCE)/UPTO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
 (CHANGES/RUNWAY)/TO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
 (CHANGES/SID)/TO {\\x y._CHANGES_(_CHANGES_(changes1),x,y)}
@@ -3002,6 +3005,7 @@ TMPFUNCTION/EXPECT {\\x ._TMPFUNCTION_(_THEN_(_THEN_(then1),x))}
 THEN/GROUNDMOVEMENT {\\x._THEN_(_THEN_(then1),x)}
 -THEN/EXPECT {\\x._THEN_(_THEN_(then1),x)}
 THEN/TRANSITION {\\x._THEN_(_THEN_(then1),x)}
+(THEN/ROUTE)/TRANSITION {\\x y._THEN_(_THEN_(then1),x,y)}
 -THEN/ALTITUDECHANGE {\\x._THEN_(_THEN_(then1),x)}
 THEN/HEADING {\\x._THEN_(_THEN_(then1),x)}
 (THEN/INTNUMBER)/AT {\\x y._THEN_(_THEN_(then1),x,y)}
@@ -3220,7 +3224,7 @@ VERIFY/DIRECTION {\\x._VERIFY_(_VERIFY_(verify1), x)}
 
 
 #VIA
-ROUTE/ROUTE {\\x._ROUTE_(_VIA_(via1), x)}
+-ROUTE/ROUTE {\\x._ROUTE_(_VIA_(via1), x)}
 (ROUTE\INTNUMBER)/PHONETICALPHABET {\\x y._ROUTE_(y,_VIA_(via1), x)}
 
 
