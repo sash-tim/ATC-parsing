@@ -1482,21 +1482,8 @@ r"\bcruising\b"
 r"\bmaneuvering\b"
 r"\bfly\b"
 r"\bvacate\b"
-r"\bturn\b"
-r"\bturn\s+left\b"
-r"\bturn\s+right\b"
-r"\bleft\s+turn\b"
-r"\bright\s+turn\b"
-
-
-r"\bturning\s+left\b"
-r"\bturning\s+right\b"
-r"\bleft\s+turning\b"
-r"\bright\s+turning\b"
 
 r"\bshort\s+of\b"
-r"\b(left)\s+on\b"
-r"\b(right)\s+on\b"
 
 r"\bRNAV\s+visual\b"
 r"\b(?:the\s+)?RNAV\b"
@@ -2759,6 +2746,20 @@ r"\bstandard\s+right\s+turns\b"
 r"\bleft\s+turns\b"
 r"\bstandard\s+left\s+turns\b"
 
+r"\bturn\b"
+r"\bturn\s+left\b"
+r"\bturn\s+right\b"
+r"\bleft\s+turn\b"
+r"\bright\s+turn\b"
+
+
+r"\bturning\s+left\b"
+r"\bturning\s+right\b"
+r"\bleft\s+turning\b"
+r"\bright\s+turning\b"
+
+r"\b(left)\s+on\b"
+r"\b(right)\s+on\b"
 
 #Thankyou
 r"\bappreciate\b"
