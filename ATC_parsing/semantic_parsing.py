@@ -859,6 +859,13 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             if match:
                 command = re.sub(match.group(1),"", command, count=0)
 
+        pattern = r"\b\d\d(\:)\d\d\b"
+        p = re.compile(pattern, re.I)
+        iterator = p.finditer(command)
+        for match in iterator:
+            if match:
+                command = re.sub(match.group(1),"", command, count=0)
+
         
         command = command.replace("; "," ").replace(": "," ").replace(", "," ").replace(". "," ").replace("? "," ").replace('—',' ').replace("-"," ").replace("=","-").replace("’","'").replace("/"," ").replace("o'","o").replace("O'","O")
         command = command.replace(",","")
@@ -905,7 +912,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
 
             # delete unneeded '*' 
             LF = LF.replace('*_','_').replace(')*',')')
-
+            
             # delete simple duplicated functions
             pattern = r"\b(_[a-z]+_)\(((\1\([\s\w\d\-\,\.\*\']+\)))\)"
             p = re.compile(pattern, re.I)
@@ -1476,6 +1483,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
                 LF_old = LF
         else:
             LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
+            
 
             
             if LF == LF_old:
@@ -1529,6 +1537,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
                 break   
 
             LF_new = LF.replace(to_replace, replace_by)
+            
+
                     
             if LF_new != LF:
                 LF = LF_new
@@ -1552,7 +1562,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     for i in range(1,number_of_steps):
         
         LF = parse_command(command_parser, LF, dData, epoch, i, dPlaceholders)
-   
+        
+        
         if LF == LF_old:
             break
         else:
@@ -1561,17 +1572,20 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         
     LF = LF.replace('STOP_(','_(')
     
+
     
 
     # final parse -----------------------
 
     LF_old = LF
+    
 
     epoch = 20
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders)
-   
+        
+
         
         # remove _TMPFUNCTION_ but not its arguments
 
@@ -1619,7 +1633,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
                 break   
 
             LF_new = LF.replace(to_replace, replace_by)
-                    
+            
+        
             if LF_new != LF:
                 LF = LF_new
                 
@@ -1631,17 +1646,20 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
         
         
     LF = LF.replace('STOP_(','_(')
+    
 
 
 
     # final_2 parse ---------------------
 
     LF_old = LF
+    
 
     epoch = 30
 
     for i in range(1,number_of_steps):
         LF = parse_command(final_2_parser, LF, dData, epoch, i, dPlaceholders)
+        
    
         # remove _TMPFINALFUNCTION_ but not its arguments
 
@@ -1699,6 +1717,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             LF_old = LF
         
     LF = LF.replace('STOP_(','_(')
+    
 
         
     return LF
