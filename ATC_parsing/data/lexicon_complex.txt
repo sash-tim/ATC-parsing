@@ -3035,6 +3035,7 @@ THENSTOP/STAR {\\x._THEN_(_THEN_(then1),x)}
 -(THENSTOP/ROUTE)/TO {\\x y._THEN_(_THEN_(then1),x,y)}
 -THEN/DIRECTION {\\x._THEN_(_THEN_(then1),x)}
 THEN/NAVIGATION {\\x._THEN_(_THEN_(then1),x)}
+THEN/TURNS {\\x._THEN_(_THEN_(then1),x)}
 THEN/FIX {\\x._THEN_(_THEN_(then1),x)}
 THEN/CLEARANCE {\\x._THEN_(_THEN_(then1),x)}
 THEN/CLEARED {\\x._THEN_(_THEN_(then1),x)}
