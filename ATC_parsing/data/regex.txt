@@ -2836,7 +2836,7 @@ r"\bterrain\b"
 r"\brising\s+terrain\b"
 r"\bhigh\s+terrain\b"
 r"\bterrain\s+elevation\b"
-r"\bterraing\s+(rising\s+rapidly)\b"
+r"\bterrain\s+(rising\s+rapidly)\b"
 
 #Time
 r"\blater\s+than\b"
