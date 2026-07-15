@@ -660,6 +660,7 @@ r"\bstop clearence inference\b"
 
 #ClockPosition
 r"\boclock\b"
+r"\b\d+\s+oclock\b"
 
 #Confirmation
 r"\bcopy\s+it\b"
@@ -930,11 +931,12 @@ r"\bdiscretion\s+leveled\b"
 
 
 #distance
-r"\bmile[s]?\b"
+r"#\b\d+\s+miles?\b\b\b\b\b"
+r"#\bmile[s]?\b"
 r"\bnautical\s+mile[s]?\b"
 r"\btrack\s+mile[s]?\b"
 r"\b(kilometer|kilometers|kilometres)\b"
-r"\b(\d+[.,]?\d*)\s+miles\b"
+r"\b\d+[.,]?\d*\s+miles?\b"
 r"\b(\d+[.,]?\d*)\s+nautical\s+miles\b"
 r"\b(\d+[.,]?\d*)\s+(?:miles|nautical\s+miles|kilometer|kilometers|kilometres)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:mile|miles|nautical\s+miles|track miles|kilometer|kilometers|kilometres)\b"
