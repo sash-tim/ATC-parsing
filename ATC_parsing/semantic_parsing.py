@@ -1873,7 +1873,7 @@ def logicalForm2JSON(LF):
         
         JSON_word_set = extract_set_of_words(sJSON)
         JSON_word_list = extract_list_of_words(sJSON)
-        prepositions = ['have',
+        prepositions = ['have','will',
                         'are','over','be','being',
                         'an','just','the','my','this',]
         check_word_set = JSON_word_set.intersection(prepositions)
