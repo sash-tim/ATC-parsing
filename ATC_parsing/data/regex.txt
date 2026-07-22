@@ -363,9 +363,10 @@ r"\bthereafter\b"
 r"\bto stop AFTER inference\b"
 
 #ALTIMETER 
-r"\baltimeter\s+(\d+[.,]?\d+\b)"
+r"\baltimeter\s+\d+[.,]?\d+\b"
 r"\baltimeter\b"
 #Altitude
+r"\bdescending\s+(\d+\s+feet)\b"
 r"\btransition\s+altitude\b"
 r"\bhigher\b"
 r"\blower\b"
@@ -537,7 +538,7 @@ r"\bas\b"
 r"\bat\b"
 
 #Be
-r"\bbe\b"
+r"#\bbe\b"
 
 #before
 r"\bbefore\b"
@@ -1126,6 +1127,8 @@ r"\bthis\s+is\b"
 
 
 #speed
+r"\b\d+\s+knots?\b"
+r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+knots?)\b"
 r"\b(IAS|TAS|GS)\b"
 r"\bkt\b"
 r"\bknots*\b"
@@ -2628,6 +2631,8 @@ r"\b(?:runway\s+)(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(
 
 
 #squawk
+r"\b(squawk\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
+r"\bsquawk\s+\d\d\d\d\b"
 r"\bsquawk\s+code\b"
 r"\bsquawk\b"
 r"\bsquak\b"
