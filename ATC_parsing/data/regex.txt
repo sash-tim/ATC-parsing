@@ -1615,8 +1615,8 @@ r"\bunfamiliar\s+with\s+the\s+airport\b"
 r"\bconfirm\s+(\d+(L|R|C))\b"
 r"\btaxi\s+to\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
 r"\btaxi\s+to\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left))?)\b"
-r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left))?)\b"
+r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left|center))?)\b"
+r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left|center))?)\b"
 r"#\brunway\s+(\d+(L|R|C)?)\b"
 
 #WordNumPhoneAlphabet
@@ -2168,7 +2168,7 @@ r"\breport\s+reaching\b"
 r"\bto stop inference of the REPORT category\b"
 
 #REPORTS
-r"\bpilot\s+reports\b"
+r"\bpilot\s+reports?\b"
 r"\breports\b"
 r"\breported\b"
 
