@@ -166,6 +166,8 @@ def make_lexicon(dData):
         """
 
         for item in dRegexCategory:
+
+            
             category = dRegexCategory[item]
             if category not in dCategoryFrequency:
                 dCategoryFrequency[category] = 0
@@ -232,6 +234,8 @@ def make_lexicon(dData):
         
 
         for category in dCategoryFrequency:
+
+           
             dCategoryPlaceholder[category] = {}
             if category in dPlaceholderNumber:
                 placeholder_number = dPlaceholderNumber[category] 
@@ -480,11 +484,25 @@ def make_lexicon(dData):
     
         res = ""
         for placeholder in dLexComplex:
+
+            
             a_ccg = dLexComplex[placeholder]
+
+            
+
             #category name may be extracted from placeholder name
             category = placeholder.replace('1','').upper()
-            # jst replace 1st placeholder from a rule from dLexComplex with all other placeholder related 
+
+                        
+
+            # just replace 1st placeholder from a rule from dLexComplex with all other placeholder related 
             # to related category
+
+
+
+
+                        
+
             for lex in a_ccg:
                 for placeholder_new in dData['category_placeholder'][category]:
                     res = res + placeholder_new + " => "+lex.replace(placeholder,placeholder_new)+"\n"

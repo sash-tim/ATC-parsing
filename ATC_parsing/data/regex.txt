@@ -360,7 +360,7 @@ r"\bafter\b"
 r"\bthereafter\b"
 
 #AFTERSTOP
-r"\bto stop AFTER inference\b"
+r"AFTER stop nesting "
 
 #ALTIMETER 
 r"\baltimeter\s+\d+[.,]?\d+\b"
@@ -495,8 +495,9 @@ r"\bglide\s+slope\b"
 
 #approved
 r"\bapproved\b"
-#approvedSTOP
-r"is used to stop approved expansion"
+
+#APPROVEDSTOP
+r"APPROVED stop nesting"
 
 #Area
 r"\barea\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
@@ -604,8 +605,8 @@ r"\b(?!\d{1,2}[lr])\d+[a-z]{2,3}\b"
 r"\b(?!\d{1,2}[lr])\d{2,10}[a-z]\b"
 
 #CALLSIGNSTOP
-r"\b to stop inference\b"
-
+r"CALLSIGN stop nesting"
+ 
 #cancellation
 r"\bcanceling\b"
 r"\bcancel\b"
@@ -634,8 +635,8 @@ r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 #Cleared
 r"\bcleared\b"
 
-#ClearedSTOP
-r"\b stop inference\b"
+#CLEAREDSTOP
+r"CLEARED stop nesting"
 
 
 #clearance
@@ -657,8 +658,9 @@ r"(?<!\bIFR\s)\bdeparture\s+clearance\b"
 r"\btaxi\s+clearance\b"
 
 
-#ClearanceSTOP
-r"\bstop clearence inference\b"
+#CLEARANCESTOP
+r"CLEARANCE stop nesting"
+
 
 #ClockPosition
 r"\boclock\b"
@@ -694,7 +696,7 @@ r"\bsubject\s+to\b"
 r"\bin\s+the\s+event\s+of\b"
 
 #CONDITIONSTOP
-r"\b to stop the category inference\b"
+r"CONDITIONS stop nesting"
 
 
 #conditionalinstructions
@@ -991,6 +993,8 @@ r"\bexpecting\b"
 r"\bawait\b"
 r"\bEFC\b"
 
+#EXPECTSTOP
+r"EXPECT stop nesting"
 
 #Safety
 r"\btraffic\s+conflict\b"
@@ -1029,8 +1033,9 @@ r"\bheading\s+\d\d\d\b"
 
 
 
-#headingSTOP
-r"is used to stop heading expansion"
+#HEADINGSTOP
+r"HEADING stop nesting"
+
 
 #Height
 r"\bheight\b"
@@ -1406,8 +1411,9 @@ r"#\bgive\s+way\b"
 #maintain
 r"\bmaintain\b"
 
-#maintainstop
-r"\bto stop inference\b"
+#MAINTAINSTOP
+r"MAINTAIN stop nesting"
+
 
 #Measure
 r"\bfeet\b"
@@ -1572,8 +1578,8 @@ r"#\b\d+\s+at\s+\d+\b"
 #When
 r"\bwhen\b"
 
-#Whenstop
-r"to stop inference"
+#WHENSTOP
+r"WHEN stop nesting"
 
 #While
 r"\bwhile\b"
@@ -1661,7 +1667,7 @@ r"\bturning\b"
 r"\breturning\b"
 
 #ONGOINGACTIONSTOP
-r"\bto stop the category inference\b"
+r"ONGOINGACTION stop nesting"
 
 #operation
 r"\bflight\s+plan\s+(closure)\b"
@@ -2124,8 +2130,8 @@ r"\bconstruction\b"
 r"\bresume\b"
 r"\bresuming\b"
 
-#resumeSTOP
-r"\bto stop inference of RESUME\b"
+#RESUMESTOP
+r"RESUME stop nesting"
 
 #Contact
 r"\breturn\s+to\s+this\s+frequency\b"
@@ -2164,8 +2170,8 @@ r"\bnext\s+report\b"
 r"\breport\s+estimating\b"
 r"\breport\s+reaching\b"
 
-#reportstop
-r"\bto stop inference of the REPORT category\b"
+#REPORTSTOP
+r"REPOET stop nesting"
 
 #REPORTS
 r"\bpilot\s+reports?\b"
@@ -2181,14 +2187,15 @@ r"\brequesting\b"
 r"\brequested\b"
 
 #REQUESTSTOP
-r"\bjust to stop inference\b"
+r"REQUEST stop nesting"
+
 
 
 #RequestInstruction
 r"\bgive\s+way\b"
 
 #REQUESTINSTRUCTIONSTOP
-r"\b just to stop inference\b"
+r"REQUESTINSTRUCTION stop nesting"
 
 
 r"\bgive\b"
@@ -2785,8 +2792,10 @@ r"\bthank\s+you\b"
 r"\bthank\s+you\s+very\s+much\b"
 r"\bthanks\b"
 
-#statusstop
-r"\bto stop status inference\b"
+#STATUSSTOP
+r"STATUS stopnesting"
+
+
 
 #surface
 r"\bsurface\b"
@@ -2911,7 +2920,7 @@ r"\blater\b"
 r"\bthen\b"
 
 #THENSTOP
-r"to stop THEN expansion"
+r"THEN stop nesting"
 
 #Through
 r"\bthrough\b"
@@ -2948,7 +2957,8 @@ r"\btraffic\s+landing\b"
 r"\bunidentified\s+traffic\b"
 
 #TRAFFICINFOSTOP
-r"\bstop\s+inference\b"
+r"TRAFFICINFO stop nesting"
+
 
 #TrafficCircuit
 r"\bcircuit[s]*\b"
@@ -3028,7 +3038,7 @@ r"\b(until|untill)\b"
 r"\btill\b"
 
 #UNTILSTOP
-r"\bto stop expantion of UNTIL category\b"
+r"UNTIL stop nesting"
 
 #upto
 r"\bup\s+to\b"
