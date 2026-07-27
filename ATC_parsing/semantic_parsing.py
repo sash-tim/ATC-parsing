@@ -823,7 +823,7 @@ def make_lexicon(dData):
     dData['final_2_parser'] = final_2_parser
 
 
-def parsing_base(command, number_of_steps, dData, dPlaceholders):
+def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData):
     """
     This base internal function that is calling by parsing and parsing_debug functions.
 
@@ -897,7 +897,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
 
         return command
     
-    def parse_command(parser, command, dData, epoch, step, dPlaceholders):
+    def parse_command(parser, command, dData, epoch, step, dPlaceholders, dParsingDebugData):
         """
         Main function to parse a command.
         Arguments:
@@ -1380,7 +1380,9 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
                 
                 return LF_replacement
 
-
+        
+        dParsingDebugData['command'] = command
+                    
         LF_final = ''
 
         dReplacement_1 = {}
@@ -1391,8 +1393,9 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             new_command_1 = text2placeholders(command, dData, dReplacement_1)
             new_command_2 = replace_unknown_phrases(new_command_1, dData, dReplacement_2)
 
-            
             command_new = new_command_2
+
+                        
             
             pattern = r"\b(x)\d+\b"
             p = re.compile(pattern, re.I)
@@ -1405,7 +1408,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             
         id = epoch+step
         dPlaceholders[id] = command_new
-            
+        dParsingDebugData[id] = dReplacement_1
+                        
         
 
         # parse command with expansion -------------------------
@@ -1492,7 +1496,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
 
     for i in range(number_of_steps):
         if i == 0:
-            LF = parse_command(preprocessing_parser, command, dData, epoch, i, dPlaceholders)
+            LF = parse_command(preprocessing_parser, command, dData, epoch, i, dPlaceholders, dParsingDebugData)
             
 
             if LF == LF_old:
@@ -1500,7 +1504,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
             else:
                 LF_old = LF
         else:
-            LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders)
+            LF = parse_command(preprocessing_parser, LF, dData, epoch, i, dPlaceholders,dParsingDebugData)
             
 
             
@@ -1579,7 +1583,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
 
     for i in range(1,number_of_steps):
         
-        LF = parse_command(command_parser, LF, dData, epoch, i, dPlaceholders)
+        LF = parse_command(command_parser, LF, dData, epoch, i, dPlaceholders, dParsingDebugData)
         
         
         if LF == LF_old:
@@ -1601,7 +1605,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     epoch = 20
 
     for i in range(1,number_of_steps):
-        LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders)
+        LF = parse_command(final_parser, LF, dData, epoch, i, dPlaceholders, dParsingDebugData)
         
 
         
@@ -1676,7 +1680,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders):
     epoch = 30
 
     for i in range(1,number_of_steps):
-        LF = parse_command(final_2_parser, LF, dData, epoch, i, dPlaceholders)
+        LF = parse_command(final_2_parser, LF, dData, epoch, i, dPlaceholders, dParsingDebugData)
         
    
         # remove _TMPFINALFUNCTION_ but not its arguments
@@ -1748,10 +1752,11 @@ def parsing(command, number_of_steps, dData):
     '''
 
     dPlaceholders = {}
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
+    dParsingDebugData = {}
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData)
     return LF
 
-def parsing_debug(command, number_of_steps, dData, dPlaceholders):
+def parsing_debug(command, number_of_steps, dData, dPlaceholders, dParsingDebugData):
 
     '''
     Arguments have same meaning as in parsing_base command.
@@ -1763,7 +1768,7 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders):
     '''
 
 
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders)
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData)
     return LF
 
 def logicalForm2JSON(LF):
