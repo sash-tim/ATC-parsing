@@ -810,11 +810,13 @@ def make_lexicon(dData):
 
     """
 
-    preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-    LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-    final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
-    final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet)
+    trace = 2
+
+    preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
 
     dData['preprocessing_parser'] = preprocessing_parser
     dData['command_parser'] = command_parser
@@ -823,7 +825,7 @@ def make_lexicon(dData):
     dData['final_2_parser'] = final_2_parser
 
 
-def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData):
+def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData,trace):
     """
     This base internal function that is calling by parsing and parsing_debug functions.
 
@@ -845,6 +847,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     The dictionary that may helpful to fix problems with parsing. It contains parsing results in
     the form of list of placeholders for each parsing epoch (parser used)  and step (steps 
     when same parser is used). 
+    - dParsingDebagData
+    Contains placeholder values for each epoch and step
 
     Returns logical form (string) that represents semantics of the command
     """
@@ -915,7 +919,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
         - dPlaceholders
         Additional output data that may help to fix problems with parsing. Store
         placeholdes for each parsing epoch and step
+        - dParsingDebagData
+        Contains placeholder values for each epoch and step
         
+
+
         Returns a string - logical form
         """
 
@@ -1363,7 +1371,12 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                     LF = str(token.semantics())
                     break
 
-                
+                # print parse derivation tree
+                if trace > 0:
+                    step_id = epoch+step
+                    print("\n\nStep Derivation:\t"+str(step_id)+"\n")
+                    chart.printCCGDerivation(t)
+                    
                 LF_replacement = LF
                 
                 
@@ -1380,8 +1393,6 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 
                 return LF_replacement
 
-        
-        dParsingDebugData['command'] = command
                     
         LF_final = ''
 
@@ -1750,10 +1761,10 @@ def parsing(command, number_of_steps, dData):
 
     Logical form of the parsing result is returned. 
     '''
-
+    trace = 0
     dPlaceholders = {}
     dParsingDebugData = {}
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData)
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData, trace)
     return LF
 
 def parsing_debug(command, number_of_steps, dData, dPlaceholders, dParsingDebugData):
@@ -1767,8 +1778,9 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders, dParsingDebugD
     the lexicon related files - regex.txt and lexicon_complex.txt
     '''
 
+    trace = 2
 
-    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData)
+    LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData, trace)
     return LF
 
 def logicalForm2JSON(LF):
