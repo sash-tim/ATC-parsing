@@ -811,12 +811,17 @@ def make_lexicon(dData):
     """
 
     trace = 2
-
-    preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
-    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
-    LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    
+    #preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet, trace = trace)
+    #command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet, trace = trace)
+    #LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet, trace = trace)
+    #final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
     final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
-    final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    #final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
+    final_2_parser = chart.CCGChartParser(lex_with_tmpfinalfunction, chart.ApplicationRuleSet, trace = trace)
 
     dData['preprocessing_parser'] = preprocessing_parser
     dData['command_parser'] = command_parser
