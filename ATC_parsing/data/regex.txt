@@ -1029,7 +1029,9 @@ r"\b(?:left\s+)?heading\b"
 r"\b(?:right\s+)?heading\b"
 r"\brunway\s+heading\b"
 r"\bassigned\s+heading\b"
+r"\bpresent\s+heading\b"
 r"\bheading\s+\d\d\d\b"
+r"\bassigned\s+heading\s+\d\d\d\b"
 
 
 
