@@ -750,6 +750,9 @@ r"\band\b"
 #Context
 r"\babracadabra\b"
 
+#CONTROLFUNCTION
+r"is used to control parsing at any step"
+
 #Controller
 r"\bdelivery\b"
 r"\bcontact\s+(approach)\b"
