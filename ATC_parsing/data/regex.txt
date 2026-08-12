@@ -1583,6 +1583,10 @@ r"\bcoming\s+up\b"
 r"[+-]?\b\d+\b"
 r"#\b\d+\s+at\s+\d+\b"
 
+#INTNUMBERSTOP
+r"INTNUMBER stop nesting"
+
+
 #When
 r"\bwhen\b"
 
