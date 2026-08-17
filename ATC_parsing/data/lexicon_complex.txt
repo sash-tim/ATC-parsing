@@ -985,6 +985,7 @@ EXCEPT/FLEVEL {\\x._EXCEPT_(_EXCEPT_(except1), x)}
 
 TMPFUNCTION/VECTORS {\\x ._TMPFUNCTION_(_EXPECT_(_EXPECT_(expect1),x))}
 -TMPFINALFUNCTION/DEPARTURE {\\x ._TMPFINALFUNCTION_(_EXPECT_(_EXPECT_(expect1),x))}
+TMPFINALFUNCTION/TIME {\\x ._TMPFINALFUNCTION_(_EXPECT_(_EXPECT_(expect1),x))}
 
 
 (EXPECT/SAFETY)/TO {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
@@ -1009,7 +1010,7 @@ EXPECT/RESTRICTION {\\x._EXPECT_(_EXPECT_(expect1), x)}
 EXPECT/RUNWAY {\\x._EXPECT_(_EXPECT_(expect1), x)}
 (EXPECT/RUNWAY)/FOR {\\x y._EXPECT_(_EXPECT_(expect1), x, y)}
 EXPECT/TIME {\\x._EXPECT_(_EXPECT_(expect1), x)}
-(EXPECT/TIME)/IN {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
+-(EXPECT/TIME)/IN {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 (EXPECT/RESTRICTION)/TIME {\\x y._EXPECT_(_EXPECT_(expect1), x,y)}
 EXPECT/FLEVEL {\\x._EXPECT_(_EXPECT_(expect1), x)}
 EXPECT/NAVAID {\\x._EXPECT_(_EXPECT_(expect1), x)}
@@ -1391,6 +1392,7 @@ REASON/TRAFFIC {\\x._REASON_(_FOR_(for1), x)}
 REASON/NOISE {\\x._REASON_(_FOR_(for1), x)}
 -REASON/APPROACHNAVAID {\\x._REASON_(_FOR_(for1), x)}
 REASON/WEATHER {\\x._REASON_(_FOR_(for1), x)}
+REASON/REASON {\\x._REASON_(_FOR_(for1), x)}
 
 
 #Frequency
@@ -3096,6 +3098,7 @@ TIME/INTNUMBER {\\x._TIME_(_TIME_(time1),x)}
 TIME/TIMEINFO {\\x._TIME_(_TIME_(time1),x)}
 (TIME/TIMEINFO)/IS {\\x y._TIME_(_TIME_(time1),x,y)}
 TIME/TIME {\\x._TIME_(_TIME_(time1),x)}
+TIME\IN {\\x ._TIME_(x, _TIME_(time1))}
 
 
 #TIMEINFO
