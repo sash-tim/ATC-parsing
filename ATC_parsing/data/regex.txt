@@ -1513,7 +1513,7 @@ r"\bvacate\b"
 r"\bshort\s+of\b"
 
 r"\bRNAV\s+visual\b"
-r"\b(?:the\s+)?RNAV\b"
+r"\bRNAV\b"
 
 r"\bRNAV\s+GPS\b"
 r"\bRNAV\s+Del\s*Rey\b"
