@@ -403,7 +403,9 @@ r"\bpassing\s+(\d+[.,]?\d*\s+feet)\b"
 
 r"\bclimbing\s+through\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+to\s+(\d+[.,]?\d*)\b"
+r"\bclimb\s+to\s+(\d+[.,]?\d*\s+feet)\b"
 r"\bclimb\s+initially\s+(\d+[.,]?\d*)\b"
+r"\bclimb\s+initially\s+(\d+[.,]?\d*\s+feet)\b"
 
 r"\bdescend\s+to\s+(\d+[.,]?\d*)\b"
 
@@ -490,7 +492,7 @@ r"\bapproaches\b"
 
 #ApproachNAVAID
 r"\bILS\b"
-r"\b(?:the\s+)?localizer\b"
+r"\blocalizer\b"
 r"\bglide\s+slope\b"
 
 
@@ -1299,8 +1301,8 @@ r"\bQTE\b"
 r"\bflight\b"
 
 #FLevel
-r"\blevel\s+at\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)(?![\s\w]*\s+thousand)"
-r"\blevel\s+at\s+(\d+[.,]?\d*)\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
+-r"\blevel\s+at\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)(?![\s\w]*\s+thousand)"
+-r"\blevel\s+at\s+(\d+[.,]?\d*)\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 -r"\blevel\s+at\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\blevel\b(?![\s\w\d]*\s+feet)(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+measure)"
 r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(final)\b"
