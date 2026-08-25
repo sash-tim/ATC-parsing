@@ -553,7 +553,8 @@ r"\bprior\b"
 r"\bbehind\b"
 r"\btrail\s+behind\b"
 
-
+#beyond
+r"\bbeyond\b"
 
 #block
 r"\bblock\b"
@@ -2028,6 +2029,7 @@ r"\bmy\s+position\b"
 r"\bposition\b"
 r"\bpresent\s+position\b"
 r"\bend\b"
+r"\bdeparture\s+end\b"
 
 
 #PRESENTWEATHERIDENTIFICATION
