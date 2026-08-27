@@ -1140,7 +1140,7 @@ r"\bwill\s+be\b"
 r"\bindicate[s]?\b"
 r"\bindicated\b"
 r"\bappear\b"
-r"\bthis\s+is\b"
+r"#\bthis\s+is\b"
 
 
 #speed
