@@ -368,6 +368,7 @@ r"\baltimeter\s+\d+[.,]?\d+\b"
 r"\baltimeter\b"
 #Altitude
 r"\bdescending\s+(\d+\s+feet)\b"
+r"\bdescending\s+(\d+\s+feet\s+AGL)\b"
 r"\btransition\s+altitude\b"
 r"\bhigher\b"
 r"\blower\b"
@@ -398,16 +399,22 @@ r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|nin
 r"\bclimbing\s+through\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 
 
 r"\bmaintain\s+(\d+[.,]?\d*\s+feet)\b"
+r"\bmaintain\s+(\d+[.,]?\d*\s+feet\s+AGL)\b"
 
 r"\bpassing\s+(\d+[.,]?\d*\s+feet)\b"
+r"\bpassing\s+(\d+[.,]?\d*\s+feet\s+AGL)\b"
 
 r"\bclimbing\s+through\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+to\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+to\s+(\d+[.,]?\d*\s+feet)\b"
+r"\bclimb\s+to\s+(\d+[.,]?\d*\s+feet\s+AGL)\b"
 r"\bclimb\s+initially\s+(\d+[.,]?\d*)\b"
 r"\bclimb\s+initially\s+(\d+[.,]?\d*\s+feet)\b"
+r"\bclimb\s+initially\s+(\d+[.,]?\d*\s+feet\s+AGL)\b"
 
 r"\bdescend\s+to\s+(\d+[.,]?\d*)\b"
+r"\bdescend\s+to\s+(\d+[.,]?\d*\s+feet)\b"
+r"\bdescend\s+to\s+(\d+[.,]?\d*\s+feet\s+AGL)\b"
 
 
 r"\bclimb\s+to\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b" 

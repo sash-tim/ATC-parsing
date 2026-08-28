@@ -1371,18 +1371,32 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
             else:
                 
                 LF = ''
+                LF_top = ''
+                tree_top = parses[0]
+                count = 0
+                max_count = 500
                 for t in parses:
                     (token, op) = t.label()
                     LF = str(token.semantics())
-                    break
+                    if count == 0:
+                        LF_top = LF
+                    if 'CONTROLFUNCTION' in LF:
+                        LF_top = LF
+                        tree_top = parses[count]
+                        
+                        break
+                    if max_count < count:
+                        break
+                    count += 1
 
                 # print parse derivation tree
                 if trace > 0:
                     step_id = epoch+step
                     print("\n\nStep Derivation:\t"+str(step_id)+"\n")
-                    chart.printCCGDerivation(t)
+                    chart.printCCGDerivation(tree_top)
+                                        
                     
-                LF_replacement = LF
+                LF_replacement = LF_top
                 
                 
                 for X in dReplacement_1:
