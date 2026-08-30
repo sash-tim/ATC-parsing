@@ -1143,9 +1143,10 @@ r"\bwhat\s+you\s+want\s+to\s+do\b"
 
 #IS
 r"\bis\b"
-r"\bwill\s+be\b"
+r"#\bwill\s+be\b"
+r"\bbe\b"
 r"\bindicate[s]?\b"
-r"\bindicated\b"
+r"#\bindicated\b"
 r"\bappear\b"
 r"#\bthis\s+is\b"
 
@@ -1666,6 +1667,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bincreasing\b"
 r"\bstopping\b"
 r"\bvacating\b"
 r"\bbacktracking\b"
@@ -2265,7 +2267,6 @@ r"\bsend\s+delay\s+message\b"
 r"\bbreak\b"
 r"\bbreak\s+break\b"
 r"\bincrease\b"
-r"\bincreasing\b"
 r"\bleave\b"
 r"\bpush\b"
 r"\breach\b"
@@ -2690,6 +2691,7 @@ r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
 #Status
+r"\bindicated\b"
 r"\bcopied\b"
 r"\bwhen\s+(get\s+to)\b"
 r"\byou\s+(get\s+to)\b"
