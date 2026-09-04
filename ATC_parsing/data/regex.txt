@@ -643,6 +643,9 @@ r"\bceiling\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|
 #CLEAR
 r"\bSky\s+condition\s*:?\s*(\bclear\b)"
 
+#CLEAROF
+r"\bclear\s+of\b"
+
 #Cleared
 r"\bcleared\b"
 
@@ -1070,7 +1073,6 @@ r"\bwonderful\s+day\b"
 
 #Hold
 r"\bholding\b"
-r"\bholding\s+short\b"
 r"\bjoin\s+the\s+hold\b"
 r"#\b(?:will\s+)?hold\s+short\b"
 r"\bhold\s+short\b"
@@ -1667,6 +1669,8 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\bholding\s+short\b"
+r"\btransitioning\b"
 r"\bincreasing\b"
 r"\bstopping\b"
 r"\bvacating\b"
@@ -3031,7 +3035,7 @@ r"\bclosed\s+right\s+traffic\b"
 #TRANSITION
 r"\btransition\b"
 r"\btransit\b"
-r"\btransitioning\b"
+r"#\btransitioning\b"
 
 
 #turbulence
