@@ -734,6 +734,7 @@ r"\b(few(\s+at)*)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hun
 
 
 #Comparison
+r"\bless\s+than\b"
 r"\bnot\s+above\b"
 r"\bor\s+lower\b"
 r"\bcouple\s+more\b"
@@ -2165,6 +2166,8 @@ r"\bresuming\b"
 r"RESUME stop nesting"
 
 #Contact
+r"\b(return)\s+if\s+contact\b"
+r"\b(return)\s+if\s+no\s+contact\b"
 r"\breturn\s+to\s+this\s+frequency\b"
 r"\battention\b"
 r"#\b(?:will\s+)?call\b"
