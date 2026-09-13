@@ -1546,7 +1546,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
         # remove _TMPPREPROCESSING_ and _CONTROLFUNCTION_ but not its arguments
 
-        for word in ['_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_','_controlfunction_','_controlfunction_','_controlfunction_',]:
+        for word in ['_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_','_tmppreprocessing_','_controlfunction_','_controlfunction_','_controlfunction_',]:
 
             word = word.upper()
 

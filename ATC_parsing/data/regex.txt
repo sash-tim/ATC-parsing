@@ -2112,6 +2112,8 @@ r"\bradial\b"
 
 #Rate
 r"\brate\b"
+
+#RateUnit
 r"\bper\s+minute\b"
 
 #point
