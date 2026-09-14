@@ -1195,8 +1195,8 @@ r"\bminimum\s+rate\b"
 r"\bslowly\b"
 
 #speedreduce
-r"\breduce\b"
-r"\breducing\b"
+r"\b(reduce)\s+speed\b"
+r"\b(reducing)\s+speed\b"
 r"\bslow\b"
 
 
@@ -1672,6 +1672,7 @@ r"\bon\b"
 r"\bonto\b"
 
 #ongoingaction
+r"\breducing\b"
 r"\bholding\s+short\b"
 r"\btransitioning\b"
 r"\bincreasing\b"
@@ -2112,6 +2113,8 @@ r"\bradial\b"
 
 #Rate
 r"\brate\b"
+r"\brate\s+of\s+descent\b"
+r"\brate\s+of\s+climb\b"
 
 #RateUnit
 r"\bper\s+minute\b"
@@ -2229,11 +2232,10 @@ r"REQUEST stop nesting"
 
 
 #RequestInstruction
+
+r"\breduce\b"
+
 r"\bgive\s+way\b"
-
-#REQUESTINSTRUCTIONSTOP
-r"REQUESTINSTRUCTION stop nesting"
-
 
 r"\bgive\b"
 r"\bcopy\s+clearance\b"
@@ -2326,14 +2328,19 @@ r"\bair\s+taxi\b"
 r"\bgo\b"
 r"\bactivate\b"
 
-
-#REQUESTINSTRUCTIONSTART
 r"\bRead\s*back\b"
-#REQUESTINSTRUCTIONFLY
-r"\bmake\s*an\s*offset\b"
-
 
 r"\bout\s+of\b"
+
+#REQUESTINSTRUCTIONSTOP
+r"REQUESTINSTRUCTION stop nesting"
+
+#REQUESTINSTRUCTIONSTART
+r"OLD VERSION \bRead\s*back\b"
+#REQUESTINSTRUCTIONFLY
+r"OLD VERSION \bmake\s*an\s*offset\b"
+
+
 #REQUESTINSTRUCTIONIDENT
 r"\bident\b"
 #Route
