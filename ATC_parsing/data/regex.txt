@@ -31,6 +31,7 @@ r"\bwzz\b"
 r"\blot\b"
 r"\bthy\b"
 r"\bswr\b"
+r"\bswa\b"
 r"\bibe\b"
 r"\bfin\b"
 r"\btap\b"
@@ -2113,8 +2114,11 @@ r"\bradial\b"
 
 #Rate
 r"\brate\b"
+r"\bpresent\s+rate\b"
 r"\brate\s+of\s+descent\b"
 r"\brate\s+of\s+climb\b"
+r"\bpresent\s+rate\s+of\s+descent\b"
+r"\bpresent\s+rate\s+of\s+climb\b"
 
 #RateUnit
 r"\bper\s+minute\b"
