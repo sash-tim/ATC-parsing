@@ -4,7 +4,6 @@ r"\bWilco\b"
 
 #advisory
 r"\bbe\s+advised\b"
-r"#\b(?:will\s+)?advise\b"
 r"\badvise\b"
 r"\badvised\b"
 r"\bfurther\s+advised\b"
@@ -381,12 +380,10 @@ r"\blevel\b"
 r"\bAGL\b"
 r"\bfeet\s+AGL\b"
 r"\b\d+\s+feet\s+AGL\b"
-r"#\bVFR\s+altitude\b"
 
 
 
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve)\s+thousand\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+hundred)\b" 
+
 
 
 r"\bdescending\s+through\s+(\d+[.,]?\d*)\b"
@@ -550,8 +547,6 @@ r"\bas\b"
 #At 
 r"\bat\b"
 
-#Be
-r"#\bbe\b"
 
 #before
 r"\bbefore\b"
@@ -957,8 +952,6 @@ r"\bdiscretion\s+leveled\b"
 
 
 #distance
-r"#\b\d+\s+miles?\b\b\b\b\b"
-r"#\bmile[s]?\b"
 r"\bnautical\s+mile[s]?\b"
 r"\btrack\s+mile[s]?\b"
 r"\b(kilometer|kilometers|kilometres)\b"
@@ -1078,16 +1071,13 @@ r"\bwonderful\s+day\b"
 #Hold
 r"\bholding\b"
 r"\bjoin\s+the\s+hold\b"
-r"#\b(?:will\s+)?hold\s+short\b"
 r"\bhold\s+short\b"
 r"\bholding\s+instructions\b"
 r"\bhold\b"
-r"#\b(?:will\s+)?hold\b"
 r"\bthe\s+(hold)\b"
 
 #HoldingPoint
 r"\b(holding\s+(point|position))\b"
-r"#\bhold\s+position\b"
 r"\bhold\s+short\s+line\b"
 r"\b(holding\s+(point|position)\s+(\w\d))\b"
 r"\b(holding\s+(point|position)\s+\w\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
@@ -1116,9 +1106,6 @@ r"\bwhilst\b"
 r"\b[a-z]\d+\b"
 r"\b\b\b[a-z]\s+\d+\b\b\b"
 
-#If
-r"#\bonce\b"
-r"#\bif\b"
 
 
 
@@ -1150,12 +1137,9 @@ r"\bwhat\s+you\s+want\s+to\s+do\b"
 
 #IS
 r"\bis\b"
-r"#\bwill\s+be\b"
 r"\bbe\b"
 r"\bindicate[s]?\b"
-r"#\bindicated\b"
 r"\bappear\b"
-r"#\bthis\s+is\b"
 
 
 #speed
@@ -1238,7 +1222,6 @@ r"\bstandard\b"
 r"\bloud\s+background\s+whistle\b"
 r"\breadability\b"
 r"\bsimultaneous\b"
-r"#\bvisual\b"
 r"\binstrument\b"
 r"\blow\b"
 r"\bshear\b"
@@ -1334,7 +1317,6 @@ r"\bflight\s+level\s+\d\d\d\b"
 
 
 #FLevelValue
-r"#\bflight\s+level\s+(\d+)\b"
 r"\bflight\s+level\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand))\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 r"\bflight\s+level\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|hundred|thousand))\b(?![\s\w\d]*\s+altitude)(?![\s\w\d]*\s+feet)"
 
@@ -1389,7 +1371,6 @@ r"\bfrom\b"
 #APPROACHNOTCOMPLETED
 r"\bgo\s+around\b"
 r"\bgoing\s+around\b"
-r"#\bunable\s+approach\b"
 r"\bon\s+the\s+missed\s+approach\b"
 r"\bon\s+the\s+missed\b"
 r"\bmissed\s+approach\b"
@@ -1429,8 +1410,6 @@ r"\btaxiing\b"
 r"\b(?:the\s+)?marshaller\b"
 r"\bmarshals\b"
 
-#GW
-r"#\bgive\s+way\b"
 
 
 #maintain
@@ -1444,20 +1423,8 @@ r"MAINTAIN stop nesting"
 r"\bfeet\b"
 r"\bmillimeter\b"
 r"\binch\b"
-r"#\bmile[s]?\b"
-r"#\bnautical\s+mile[s]?\b"
-r"#\btrack\s+mile[s]?\b"
-r"#\b(kilometer|kilometers|kilometres|hectopascals*)\b"
 r"\bhectopascals*\b"
 r"\b\d+\s+feet\b"
-r"#\b(\d+[.,]?\d*)\s+miles\b"
-r"#\b(\d+[.,]?\d*)\s+nautical\s+miles\b"
-r"#\b(\d+[.,]?\d*)\s+(?:miles|nautical\s+miles|kilometer|kilometers|kilometres|hectopascals*)\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:mile|miles|nautical\s+miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:mile|miles|nautical miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:mile|miles|nautical miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:mile|miles|nautical miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(mile|miles|nautical miles|track miles|kilometer|kilometers|kilometres|hectopascals*)\b"
 
 r"\b(\d+[.,]?\d*)\s+(?:hectopascals*)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\s+(?:hectopascals*)\b"
@@ -1598,7 +1565,6 @@ r"\bcoming\s+up\b"
 
 #IntNumber
 r"[+-]?\b\d+\b"
-r"#\b\d+\s+at\s+\d+\b"
 
 #INTNUMBERSTOP
 r"INTNUMBER stop nesting"
@@ -1620,7 +1586,6 @@ r"\bwith\b"
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"#\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand)\s+feet)\b"
 r"\b((zero|one|two|three|four|five|six|seven|eight|nine|niner|ten|eleven|twelve|thirteen|fourteen|fifteen|sixteen|seventeen|eighteen|nineteen|twenty|thirty|forty|fifty|sixty|seventy|eighty|ninety|hundred|thousand))\b"
 
 
@@ -1652,7 +1617,7 @@ r"\btaxi\s+to\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
 r"\btaxi\s+to\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left|center))?)\b"
 r"\brunway\s+((zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner)(\s+(right|left|center))?)\b"
-r"#\brunway\s+(\d+(L|R|C)?)\b"
+
 
 #WordNumPhoneAlphabet
 r"\b(zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
@@ -2059,7 +2024,6 @@ r"\bSTAR\b"
 r"\bSID\b"
 r"\bdifferent\s+procedure\b"
 r"\bnormal\s+procedures*\b"
-r"#\bnormal\s+procedures\s+apply\b"
 r"\bas\s+published\b"
 r"\bon\s+the\s+go\b"
 r"\blost\s+link\s+procedure\b"
@@ -2107,7 +2071,7 @@ r"\bany\s+chance\b"
 #Radar
 r"\bradar\s+contact\b"
 r"\bweather\s+returns\b"
-r"#\bvector[s]?\b"
+
 
 #radial
 r"\b\d+\s+radial\b"
@@ -2137,7 +2101,6 @@ r"\bpoint\b"
 #Responsibility
 
 #Restriction
-r"#\bClearance\s+void\b"
 r"\baltitude\s+restrictions?\b"
 r"\bcharted\s+restrictions\b"
 r"\ball\s+charted\s+restrictions\b"
@@ -2186,7 +2149,6 @@ r"\b(return)\s+if\s+contact\b"
 r"\b(return)\s+if\s+no\s+contact\b"
 r"\breturn\s+to\s+this\s+frequency\b"
 r"\battention\b"
-r"#\b(?:will\s+)?call\b"
 r"\bcall\b"
 r"\bpick\s+up\b"
 r"\blistens*\b"
@@ -2213,7 +2175,6 @@ r"\bcorrection\b"
 r"\breport\b"
 r"\blet\s+me\s+know\b"
 r"\b(advise)\s+intentions\b"
-r"#\b((say|report|advise)\s+intentions*)\b"
 r"\b((say|report|advise)\s+request)\b"
 r"\bsay\b"
 r"\breport\s+back\b"
@@ -2250,7 +2211,7 @@ r"\bgive\s+way\b"
 
 r"\bgive\b"
 r"\bcopy\s+clearance\b"
-r"#\bwill\s+(follow)\b"
+
 r"\b(follow)\s+my\b"
 r"\bcopy\s+that\b"
 r"\bpushback\s+and\s+start\b"
@@ -2265,7 +2226,7 @@ r"\bbegin\b"
 r"\ballow\b"
 r"\bextend\b"
 r"\bexecute\b"
-r"#\brequire\b"
+
 r"\binstructions*\b"
 r"\binstructed\b"
 r"\balternate\s+instructions*\b"
@@ -2283,7 +2244,7 @@ r"\bcontinue\s+on\s+present\b"
 r"\bcontinue\s+present\b"
 r"\bset\b"
 r"\bestablish\s+our\s+localizer\b"
-r"#\b(?:will\s+)?need\b"
+
 r"\bneed\b"
 r"\bhave\s+to\b"
 r"\bkeep\s+an\s+eyes\b"
@@ -2302,7 +2263,6 @@ r"\bstop\b"
 r"\bfile\b"
 r"\bcontinue\b"
 r"\bcomply\b"
-r"#\brequest\b"
 r"\bdirect\s+request\b"
 r"\bdeparture\s+information\b"
 
@@ -2363,7 +2323,6 @@ r"\bairway\b"
 r"\bglide\s+path\b"
 r"\bfiled\s+route\b"
 r"\bplanned\s+route\b"
-r"#\b(?:airway\s+)?flight\s+plan\s+route\b"
 r"\bflight\s+plan\s+route\b"
 r"\barc\b"
 r"\barc\s+south\b"
@@ -2460,7 +2419,7 @@ r"\bloop\d\b"
 r"\bloop\d\s+departure\b"
 r"\b(loop\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\s+departure\b"
 r"\b(loop\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
-r"#\b[a-z]{3,5}\d\s+departure\b"
+
 
 r"\babbey\d\b"
 r"\bablog\d\b"
@@ -2690,8 +2649,6 @@ r"\b\b[0-9][a-z]\b\b"
 #Side
 r"\b((north|east|south|west)\s+side)\b"
 r"\brunway[s]?\s+\d+\s+(left|right|center)\b(?!\s+hand)"
-r"#\b\d+\s+(left|right|center)\b(?!\s+hand)"
-r"#\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right|center)\b(?!\s+hand)"
 r"\b\d+\s+(left|right)\b(?!\s+hand)"
 r"\brunway\s+\d+\s+(left|right|center)\b(?!\s+hand)"
 r"\b(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\s+(left|right)\b(?!\s+hand)"
@@ -2717,7 +2674,6 @@ r"\bstand\s*by\b"
 r"waypoint\s+version"
 r"\bdescend\s+via\s+([a-z]{5}\d)\b"
 r"\b([a-z]{5}\d)\s+arrival\b"
-r"#\b([a-z]{5}\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner))\b"
 r"\b(RNAV\s+[a-z]{5}\d)\s+arrival\b"
 
 
@@ -2740,20 +2696,15 @@ r"\byou\s+see\b"
 r"\bcrosses\b"
 r"\bvacates\b"
 r"\bnot\s+yet\s+clear\b"
-r"#\bremain\s+(outside)\b"
-r"#\bestablished\s+on\s+the\s+localizer\b"
-r"#\bunable\b"
 r"\bno\s+factor\b"
 r"\bthe\s+go\b"
 r"\btraffic\s+observed\b"
-r"#\b(?:that\s+)?traffic\s+in\s+sight\b"
 r"\bnegative\s+contact\b"
 r"\bin\s+sight\b"
 r"\brunway\s+in\s+sight\b"
 r"\b(?:the\s+)?airport\s+in\s+sight\b"
 r"\baerodrome\s+in\s+sight\b"
 r"\bfield\s+in\s+sight\b"
-r"#\bunable\s+landing\s+clearance\b"
 r"\bclear\s+of\s+corridor\b"
 r"\bclear\s+of\s+weather\b"
 r"\bclear\s+of\s+conflict\b"
@@ -2790,9 +2741,7 @@ r"\bready\b"
 r"\bon\s+test\b"
 r"\bvacated\b"
 r"\bfree\b"
-r"#\bapproved\b"
 r"\bapprove\b"
-r"#\bcleared\b"
 r"\brecleared\b"
 
 r"\bcorrect\b"
@@ -2801,7 +2750,6 @@ r"\bin\s+use\b"
 r"\bILS\s+approach\s+in\s+use\b"
 r"\bavailable\b"
 r"\bunavailable\b"
-r"#\bcleared\s+to\s+land\b"
 r"\bcan\s+begin\b"
 r"\bwill\s+be\s+provided\b"
 r"\bprovided\b"
@@ -2810,9 +2758,7 @@ r"\bin\s+progress\b"
 
 r"\bactivated\b"
 r"\bestablished\b"
-r"#\bestablish\b"
 r"\bfully\s+established\b"
-r"#\bfully\s+establish\b"
 r"\bequipped\b"
 
 #TMPPREPROCESSING
@@ -2906,9 +2852,6 @@ r"\btaxi\s+.*\b(intersection)\b"
 r"\btaxiway\s+.*\b(intersection)\b"
 r"\brunway\s+.*\b(intersection)\b"
 r"\bvacate\s+.*\b(intersection)\b"
-r"#\b(short)\s+of\s+runway\b"
-r"#\b(short)\s+of\s+\d+\b"
-r"#\b(short)\s+of\s+(?:zero|one|two|three|four|five|six|seven|eight|nine|niner)\b"
 r"\b\d+\s+on\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 r"\b(?:one|two|three|four|five|six|seven|eight|nine|niner)\s+on\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)\b"
 r"\btaxiway\b"
@@ -2933,7 +2876,7 @@ r"\balready\b"
 r"\bas\s+soon\s+as\s+ready\b"
 r"\binitially\b"
 r"\bshortly\b"
-r"#\bthereafter\b"
+
 r"\bfor\s+the\s+moment\b"
 r"\bat\s+the\s+moment\b"
 r"\bfor\s+a\s+moment\b"
@@ -3062,7 +3005,7 @@ r"\bclosed\s+right\s+traffic\b"
 #TRANSITION
 r"\btransition\b"
 r"\btransit\b"
-r"#\btransitioning\b"
+
 
 
 #turbulence
@@ -3109,7 +3052,6 @@ r"\bconfirm\b"
 
 
 #VIA
-r"#\bvia(?:\s+the)?\b"
 r"\bvia\b"
 
 #Vehicle
@@ -3344,12 +3286,6 @@ r"\b(?:the\s+)?(?:waypoint\s+)?yorke\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?zeday\b"
 r"\b(?:the\s+)?(?:waypoint\s+)?zippy\b"
 
-r"#\bresume\s+([a-z]{5}\d*)\b"
-r"#\bvia\s+([a-z]{5}\d*)\b"
-r"#\b([a-z]{5}\d*)\s+arrival\b"
-r"#\b([a-z]{5}\d)\s+departure\b"
-r"#\bdirect\s+([a-z]{5}\d*)\b"
-r"#\bdescend\s+via\s+([a-z]{5})\b"
 r"\bwaypoint\b"
 r"\b(?:waypoint|fix|direct)\s+((Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu)(\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu))*(\s+(Alfa|Alpha|Bravo|Charlie|Delta|Echo|Foxtrot|Golf|Hotel|India|Juliet[t]?|Kilo|Lima|Mike|November|Oscar|Papa|Quebec|Romeo|Sierra|Tango|Uniform|Victor|Whiskey|Xray|Yankee|Zulu))*\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred)(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*(\s+(zero|one|two|three|four|five|six|seven|eight|nine|niner|thousand|hundred))*)\b"
 
@@ -3362,8 +3298,6 @@ r"\bweather\s+area\b"
 
 
 #WhoObj
-r"#\byou\s+have\b"
-r"#\byou\s+are\b"
 r"\byou\b"
 r"\ball\s+aircrafts*\b"
 r"\blanding\s+aircraft\b"
@@ -3381,10 +3315,7 @@ r"\bWe\b"
 r"\bmy\b"
 r"\byour\b"
 
-#Why
 
-#WILL
-r"#\bwill\b"
 
 #Wind
 r"\bwindshear\b"
