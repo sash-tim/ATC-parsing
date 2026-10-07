@@ -857,7 +857,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
     Returns logical form (string) that represents semantics of the command
     """
-
+    
     def command_normalization (command):
         """
         Command normalization including reduction of punctuation and replacement of some
@@ -1349,7 +1349,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
             nParses = 0
             parses = []
 
-        
+            
             segment_expanded = segment
             """
             The parsing is successful if 
@@ -1392,7 +1392,13 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 # print parse derivation tree
                 if trace > 0:
                     step_id = epoch+step
-                    print("\n\nStep Derivation:\t"+str(step_id)+"\n")
+
+                    if dParsingDebugData['debug'] == True:
+                        print('\nLEXICON: '+current_lexicon)
+                        print('STEP: '+str(step))
+                        print('SEGMENT: '+segment.strip('\n'))
+                        print("DERIVATION TREE:\n")
+                    
                     chart.printCCGDerivation(tree_top)
                                         
                     
@@ -1452,6 +1458,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
         
         if LF_replacement != '':
 
+            #if dParsingDebugData['debug'] == True:
+                #segment = command_new
+                #print('\nSEGMENT: '+segment+'\n')
+                    
+
             """
             Clean function _context_(...) by its argument if it is another function
             """
@@ -1467,6 +1478,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 
             
             LF_final = LF_final +LF_replacement+'; '
+
+            if dParsingDebugData['debug'] == True:
+                print('\nLF: '+LF_final+'\n')
+                                    
+
         else:
             """ 
             we need to split the sentence into segments
@@ -1484,6 +1500,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
         
 
                     if LF_replacement != '':
+
+                        #if dParsingDebugData['debug'] == True:
+                            #print('\nSEGMENT: '+segment+'\n')
+                        
+
                         # replace function _context_() by its argument if it is another function
                         pattern = r"\b_context_\(_(.+)\)"
                         p = re.compile(pattern, re.I)
@@ -1496,6 +1517,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                             LF_replacement = clean_LF(LF_replacement)
                             
                         LF_final = LF_final +LF_replacement+'; '
+
+                        if dParsingDebugData['debug'] == True:
+                            print('\nLF: '+LF_final+'\n')
+                                                
+
                         command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
                         break
                     
@@ -1521,6 +1547,10 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     
     #preprocessing parse ------------------------------
 
+    if dParsingDebugData['debug'] == True:
+        current_lexicon = 'pre-processing'
+        print('\nLEXICON: '+current_lexicon)
+        
     
     LF_old = ''
     epoch = 0
@@ -1609,6 +1639,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     
     #command parse -----------------------------
 
+    if dParsingDebugData['debug'] == True:
+            current_lexicon = 'main'
+            print('\nLEXICON: '+current_lexicon)
+        
+
     LF_old = LF
     epoch = 10
 
@@ -1682,6 +1717,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     
 
     # final parse -----------------------
+
+    if dParsingDebugData['debug'] == True:
+        current_lexicon = 'post-processing'
+        print('\nLEXICON: '+current_lexicon)
+
 
     LF_old = LF
     
@@ -1757,6 +1797,11 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
 
     # final_2 parse ---------------------
+
+    if dParsingDebugData['debug'] == True:
+        current_lexicon = 'post-processing-final'
+        #print('\nLEXICON: '+current_lexicon)
+                
 
     LF_old = LF
     
@@ -1836,7 +1881,7 @@ def parsing(command, number_of_steps, dData):
     '''
     trace = 0
     dPlaceholders = {}
-    dParsingDebugData = {}
+    dParsingDebugData = {'debug':False}
     LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData, trace)
     return LF
 
@@ -1851,6 +1896,8 @@ def parsing_debug(command, number_of_steps, dData, dPlaceholders, dParsingDebugD
     the lexicon related files - regex.txt and lexicon_complex.txt
     '''
 
+    dParsingDebugData['debug'] = True
+        
     trace = 2
 
     LF = parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData, trace)
