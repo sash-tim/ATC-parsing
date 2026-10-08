@@ -1348,7 +1348,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
             nExpansions = 0
             nParses = 0
             parses = []
-
+            
             
             segment_expanded = segment
             """
@@ -1394,9 +1394,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                     step_id = epoch+step
 
                     if dParsingDebugData['debug'] == True:
-                        print('\nLEXICON: '+current_lexicon)
-                        print('STEP: '+str(step))
-                        print('SEGMENT: '+segment.strip('\n'))
+                        
+                        print('\nSEGMENT: '+segment.strip('\n'))
                         print("DERIVATION TREE:\n")
                     
                     chart.printCCGDerivation(tree_top)
@@ -1441,11 +1440,28 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                     command_new = re.sub(match.group(1),"X", command_new, count=1)
         else:
             command_new = LF2placeholders(command, dReplacement_1)
+
+        
             
         id = epoch+step
         dPlaceholders[id] = command_new
         dParsingDebugData[id] = dReplacement_1
-                        
+
+
+        if dParsingDebugData['debug'] == True:                
+            print('\nCOMMAND: '+command) 
+            print('LEXICON: '+current_lexicon)
+            print('STEP: '+str(step))
+
+            tags = dPlaceholders[id]                                                
+            print('TAGS: '+tags)    
+            print("TAG VALUES:")
+            for tag in tags.split(' '):
+                if tag == '':
+                    continue
+                if tag in dParsingDebugData[id]:   
+                    print("\t"+tag+':\t'+dParsingDebugData[id][tag].strip("<>"))
+
         
 
         # parse command with expansion -------------------------
@@ -1458,10 +1474,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
         
         if LF_replacement != '':
 
-            #if dParsingDebugData['debug'] == True:
-                #segment = command_new
-                #print('\nSEGMENT: '+segment+'\n')
-                    
+                   
 
             """
             Clean function _context_(...) by its argument if it is another function
@@ -1479,9 +1492,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
             
             LF_final = LF_final +LF_replacement+'; '
 
-            if dParsingDebugData['debug'] == True:
-                print('\nLF: '+LF_final+'\n')
-                                    
+                                   
 
         else:
             """ 
@@ -1501,8 +1512,6 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
                     if LF_replacement != '':
 
-                        #if dParsingDebugData['debug'] == True:
-                            #print('\nSEGMENT: '+segment+'\n')
                         
 
                         # replace function _context_() by its argument if it is another function
@@ -1518,8 +1527,6 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                             
                         LF_final = LF_final +LF_replacement+'; '
 
-                        if dParsingDebugData['debug'] == True:
-                            print('\nLF: '+LF_final+'\n')
                                                 
 
                         command_new = ' '.join(command_new_words[j+1:len(command_new_words)+1])   
@@ -1532,7 +1539,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
             #LF_final = LF_final.replace('STOP_(','_(')            
             LF_final = LF_final.replace('\n*','')            
                 
-                            
+                                       
         return LF_final
 
     command = command_normalization(command)
@@ -1540,16 +1547,16 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     
     preprocessing_parser = dData['preprocessing_parser']
     command_parser = dData['command_parser']
-    LF_parser = dData['LF_parser'] # we will ignore LF parser in this version
+    #LF_parser = dData['LF_parser'] # we will ignore LF parser in this version
     final_parser = dData['final_parser']
     final_2_parser = dData['final_2_parser']
 
+    current_lexicon = ''
     
     #preprocessing parse ------------------------------
-
+    
     if dParsingDebugData['debug'] == True:
         current_lexicon = 'pre-processing'
-        print('\nLEXICON: '+current_lexicon)
         
     
     LF_old = ''
@@ -1557,6 +1564,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
     for i in range(number_of_steps):
         if i == 0:
+
+            
             LF = parse_command(preprocessing_parser, command, dData, epoch, i, dPlaceholders, dParsingDebugData)
             
 
@@ -1627,22 +1636,27 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 LF = LF_new
                 
         if LF == LF_old:
+                    
             break
         else:
+                         
             LF_old = LF
-        
+
+        if dParsingDebugData['debug'] == True:
+            print('\nLF: '+LF)
+                        
     
     LF = LF.replace('STOP_(','_(')
-
-
+    if dParsingDebugData['debug'] == True:
+        print('\nLF: '+LF)
+            
     
     
     #command parse -----------------------------
 
     if dParsingDebugData['debug'] == True:
-            current_lexicon = 'main'
-            print('\nLEXICON: '+current_lexicon)
-        
+        current_lexicon = 'main'
+    
 
     LF_old = LF
     epoch = 10
@@ -1706,21 +1720,28 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
         
         
         if LF == LF_old:
+                     
             break
         else:
+                         
             LF_old = LF
-
         
+        if dParsingDebugData['debug'] == True:
+            print('\nLF: '+LF)
+                    
+            
     LF = LF.replace('STOP_(','_(')
-    
-
+    if dParsingDebugData['debug'] == True:
+        print('\nLF: '+LF)
+                
+        
     
 
     # final parse -----------------------
 
     if dParsingDebugData['debug'] == True:
         current_lexicon = 'post-processing'
-        print('\nLEXICON: '+current_lexicon)
+        
 
 
     LF_old = LF
@@ -1785,22 +1806,28 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 LF = LF_new
                 
         if LF == LF_old:
+                        
             break
         else:
+                         
             LF_old = LF
         
-        
+        if dParsingDebugData['debug'] == True:
+            print('\nLF: '+LF)
+                        
         
     LF = LF.replace('STOP_(','_(')
-    
-
+    if dParsingDebugData['debug'] == True:
+        print('\nLF: '+LF)
+                
+        
 
 
     # final_2 parse ---------------------
 
     if dParsingDebugData['debug'] == True:
         current_lexicon = 'post-processing-final'
-        #print('\nLEXICON: '+current_lexicon)
+        
                 
 
     LF_old = LF
@@ -1861,15 +1888,23 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                     
             if LF_new != LF:
                 LF = LF_new
-                
+                            
         if LF == LF_old:
+                            
             break
         else:
+                        
             LF_old = LF
-        
-    LF = LF.replace('STOP_(','_(')
-    
 
+        if dParsingDebugData['debug'] == True:
+            print('\nLF: '+LF)
+                    
+            
+    LF = LF.replace('STOP_(','_(')
+    if dParsingDebugData['debug'] == True:
+        print('\nLF: '+LF)
+                
+        
         
     return LF
 
