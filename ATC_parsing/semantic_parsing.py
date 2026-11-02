@@ -815,7 +815,8 @@ def make_lexicon(dData):
     #preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
     preprocessing_parser = chart.CCGChartParser(lex_with_tmppreprocessing, chart.ApplicationRuleSet, trace = trace)
     #command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
-    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet, trace = trace)
+    command_parser = chart.CCGChartParser(lex_no_tmppreprocessing_no_filter_tmpfunction_tmpfinalfunction, chart.ApplicationRuleSet, trace=trace)
+    
     #LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
     LF_parser = chart.CCGChartParser(lex_with_filter, chart.ApplicationRuleSet, trace = trace)
     #final_parser = chart.CCGChartParser(lex_with_tmpfunction, chart.ApplicationRuleSet + chart.CompositionRuleSet, trace = trace)
@@ -829,7 +830,7 @@ def make_lexicon(dData):
     dData['final_parser'] = final_parser
     dData['final_2_parser'] = final_2_parser
 
-
+    
 def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugData,trace):
     """
     This base internal function that is calling by parsing and parsing_debug functions.
@@ -1373,6 +1374,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                 LF = ''
                 LF_top = ''
                 tree_top = parses[0]
+
+                #print('total trees:'+str(len(parses)))
                 count = 0
                 max_count = 500
                 for t in parses:
@@ -1380,14 +1383,18 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                     LF = str(token.semantics())
                     if count == 0:
                         LF_top = LF
+                    
                     if 'CONTROLFUNCTION' in LF:
                         LF_top = LF
                         tree_top = parses[count]
-                        
+                        #print('CONTROLFUNCTION tree count: '+str(count))
+                                            
                         break
+                    
                     if max_count < count:
                         break
                     count += 1
+                    
 
                 # print parse derivation tree
                 if trace > 0:
@@ -1398,8 +1405,9 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
                         print('\nSEGMENT: '+segment.strip('\n'))
                         print("DERIVATION TREE:\n")
                     
-                    chart.printCCGDerivation(tree_top)
-                                        
+                        chart.printCCGDerivation(tree_top)
+                        
+                                            
                     
                 LF_replacement = LF_top
                 
@@ -1468,6 +1476,7 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
 
         maxExpansion = 1
         
+                
         
         LF_replacement = parse_segment(parser, command_new, maxExpansion, dReplacement_1, dReplacement_2)
         
@@ -1563,6 +1572,8 @@ def parsing_base(command, number_of_steps, dData, dPlaceholders, dParsingDebugDa
     epoch = 0
 
     for i in range(number_of_steps):
+
+        
         if i == 0:
 
             
